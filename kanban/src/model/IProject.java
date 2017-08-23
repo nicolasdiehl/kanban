@@ -1,6 +1,6 @@
 package model;
 
-import java.util.List;
+import java.util.*;
 
 public interface IProject {
 	String getID();
@@ -8,6 +8,12 @@ public interface IProject {
 	
 	String getName();
 	void setName(String value);
+	
+	Date getModified();
+	void setModified(Date value);
+	
+	Date getCreated();
+	void setCreated(Date value);
 	
 	String getDescription();
 	void setDescription(String value);
