@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 
 public class MainApp extends Application {
 
@@ -17,7 +18,8 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("AddressApp");
+        this.primaryStage.getIcons().add(new Image("KbLogo.png"));
+        this.primaryStage.setTitle("HEMS Kanban");
 
         initRootLayout();
         GUI();
