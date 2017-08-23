@@ -4,7 +4,6 @@ import java.util.*;
 /**
  * project class containing id, name, description, date last modified, creation date
  * @version 1.0
- * @author André Adolf, Steffen Aaland 
  */
 
 public class Project implements IProject{
@@ -48,7 +47,7 @@ public class Project implements IProject{
 	/**
 	 *  constructor for creating new project, 
 	 *  creates unique id for the project, 
-	 *  sets current date&time to modified/created, 
+	 *  sets current dateTime to modified and created, 
 	 *  creates members list and adds creator id to the list
 	 * @param name 				project name
 	 * @param description		project description

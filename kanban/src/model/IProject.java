@@ -4,7 +4,6 @@ import java.util.*;
 /**
  * interface of the project class
  * @version 1.0
- * @author André Adolf, Steffen Aaland 
  */
 
 public interface IProject {
