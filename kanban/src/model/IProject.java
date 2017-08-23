@@ -25,4 +25,5 @@ public interface IProject {
 	void setMembers(List<Integer> value);
 	
 	void addTask(ITask value); 
+	void addMember(int value);
 }
