@@ -22,11 +22,13 @@ public class Project implements IProject{
 		this.id = id;
 	}
 	
-	public Project(String name,String description ,List<ITask> tasks ,List<Integer> members ) {
-			this(name, description,null,null,tasks,members,UUID.randomUUID().toString());
+	public Project(String name,String description ,int creator ) {
+			this(name, description,null,null,new ArrayList<ITask>(),null,UUID.randomUUID().toString());
 			Date current = new Date();
 			modified = current;
 			created = current;		
+			members = new ArrayList<Integer>();
+			members.add(creator);
 	}
 	
 	@Override 	
@@ -105,4 +107,11 @@ public class Project implements IProject{
 		tasks.add(value);		
 	}
 
+	@Override
+	public void addMember(int value) {
+		members.add(value);	
+	}
+
+	
+	
 }
