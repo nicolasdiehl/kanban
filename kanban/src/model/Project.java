@@ -1,12 +1,9 @@
 package model;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Project implements IProject{
 
-	//ToDo: modified, created
 	private String id;
 	private String name;
 	private String description;
@@ -25,8 +22,11 @@ public class Project implements IProject{
 		this.id = id;
 	}
 	
-	public Project(String name,String description ,Date modified, Date created, List<ITask> tasks ,List<Integer> members ) {
-			this(name, description,modified,created,tasks,members,UUID.randomUUID().toString());
+	public Project(String name,String description ,List<ITask> tasks ,List<Integer> members ) {
+			this(name, description,null,null,tasks,members,UUID.randomUUID().toString());
+			Date current = new Date();
+			modified = current;
+			created = current;		
 	}
 	
 	@Override 	
@@ -48,7 +48,6 @@ public class Project implements IProject{
 	public void setName(String value) {
 		name = value;
 	}
-	
 
 	@Override
 	public Date getModified() {
