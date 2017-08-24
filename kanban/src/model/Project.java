@@ -7,7 +7,7 @@ import javafx.collections.*;
 public class Project implements IProject, IProjectFX{
 /**
  * project class containing id, name, description, date last modified, creation date
- * @version 1.0
+ * @version 1.1
  */
 
 
@@ -21,7 +21,7 @@ public class Project implements IProject, IProjectFX{
 	private Date modified;	
 	/**date the project was created */
 	private Date created;					
-	//TODO delete tasks/members?
+	//TODO delete members, add courses?
 	/**list of tasks */
 	private List<ITask> tasks;		
 	/**list of project member ids */
