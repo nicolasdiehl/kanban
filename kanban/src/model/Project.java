@@ -2,7 +2,10 @@ package model;
 
 import java.util.*;
 
-public class Project implements IProject{
+import javafx.beans.property.*;
+import javafx.collections.*;
+
+public class Project implements IProject, IProjectFX{
 
 	private String id;
 	private String name;
@@ -84,7 +87,7 @@ public class Project implements IProject{
 
 	@Override
 	public List<ITask> getTasks() {
-		return tasks;
+		return new ArrayList<ITask>(tasks);
 	}
 
 	@Override
@@ -94,7 +97,7 @@ public class Project implements IProject{
 
 	@Override
 	public List<Integer> getMembers() {
-		return members;
+		return new ArrayList<Integer>(members);
 	}
 
 	@Override
@@ -112,6 +115,74 @@ public class Project implements IProject{
 		members.add(value);	
 	}
 
-	
-	
+	@Override
+	public SimpleStringProperty getIDProperty() {
+		return new SimpleStringProperty(id);
+	}
+
+	@Override
+	public void setID(SimpleStringProperty value) {
+		id = value.get();
+	}
+
+	@Override
+	public SimpleStringProperty getNameProperty() {
+		return new SimpleStringProperty(name);
+	}
+
+	@Override
+	public void setName(SimpleStringProperty value) {
+		name = value.get();
+	}
+
+	@Override
+	public ObjectProperty<Date> getModifiedProperty() {
+		return new SimpleObjectProperty<Date>(modified);
+	}
+
+	@Override
+	public void setModified(ObjectProperty<Date> value) {
+		modified = value.get();		
+	}
+
+	@Override
+	public ObjectProperty<Date> getCreatedProperty() {
+		return new SimpleObjectProperty<Date>(created);
+	}
+
+	@Override
+	public void setCreated(ObjectProperty<Date> value) {
+		created = value.get();
+	}
+
+	@Override
+	public SimpleStringProperty getDescriptionProperty() {
+		return new SimpleStringProperty(description);
+	}
+
+	@Override
+	public void setDescription(SimpleStringProperty value) {
+		description = value.get();	
+	}
+
+	@Override
+	public ObservableList<ITask> getTasksProperty() {
+		return (ObservableList<ITask>)getTasks();
+	}
+
+	@Override
+	public void setTasks(ObservableList<ITask> value) {
+		tasks = value;
+	}
+
+	@Override
+	public ObservableList<Integer> getMembersProperty() {
+		
+		return (ObservableList<Integer>)getMembers();
+	}
+
+	@Override
+	public void setMembers(ObservableList<Integer> value) {
+		members = value;	
+	}
 }

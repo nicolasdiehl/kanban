@@ -2,7 +2,7 @@ package model;
 
 import java.util.*;
 
-public interface IProject {
+public interface IProject extends IProjectFX{
 	String getID();
 	void setID(String value);
 	
