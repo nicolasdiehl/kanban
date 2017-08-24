@@ -1,20 +1,42 @@
 package model;
-
 import java.util.*;
 
 import javafx.beans.property.*;
 import javafx.collections.*;
 
 public class Project implements IProject, IProjectFX{
+/**
+ * project class containing id, name, description, date last modified, creation date
+ * @version 1.0
+ */
 
-	private String id;
+
+	/**project id*/
+	private String id;	
+	/**project name */
 	private String name;
-	private String description;
-	private Date modified;
-	private Date created;
-	private List<ITask> tasks;
-	private List<Integer> members;
+	/**description of the project */
+	private String description;	
+	/**date the project was last modified */
+	private Date modified;	
+	/**date the project was created */
+	private Date created;					
+	//TODO delete tasks/members?
+	/**list of tasks */
+	private List<ITask> tasks;		
+	/**list of project member ids */
+	private List<Integer> members;	
 	
+	/**
+	 * constructor for loading project
+	 * @param name				project name
+	 * @param description		project description
+	 * @param modified			datelast modified date
+	 * @param created			date creation date
+	 * @param tasks 				list of tasks
+	 * @param members		list of member ids
+	 * @param id						project id
+	 */
 	public Project(String name,String description,Date modified, Date created, List<ITask> tasks ,List<Integer> members, String id ) {
 		this.name = name;
 		this.description = description;
@@ -25,6 +47,15 @@ public class Project implements IProject, IProjectFX{
 		this.id = id;
 	}
 	
+	/**
+	 *  constructor for creating new project, 
+	 *  creates unique id for the project, 
+	 *  sets current dateTime to modified and created, 
+	 *  creates members list and adds creator id to the list
+	 * @param name 				project name
+	 * @param description		project description
+	 * @param creator			creator id
+	 */
 	public Project(String name,String description ,int creator ) {
 			this(name, description,null,null,new ArrayList<ITask>(),null,UUID.randomUUID().toString());
 			Date current = new Date();
@@ -38,7 +69,7 @@ public class Project implements IProject, IProjectFX{
 	public String getID() {
 		return id;
 	}
-
+  
 	@Override
 	public void setID(String value) {
 		id = value;	
@@ -104,7 +135,7 @@ public class Project implements IProject, IProjectFX{
 	public void setMembers(List<Integer> value) {
 		members = value;		
 	}
-
+	
 	@Override
 	public void addTask(ITask value) {
 		tasks.add(value);		
