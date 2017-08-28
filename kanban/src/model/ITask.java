@@ -5,7 +5,7 @@ import java.util.List;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public interface ITask {
+public interface ITask extends ITaskFX{
 	
 	
 	/**

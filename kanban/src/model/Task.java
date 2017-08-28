@@ -8,23 +8,23 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 
-class Task implements ITask {
+class Task implements ITask, ITaskFX {
 	
-	/*
+	/**
 	 * declaration of attributes 
 	 */
-	private SimpleStringProperty title;
-	private SimpleStringProperty description;
-	private SimpleStringProperty categorie;
-	private SimpleStringProperty status;
-	private SimpleStringProperty creatorID; 
-	private ObjectProperty<Date> lastCall; 
-	private ObjectProperty<Date> dateCreate; 
-	private ObservableList<User> member;
-	private ObservableList<String> comment;
+	private String title;
+	private String describtion;
+	private String categorie;
+	private String status;
+	private String creatorID; 
+	private Date lastCall; 
+	private Date dateCreate; 
+	private List<User> member;
+	private List<String> comment;
 	
 	
-	/*
+	/**
 	 * Constructor
 	 */
 	
@@ -38,117 +38,111 @@ class Task implements ITask {
 	 */
 
 	@Override
-	public String getTitleProperty() {
+	public String getTitle() {
 		
-		return title.get();
+		return title;
 	}
 
 	@Override
 	public void setTitle(String value) {
-		this.title = new SimpleStringProperty();
-		this.title.set(value);
+		title = value;
 	}
 
 	@Override
-	public String getDescribtionProperty() {
+	public String getDescribtion() {
 		 
-		return description.get();
+		return describtion;
 	}
-
+e
 	@Override
 	public void setDescribtion(String value) {
 		 
-		this.description = new SimpleStringProperty();
-		this.description.set(value);
+		describtion = value;
 	}
 
 	@Override
-	public String getCategorieProperty() {
+	public String getCategorie() {
 		 
-		return categorie.get();
+		return categorie;
 	}
 
 	@Override
 	public void setCategorie(String value) {
 		 
-		this.categorie = new SimpleStringProperty();
-		this.categorie.set(value);
+		categorie = value;
 	}
 
 	@Override
-	public String getStatusProperty() {
+	public String getStatus() {
 		 
-		return status.get();
+		return status;
 	}
 
 	@Override
 	public void setStatus(String value) {
 		 
-		this.status = new SimpleStringProperty();
-		this.status.set(value);
+		status = value; 
 	}
 
 	@Override
-	public String getCreatorIDProperty() {
+	public String getCreatorID() {
 		 
-		return creatorID.get();
+		return creatorID;
 	}
 
 	@Override
 	public void setCreatorID(String value) {
 		
-		this.creatorID = new SimpleStringProperty();
-		this.creatorID.set(value);
+		creatorID = value; 
 	}
 
 	@Override
-	public Date getLastCallProperty() {
+	public Date getLastCall() {
 		
-		return lastCall.get();
+		return lastCall;
 	}
 
 	@Override
 	public void setLastCall(Date value) {
 		
-		this.lastCall = new SimpleObjectProperty<>();
-		this.lastCall.set(value);
+		lastCall = value; 
 	}
 
 	@Override
-	public Date getCreatorDateProperty() {
+	public Date getCreatorDate() {
 		
-		return dateCreate.get();
+		return dateCreate;
 	}
 
 	@Override
 	public void setCreatorDate(Date value) {
-		this.dateCreate = new SimpleObjectProperty<>();
-		this.dateCreate.set(value);
+
+		dateCreate = value;
 	}
 
 	@Override
-	public List<User> getMemberProperty() {
+	public List<User> getMember() {
 		
-		return this.member;
+		return member;
 	}
 
 	@Override
 	public void setMember(List<User> value) {
 		
-		this.member = (ObservableList<String>)value;
+		member = value;
 	}
 	
 
 	@Override
 	public List<String> getCommentProperty() {
 		
-		return this.comment;
+		return comment;
 	}
 	
 	@Override
 	public void setComment(List<String> value) {
 		
-		this.comment = (ObservableList<String>) value;
+		comment = value;
 	}
 	
 }
