@@ -10,16 +10,22 @@ import java.net.Socket;
 public class KServer {
 	public static void main(String args[]) {
 
+		int port = 0;
+		if (args.length == 1) {
+			port = Integer.valueOf(args[0]);
+		} else {
+			throw new IllegalArgumentException("Argument one should be the port.");
+		}
+
 		Socket socket = null;
 		ServerSocket serverSocket = null;
-		System.out.println("Server waiting for connection..");
+		System.out.println("Server waiting for connection on port " + port + ".");
 		try {
-			serverSocket = new ServerSocket(8080);
+			serverSocket = new ServerSocket(port);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Server error!");
-
 		}
 
 		while (true) {

@@ -10,29 +10,28 @@ import java.net.Socket;
 
 public class Filetransferserver {
 	static ServerSocket receiver = null;
-	static OutputStream out = null;
+	static OutputStream outputStream = null;
 	static Socket socket = null;
-	static File myFile = new File("C:\\almost_portable_libgdx\\a4.png");
-	/* static int count; */
-	static byte[] buffer = new byte[(int) myFile.length()];
+	static File file = new File("C:\\almost_portable_libgdx\\a4.png");
+	static byte[] buffer = new byte[(int) file.length()];
 
 	public static void main(String[] args) throws IOException {
 		receiver = new ServerSocket(9099);
 		socket = receiver.accept();
 		System.out.println("Accepted connection from : " + socket);
-		FileInputStream fis = new FileInputStream(myFile);
-		BufferedInputStream in = new BufferedInputStream(fis);
-		in.read(buffer, 0, buffer.length);
-		out = socket.getOutputStream();
+		FileInputStream fileInputStream = new FileInputStream(file);
+		BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+		bufferedInputStream.read(buffer, 0, buffer.length);
+		outputStream = socket.getOutputStream();
 		System.out.println("Sending files");
-		out.write(buffer, 0, buffer.length);
-		out.flush();
+		outputStream.write(buffer, 0, buffer.length);
+		outputStream.flush();
 		/*
 		 * while ((count = in.read(buffer)) > 0){ out.write(buffer,0,count);
 		 * out.flush(); }
 		 */
-		out.close();
-		in.close();
+		outputStream.close();
+		bufferedInputStream.close();
 		socket.close();
 		System.out.println("Finished sending");
 

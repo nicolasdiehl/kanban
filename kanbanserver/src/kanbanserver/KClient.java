@@ -11,8 +11,21 @@ public class KClient {
 
 	public static void main(String args[]) throws IOException {
 
+		String url = "";
+		int port = 0;
+		if (args.length == 2) {
+			url = args[0];
+			port = Integer.valueOf(args[1]);
+		} else {
+			throw new IllegalArgumentException("Argument one should be ip/url and argument two should be port.");
+		}
+
 		// InetAddress address = InetAddress.getLocalHost();
-		InetAddress address = InetAddress.getByName("127.0.0.1");
+		InetAddress address = InetAddress.getByName(url);
+		// InetAddress address =
+		// InetAddress.getByName("http://www.ekamer.ddns.net");
+		// InetAddress address = InetAddress.getByName(new
+		// URL("http://www.ekamer.ddns.net").getHost());
 		Socket socket = null;
 		String line = null;
 		BufferedReader bufferedReader = null;
@@ -20,7 +33,7 @@ public class KClient {
 		PrintWriter outputStream = null;
 
 		try {
-			socket = new Socket(address, 8080);
+			socket = new Socket(address, port);
 			bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 			inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			outputStream = new PrintWriter(socket.getOutputStream());
@@ -30,7 +43,7 @@ public class KClient {
 		}
 
 		System.out.println("Client address:" + address);
-		System.out.println("Enter data to echo Server(enter quit to exit):");
+		System.out.println("Enter data to echo Server (enter quit to exit):");
 
 		String response = null;
 		try {

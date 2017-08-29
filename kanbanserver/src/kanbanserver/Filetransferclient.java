@@ -10,29 +10,41 @@ import java.net.Socket;
 
 public class Filetransferclient {
 	static Socket socket = null;
-	static int maxsize = 999999999;
+	// static int maxsize = 999999999;
+	static int maxsize = 1;
 	static int byteread;
 	static int current = 0;
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		byte[] buffer = new byte[maxsize]; // create buffer with big size
+
+		// create buffer with big size
+		byte[] buffer = new byte[maxsize];
+
+		// create socket with ip&port
 		Socket socket = new Socket("localhost", 9099);
-		InputStream is = socket.getInputStream();
+
+		// create inputstream
+		InputStream inputStream = socket.getInputStream();
+
+		// set file target
 		File test = new File("C:\\almost_portable_libgdx\\a5.png");
 		test.createNewFile();
-		FileOutputStream fos = new FileOutputStream(test);
-		BufferedOutputStream out = new BufferedOutputStream(fos);
 
-		current = byteread;
-		while ((byteread = is.read(buffer, 0, buffer.length)) != -1) {
-			out.write(buffer, 0, byteread);
+		// create buffered output stream
+		FileOutputStream fileOutputStream = new FileOutputStream(test);
+		BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+
+		// as long as there are bytes to read
+		while ((byteread = inputStream.read(buffer, 0, buffer.length)) != -1) {
+			// write bytes to output
+			bufferedOutputStream.write(buffer, 0, byteread);
 		}
 
-		out.flush();
+		bufferedOutputStream.flush();
 
 		socket.close();
-		fos.close();
-		is.close();
+		fileOutputStream.close();
+		inputStream.close();
 
 	}
 }
