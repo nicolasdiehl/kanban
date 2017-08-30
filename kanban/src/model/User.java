@@ -6,14 +6,15 @@ public class User {
 	private String name;
 	private String pw;
 	
-	List<Project> project = new List<Project>();
-	Project lastProject;
+	private List<String> projects;
+	private String lastProject;
 	
-	public User(String uid, String name, String pw) {
+	public User(String uid, String name, String pw, List<String> projects, String lastProject) {
 		this.uid = uid;
 		this.name = name;
 		this.pw = pw;
-		
+		this.setProjects(projects);
+		this.setLastProject(lastProject);
 	}
 	
 	public String getUid() {
@@ -33,6 +34,22 @@ public class User {
 	}
 	public void setPw(String pw) {
 		this.pw = pw;
+	}
+
+	public String getLastProject() {
+		return lastProject;
+	}
+
+	public void setLastProject(String lastProject) {
+		this.lastProject = lastProject;
+	}
+
+	public List<String> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<String> projects) {
+		this.projects = projects;
 	}
 
 	
