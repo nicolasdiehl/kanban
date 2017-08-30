@@ -53,7 +53,7 @@ class Task implements ITask, ITaskFX {
 		 
 		return describtion;
 	}
-e
+
 	@Override
 	public void setDescribtion(String value) {
 		 
@@ -134,7 +134,7 @@ e
 	
 
 	@Override
-	public List<String> getCommentProperty() {
+	public List<String> getComment() {
 		
 		return comment;
 	}
@@ -142,6 +142,116 @@ e
 	@Override
 	public void setComment(List<String> value) {
 		
+		comment = value;
+	}
+
+
+	@Override
+	public SimpleStringProperty getTitleProperty() {
+		return new SimpleStringProperty(title);
+	}
+
+
+	@Override
+	public void setTitle(SimpleStringProperty value) {
+		title = value.get();
+		
+	}
+
+
+	@Override
+	public SimpleStringProperty getDescribtionProperty() {
+		return new SimpleStringProperty(describtion);
+	}
+
+
+	@Override
+	public void setDescribtion(SimpleStringProperty value) {
+		describtion = value.get();
+	}
+
+
+	@Override
+	public SimpleStringProperty getCategorieProperty() {
+		return new SimpleStringProperty(categorie);
+	}
+
+
+	@Override
+	public void setCategorie(SimpleStringProperty value) {
+		categorie = value.get();
+	}
+
+
+	@Override
+	public SimpleStringProperty getStatusProperty() {
+		return new SimpleStringProperty(status);
+	}
+
+
+	@Override
+	public void setStatus(SimpleStringProperty value) {
+		status = value.get();
+	}
+
+
+	@Override
+	public SimpleStringProperty getCreatorIDProperty() {
+		return new SimpleStringProperty(creatorID);
+	}
+
+
+	@Override
+	public void setCreatorID(SimpleStringProperty value) {
+		creatorID = value.get();
+	}
+
+
+	@Override
+	public ObjectProperty<Date> getLastCallProperty() {
+		return new SimpleObjectProperty<Date>(lastCall);
+	}
+
+
+	@Override
+	public void setLastCall(ObjectProperty<Date> value) {
+		lastCall = value.get(); 
+	}
+
+
+	@Override
+	public ObjectProperty<Date> getCreatorDateProperty() {
+		return new SimpleObjectProperty<Date>(dateCreate);
+	}
+
+
+	@Override
+	public void setCreatorDate(ObjectProperty<Date> value) {
+		dateCreate = value.get(); 
+	}
+
+
+	@Override
+	public ObservableList<User> getMemberProperty() {
+		return (ObservableList<User>)getMember();
+	}
+
+
+	@Override
+	public void setMember(ObservableList<User> value) {
+		member = value; 
+		
+	}
+
+
+	@Override
+	public ObservableList<String> getCommentProperty() {
+		return (ObservableList<String>)getComment();
+	}
+
+
+	@Override
+	public void setComment(ObservableList<String> value) {
 		comment = value;
 	}
 	

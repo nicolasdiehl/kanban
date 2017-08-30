@@ -9,25 +9,25 @@ import javafx.collections.ObservableList;
 
 public interface ITaskFX {
 	
-	String getTitleProperty();
+	SimpleStringProperty getTitleProperty();
 	void setTitle(SimpleStringProperty value);
 	
-	String getDescribtionProperty();
+	SimpleStringProperty getDescribtionProperty();
 	void setDescribtion(SimpleStringProperty value);
 	
-	String getCategorieProperty();
+	SimpleStringProperty getCategorieProperty();
 	void setCategorie(SimpleStringProperty value);
 	
-	String getStatusProperty();
+	SimpleStringProperty getStatusProperty();
 	void setStatus(SimpleStringProperty value); 
 	
-	String getCreatorIDProperty();
+	SimpleStringProperty getCreatorIDProperty();
 	void setCreatorID(SimpleStringProperty value); 
 	
-	Date getLastCallProperty();
+	ObjectProperty<Date> getLastCallProperty();
 	void setLastCall(ObjectProperty<Date> value); 
 	
-	Date getCreatorDateProperty();
+	ObjectProperty<Date> getCreatorDateProperty();
 	void setCreatorDate(ObjectProperty<Date> value); 
 	
 	ObservableList<User> getMemberProperty();
