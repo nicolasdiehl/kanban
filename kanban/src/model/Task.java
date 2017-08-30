@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 
-class Task implements ITask, ITaskFX {
+public class Task implements ITask, ITaskFX {
 	
 	/**
 	 * declaration of attributes 
