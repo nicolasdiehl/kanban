@@ -1,14 +1,13 @@
 package model;
 
 import java.util.Date;
-import java.util.List;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 
 public interface ITaskFX {
 	
+
 	SimpleStringProperty getTitleProperty();
 	void setTitle(SimpleStringProperty value);
 	
