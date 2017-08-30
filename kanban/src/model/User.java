@@ -1,12 +1,12 @@
 package model;
-import java.util.List;
+import java.util.ArrayList;
 
 public class User {
 	private String uid;
 	private String name;
 	private String pw;
 	
-	List<Project> project = new List<Project>();
+	ArrayList<Project> project = new ArrayList<Project>();
 	Project lastProject;
 	
 	public User(String uid, String name, String pw) {
