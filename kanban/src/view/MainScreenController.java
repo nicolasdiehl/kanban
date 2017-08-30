@@ -9,6 +9,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
+import model.ITask;
 import model.ITaskFX;
 
 public class MainScreenController {
@@ -56,7 +57,7 @@ public class MainScreenController {
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
-//        todoTTC.setCellValueFactory(cellData -> cellData.getValue().todoProperty());
+        todoTTC.setCellValueFactory(cellData -> cellData.getValue().getTitleProperty());
     }
 
     /**
@@ -68,7 +69,7 @@ public class MainScreenController {
         this.mainApp = mainApp;
 
 //         Add observable list data to the table
-//        todoTTV.setItems(mainApp.getTasks());
+        todoTTV.setItems((mainApp.getTaskData()));
     }
     
 }

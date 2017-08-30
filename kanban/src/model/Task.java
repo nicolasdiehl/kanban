@@ -53,7 +53,7 @@ class Task implements ITask, ITaskFX {
 		 
 		return describtion;
 	}
-e
+
 	@Override
 	public void setDescribtion(String value) {
 		 
