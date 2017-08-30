@@ -5,11 +5,12 @@ import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 
 public interface ITaskFX {
 	
-	String getTitleProperty();
+	StringProperty getTitleProperty();
 	void setTitle(SimpleStringProperty value);
 	
 	String getDescribtionProperty();
