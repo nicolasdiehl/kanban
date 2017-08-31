@@ -1,20 +1,22 @@
 package model;
-import java.util.List;
+import java.util.*;
 
 public class User {
 	private String uid;
 	private String name;
 	private String pw;
 	
+
 	private List<String> projects;
-	private String lastProject;
+	private String projectCurrent;
+
 	
-	public User(String uid, String name, String pw, List<String> projects, String lastProject) {
+	public User(String uid, String name, String pw, List<String> projects, String projectCurrent) {
 		this.uid = uid;
 		this.name = name;
 		this.pw = pw;
-		this.setProjects(projects);
-		this.setLastProject(lastProject);
+		this.projects = projects;
+		this.setProjectCurrent(projectCurrent);
 	}
 	
 	public String getUid() {
@@ -36,14 +38,6 @@ public class User {
 		this.pw = pw;
 	}
 
-	public String getLastProject() {
-		return lastProject;
-	}
-
-	public void setLastProject(String lastProject) {
-		this.lastProject = lastProject;
-	}
-
 	public List<String> getProjects() {
 		return projects;
 	}
@@ -52,8 +46,13 @@ public class User {
 		this.projects = projects;
 	}
 
-	
+	public String getProjectCurrent() {
+		return projectCurrent;
+	}
 
+	public void setProjectCurrent(String projectCurrent) {
+		this.projectCurrent = projectCurrent;
+	}
 }
 
 
