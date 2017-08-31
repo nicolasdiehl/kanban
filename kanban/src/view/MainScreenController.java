@@ -2,6 +2,8 @@ package view;
 
 import control.MainApp;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
@@ -9,6 +11,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
+import model.Task;
 import model.ITask;
 import model.ITaskFX;
 
@@ -39,6 +42,44 @@ public class MainScreenController {
 
 //    @FXML
 //    private 
+    
+    /**
+     * Called when the user clicks the new button. Opens a dialog to edit
+     * details for a new person.
+     */
+    @FXML
+    private void handleNewPerson() {
+        Task tempTask = new Task();
+        boolean okClicked = mainApp.showNewTaskDialog(tempTask);
+        if (okClicked) {
+            mainApp.getTaskData().add(tempTask);
+        }
+    }
+
+    /**
+     * Called when the user clicks the edit button. Opens a dialog to edit
+     * details for the selected person.
+     */
+    @FXML
+    private void handleEditPerson() {
+        Task selectedTask = todoTTV.getSelectionModel().getSelectedItem();
+        if (selectedTask != null) {
+            boolean okClicked = mainApp.showTaskEditDialog(selectedTask);
+            if (okClicked) {
+                showPersonDetails(selectedTask);
+            }
+
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(mainApp.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Person Selected");
+            alert.setContentText("Please select a person in the table.");
+
+            alert.showAndWait();
+        }
+    }
     
     // Reference to the main application.
     private MainApp mainApp;
