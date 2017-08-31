@@ -19,13 +19,14 @@ public class KClient {
 		} else {
 			throw new IllegalArgumentException("Argument one should be ip/url and argument two should be port.");
 		}
-
-		// InetAddress address = InetAddress.getLocalHost();
-		InetAddress address = InetAddress.getByName(url);
-		// InetAddress address =
-		// InetAddress.getByName("http://www.ekamer.ddns.net");
-		// InetAddress address = InetAddress.getByName(new
-		// URL("http://www.ekamer.ddns.net").getHost());
+		InetAddress address;
+		if (url.equals("local")) {
+			// InetAddress address = InetAddress.getLocalHost();
+			address = InetAddress.getByName("127.0.0.1");
+			System.out.println(address.toString());
+		} else {
+			address = InetAddress.getByName(url);
+		}
 		Socket socket = null;
 		String line = null;
 		BufferedReader bufferedReader = null;
