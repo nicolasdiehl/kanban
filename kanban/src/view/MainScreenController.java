@@ -60,26 +60,26 @@ public class MainScreenController {
      * Called when the user clicks the edit button. Opens a dialog to edit
      * details for the selected person.
      */
-    @FXML
-    private void handleEditPerson() {
-        Task selectedTask = todoTTV.getSelectionModel().getSelectedItem();
-        if (selectedTask != null) {
-            boolean okClicked = mainApp.showTaskEditDialog(selectedTask);
-            if (okClicked) {
-                showPersonDetails(selectedTask);
-            }
-
-        } else {
-            // Nothing selected.
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("No Selection");
-            alert.setHeaderText("No Person Selected");
-            alert.setContentText("Please select a person in the table.");
-
-            alert.showAndWait();
-        }
-    }
+//    @FXML
+//    private void handleEditPerson() {
+//        Task selectedTask = todoTTV.getSelectionModel().getSelectedItem();
+//        if (selectedTask != null) {
+//            boolean okClicked = mainApp.showTaskEditDialog(selectedTask);
+//            if (okClicked) {
+//                showPersonDetails(selectedTask);
+//            }
+//
+//        } else {
+//            // Nothing selected.
+//            Alert alert = new Alert(AlertType.WARNING);
+//            alert.initOwner(mainApp.getPrimaryStage());
+//            alert.setTitle("No Selection");
+//            alert.setHeaderText("No Person Selected");
+//            alert.setContentText("Please select a person in the table.");
+//
+//            alert.showAndWait();
+//        }
+//    }
     
     // Reference to the main application.
     private MainApp mainApp;
