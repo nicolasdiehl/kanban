@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.NewTaskDialogController">
    <children>
       <GridPane layoutX="12.5" layoutY="12.5" prefHeight="337.5" prefWidth="575.0">
         <columnConstraints>
@@ -30,14 +30,14 @@
             <Label text="Kategorie:" GridPane.rowIndex="2" />
             <Label text="Status:" GridPane.rowIndex="4" />
             <Label text="Kommentar:" GridPane.rowIndex="3" />
-            <TextField promptText="Titel" GridPane.columnIndex="1" />
-            <TextArea prefHeight="200.0" prefWidth="200.0" promptText="Kommentar" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <ComboBox prefHeight="25.0" prefWidth="500.0" promptText="ToDo" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextArea prefHeight="200.0" prefWidth="200.0" promptText="Beschreibung" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ComboBox prefHeight="25.0" prefWidth="500.0" promptText="Kategorie auswählen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="titleTextField" promptText="Titel" GridPane.columnIndex="1" />
+            <TextArea fx:id="commentTextField" prefHeight="200.0" prefWidth="200.0" promptText="Kommentar" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ComboBox fx:id="statusComboBox" prefHeight="25.0" prefWidth="500.0" promptText="ToDo" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextArea fx:id="descriptionTextField" prefHeight="200.0" prefWidth="200.0" promptText="Beschreibung" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="categoryComboBox" prefHeight="25.0" prefWidth="500.0" promptText="Kategorie auswählen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <Button cancelButton="true" layoutX="512.5" layoutY="350.0" mnemonicParsing="false" prefWidth="75.0" text="Cancel" />
-      <Button layoutX="425.0" layoutY="350.0" mnemonicParsing="false" prefWidth="75.0" text="OK" />
+      <Button fx:id="cancelButton" cancelButton="true" layoutX="512.5" layoutY="350.0" mnemonicParsing="false" prefWidth="75.0" text="Cancel" />
+      <Button fx:id="okButton" layoutX="425.0" layoutY="350.0" mnemonicParsing="false" prefWidth="75.0" text="OK" />
    </children>
 </AnchorPane>

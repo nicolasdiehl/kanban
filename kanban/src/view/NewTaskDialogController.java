@@ -17,7 +17,7 @@ public class NewTaskDialogController {
     @FXML
     private TextArea descriptionTextField;
     @FXML
-    private TextField categoryTextField;
+    private ComboBox<String> categoryComboBox;
     @FXML
     private ComboBox<String> statusComboBox;
     @FXML
