@@ -80,7 +80,7 @@ class ServerThread extends Thread {
 		} catch (IOException e) {
 
 			line = this.getName();
-			System.out.println("IO error, client " + line + " terminated too early");
+			System.out.println("IO error, client " + line + " terminated.");
 		} catch (NullPointerException e) {
 			line = this.getName();
 			System.out.println("Client " + line + " closed");
