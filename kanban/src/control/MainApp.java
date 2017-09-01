@@ -9,11 +9,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.ITaskFX;
 import view.LoginScreenController;
 import view.MainScreenController;
+import view.ProjectSelectionScreenController;
 
 public class MainApp extends Application {
 
@@ -21,7 +23,8 @@ public class MainApp extends Application {
     
     private BorderPane rootLayout;
     private BorderPane loginLayout; /////////////////////
-
+    
+    public static String loginName;
     /**
      * The data as an observable list of Persons.
      */
@@ -83,14 +86,7 @@ public class MainApp extends Application {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/view/LoginScreen.fxml"));
-            //BorderPane LoginScreen = (BorderPane) loader.load();
-
-            // Set person overview into the center of root layout.
-            //rootLayout.setCenter(LoginScreen);
-
-            // Give the controller access to the main app.
-            //LoginScreenController controller = loader.getController();
-            //controller.setMainApp(this);
+            
             
 
     	    loginLayout = (BorderPane) loader.load();
@@ -106,10 +102,7 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
-    public void Hallo() {
-    	System.out.println("hallo");
-    }
-
+    
     /**
      * Shows the person overview inside the root layout.
      */
@@ -135,9 +128,32 @@ public class MainApp extends Application {
         }
     }
 
+    public void showProjectScreen() {
+        try {
+        	initRootLayout();
+        	// Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/view/ProjectSelectionScreen.fxml"));
+            AnchorPane ProjectScreen = (AnchorPane) loader.load();
+            
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(ProjectScreen);
+
+            // Give the controller access to the main app.
+            ProjectSelectionScreenController controller = loader.getController();
+            controller.setMainApp(this);
+            
 
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+
+    public void showNewTaskDialog(){
+    	
+    }
 
     /**
      * Returns the main stage.
