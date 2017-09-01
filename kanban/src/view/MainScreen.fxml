@@ -60,7 +60,7 @@
          <contextMenu>
             <ContextMenu>
               <items>
-                <MenuItem fx:id="newTaskContext" mnemonicParsing="false" text="Neuer Task" />
+                <MenuItem fx:id="newTaskContext" mnemonicParsing="false" onAction="#handleNewTask" text="Neuer Task" />
               </items>
             </ContextMenu>
          </contextMenu>

@@ -48,12 +48,13 @@ public class MainScreenController {
      * details for a new person.
      */
     @FXML
-    private void handleNewPerson() {
+    private void handleNewTask() {
         Task tempTask = new Task();
-        boolean okClicked = mainApp.showNewTaskDialog(tempTask);
-        if (okClicked) {
-            mainApp.getTaskData().add(tempTask);
-        }
+        mainApp.showNewTaskDialog(tempTask);
+//        boolean okClicked = mainApp.showNewTaskDialog(tempTask);
+//        if (okClicked) {
+//            mainApp.getTaskData().add(tempTask);
+//        }
     }
 
     /**

@@ -24,6 +24,7 @@ public class MainApp extends Application {
     
     private BorderPane rootLayout;
     private BorderPane loginLayout; /////////////////////
+    private AnchorPane newTaskLayout;
     
     public static String loginName;
     /**
@@ -153,6 +154,29 @@ public class MainApp extends Application {
 
 
     public boolean showNewTaskDialog(Task tempTask){
+	
+	try {
+	    Stage stage = new Stage();
+	    stage.getIcons().add(new Image("KbLogo.png"));
+	    stage.setTitle("New Task");
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/view/NewTaskDialog.fxml"));
+            
+            
+
+    	    newTaskLayout = (AnchorPane) loader.load();
+
+    	    Scene scene = new Scene(newTaskLayout);	    
+	    stage.setScene(scene);
+	    stage.show();
+ 
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	
 	return false;
     }
 
