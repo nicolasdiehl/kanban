@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.ITaskFX;
+import model.Task;
 import view.LoginScreenController;
 import view.MainScreenController;
 import view.ProjectSelectionScreenController;
@@ -151,8 +152,8 @@ public class MainApp extends Application {
     }
 
 
-    public void showNewTaskDialog(){
-    	
+    public boolean showNewTaskDialog(Task tempTask){
+	return false;
     }
 
     /**
