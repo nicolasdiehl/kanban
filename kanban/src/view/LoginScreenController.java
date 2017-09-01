@@ -36,15 +36,18 @@ public class LoginScreenController {
     private TextField passwortTextfield;
 
     @FXML
-    private TextField usernameTextfield;
+	private TextField usernameTextfield;
 
     @FXML
     private Button loginButton;
 
     // Reference to the main application.
     private  MainApp mainApp;
+    
   
     Stage prevStage;
+    
+    
     
 
     /**
@@ -61,12 +64,13 @@ public class LoginScreenController {
   
     @FXML
     public void dropLoginButton() {
-    	System.out.println("läuft");
-    	
-    	
 
     	MainApp mainApp = new MainApp();
-    	mainApp.showMainScreen();
+    	
+    	mainApp.loginName = this.usernameTextfield.getText();
+    	
+    	//mainApp.showMainScreen();
+    	mainApp.showProjectScreen();
     	
     	prevStage = (Stage) loginButton.getScene().getWindow();
     	prevStage.close();
