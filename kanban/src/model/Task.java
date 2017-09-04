@@ -13,14 +13,24 @@ public class Task implements ITask, ITaskFX {
 	/**
 	 * declaration of attributes 
 	 */
+	
+	/** task title */
 	private String title;
-	private String describtion;
+	/** description of the task */
+	private String description;
+	/** categorie of the task... should define the color of the post-it*/
 	private String categorie;
+	/** current status of the task*/
 	private String status;
-	private String creatorID; 
+	/** creator ID*/
+	private String creatorID;
+	/** last call of this task*/
 	private Date lastCall; 
-	private Date dateCreate; 
+	/** creation date*/
+	private Date dateCreate;
+	/** list of member, which works on the task*/
 	private List<User> member;
+	/** list of comments*/
 	private List<String> comment;
 	
 	
@@ -49,15 +59,15 @@ public class Task implements ITask, ITaskFX {
 	}
 
 	@Override
-	public String getDescribtion() {
+	public String getDescription() {
 		 
-		return describtion;
+		return description;
 	}
 
 	@Override
-	public void setDescribtion(String value) {
+	public void setDescription(String value) {
 		 
-		describtion = value;
+		description = value;
 	}
 
 	@Override
@@ -160,14 +170,14 @@ public class Task implements ITask, ITaskFX {
 
 
 	@Override
-	public SimpleStringProperty getDescribtionProperty() {
-		return new SimpleStringProperty(describtion);
+	public SimpleStringProperty getDescriptionProperty() {
+		return new SimpleStringProperty(description);
 	}
 
 
 	@Override
-	public void setDescribtion(SimpleStringProperty value) {
-		describtion = value.get();
+	public void setDescription(SimpleStringProperty value) {
+		description = value.get();
 	}
 
 
