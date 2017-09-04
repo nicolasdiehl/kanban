@@ -1,16 +1,17 @@
 package kanbanserver;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
 public class KServer {
+	public static ArrayList<SimpleObject> listOfObjects;
+
 	public static void main(String args[]) {
-		ArrayList<SimpleObject> listOfObjects = new ArrayList<SimpleObject>();
+		listOfObjects = new ArrayList<SimpleObject>();
 		listOfObjects.add(new SimpleObject("name", "id"));
 		listOfObjects.add(new SimpleObject("name2", "id2"));
 		listOfObjects.add(new SimpleObject("name3", "id3"));
@@ -20,43 +21,47 @@ public class KServer {
 		} else {
 			throw new IllegalArgumentException("Argument one should be the port.");
 		}
-
-		Socket socket = null;
+		
+		Socket connectionSocket = null;
 		ServerSocket serverSocket = null;
 		System.out.println("Server waiting for connection on port " + port + ".");
 		try {
 			serverSocket = new ServerSocket(port);
-
+			while (true) {
+				try {
+					connectionSocket = serverSocket.accept();
+					System.out.println("Connection OK!");
+					ServerThread serverThread = new ServerThread(connectionSocket);
+					serverThread.start();
+	
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("Connection error!");
+				}
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Server error!");
 		}
-
-		while (true) {
-			try {
-				socket = serverSocket.accept();
-				System.out.println("Connection OK!");
-				ServerThread serverThread = new ServerThread(socket);
-				serverThread.start();
-
-			}
-
-			catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("Connection error!");
-
+		finally {
+			// Finally runs after the "endless while" for now, no need to stop the server.
+			if (serverSocket != null) {
+				try {
+					serverSocket.close();
+				    System.out.println("serverSocket closed!");
+				} catch (IOException ie) {
+					System.out.println("Error closing serverSocket.");
+				}
 			}
 		}
-
 	}
-
 }
 
 class ServerThread extends Thread {
 
-	String line = null;
-	BufferedReader inputStreamReader = null;
-	PrintWriter outputStream = null;
+    ObjectOutputStream objectOutputStream = null;
+    ObjectInputStream objectInputStream = null;
 	Socket socket = null;
 
 	public ServerThread(Socket socket) {
@@ -65,42 +70,29 @@ class ServerThread extends Thread {
 
 	public void run() {
 		try {
-			inputStreamReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			outputStream = new PrintWriter(socket.getOutputStream());
+		    objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+		    objectInputStream = new ObjectInputStream(socket.getInputStream());
 
 		} catch (IOException e) {
 			System.out.println("IO error in server thread");
 		}
 
 		try {
-			line = inputStreamReader.readLine();
-			while (line.compareTo("QUIT") != 0) {
-
-				outputStream.println("lol echo: " + line);
-				outputStream.flush();
-				System.out.println("Response to Client is: " + line);
-				line = inputStreamReader.readLine();
-			}
+			objectOutputStream.writeObject(KServer.listOfObjects);
 		} catch (IOException e) {
-
-			line = this.getName();
-			System.out.println("IO error, client " + line + " terminated.");
-		} catch (NullPointerException e) {
-			line = this.getName();
-			System.out.println("Client " + line + " closed");
-		}
-
-		finally {
+            e.printStackTrace();
+            System.err.print("IO exception server!");
+		} finally {
 			try {
-				System.out.println("Connection Closing..");
-				if (inputStreamReader != null) {
-					inputStreamReader.close();
-					System.out.println("Socket input stream reader closed!");
+				System.out.println("Server connection closing..");
+				if (objectOutputStream != null) {
+					objectOutputStream.close();
+					System.out.println("objectOutputStream closed!");
 				}
 
-				if (outputStream != null) {
-					outputStream.close();
-					System.out.println("Socket output stream closed!");
+				if (objectInputStream != null) {
+					objectInputStream.close();
+					System.out.println("objectInputStream closed!");
 				}
 
 				if (socket != null) {
@@ -109,7 +101,7 @@ class ServerThread extends Thread {
 				}
 
 			} catch (IOException ie) {
-				System.out.println("Error closing socket, input stream reader or output stream.");
+				System.out.println("Error closing servers socket, objectOutputStream or objectInputStream.");
 			}
 		}
 	}

@@ -1,7 +1,9 @@
 package kanbanserver;
 
-public class SimpleObject {
+import java.io.Serializable;
 
+public class SimpleObject implements Serializable{
+	private static final long serialVersionUID = -2398503995120490647L;
 	String name;
 	String id;
 
