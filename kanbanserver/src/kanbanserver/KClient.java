@@ -1,11 +1,12 @@
 package kanbanserver;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class KClient {
 
@@ -28,48 +29,60 @@ public class KClient {
 			address = InetAddress.getByName(url);
 		}
 		Socket socket = null;
-		String line = null;
-		BufferedReader bufferedReader = null;
-		BufferedReader inputStream = null;
-		PrintWriter outputStream = null;
-
+		// String line = null;
+		// BufferedReader bufferedReader = null;
+		// BufferedReader inputStream = null;
+		// PrintWriter outputStream = null;
+		ObjectOutputStream objectOutputStream;
+		ObjectInputStream objectInputStream;
+		
 		try {
 			socket = new Socket(address, port);
-			bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-			inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			outputStream = new PrintWriter(socket.getOutputStream());
+			// bufferedReader = new BufferedReader(new
+			// InputStreamReader(System.in));
+			// inputStream = new BufferedReader(new
+			// InputStreamReader(socket.getInputStream()));
+			// outputStream = new PrintWriter(socket.getOutputStream());
+			// Create the input & output streams to the server
+			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+			objectInputStream = new ObjectInputStream(socket.getInputStream());
+	        ArrayList<SimpleObject> listOfSimpleObjects;
+			listOfSimpleObjects = (ArrayList) objectInputStream.readObject();
+            
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.print("IO exception!");
 		}
 
 		System.out.println("Client address:" + address);
-		System.out.println("Enter data to echo Server (enter quit to exit):");
+		System.out.println("Sending object to server.");
 
-		String response = null;
 		try {
-			line = bufferedReader.readLine();
-			while (line.compareTo("quit") != 0) {
-				outputStream.println(line);
-				outputStream.flush();
-				response = inputStream.readLine();
-				System.out.println("Server response:" + response);
-				line = bufferedReader.readLine();
-
+			// line = bufferedReader.readLine();
+			// while (line.compareTo("quit") != 0) {
+			// 	outputStream.println(line);
+			//	outputStream.flush();
+			//	response = inputStream.readLine();
+			//	System.out.println("Server response:" + response);
+			//	line = bufferedReader.readLine();
 			}
 
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("Error reading socket!");
-		} finally {
+		}catch(
 
-			inputStream.close();
-			outputStream.close();
-			bufferedReader.close();
-			socket.close();
-			System.out.println("Connection closed!");
+	IOException e)
+	{
+		e.printStackTrace();
+		System.out.println("Error reading socket!");
+	}finally
+	{
 
-		}
+		// inputStream.close();
+		// outputStream.close();
+		// bufferedReader.close();
+		// socket.close();
+		// System.out.println("Connection closed!");
 
 	}
-}
+
+}}

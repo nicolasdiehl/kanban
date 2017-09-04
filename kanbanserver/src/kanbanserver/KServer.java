@@ -6,10 +6,14 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class KServer {
 	public static void main(String args[]) {
-
+		ArrayList<SimpleObject> listOfObjects = new ArrayList<SimpleObject>();
+		listOfObjects.add(new SimpleObject("name", "id"));
+		listOfObjects.add(new SimpleObject("name2", "id2"));
+		listOfObjects.add(new SimpleObject("name3", "id3"));
 		int port = 0;
 		if (args.length == 1) {
 			port = Integer.valueOf(args[0]);
