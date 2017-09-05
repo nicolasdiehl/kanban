@@ -198,7 +198,7 @@ public class Project implements IProject, IProjectFX{
 
 	@Override
 	public ObservableList<ITask> getTasksProperty() {
-		return (ObservableList<ITask>)getTasks();
+		return FXCollections.observableArrayList(getTasks());
 	}
 
 	@Override
