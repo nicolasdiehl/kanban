@@ -1,13 +1,28 @@
 package control;
 
+import java.util.List;
+
+import model.*;
+
 public class ClientControl {
+	
+	private static ClientControl instance = new ClientControl();
+	private IProject openProject;
+	private List<IProject> sleepingProjects;
+	
+	
+	public static ClientControl getInstance() {
+		return instance;
+	}
+	
 	/**
 	 * logInUser gets called by LoginButton
 	 * 
 	 * @return
 	 */
-	public boolean userLogIn() {
+	public boolean userLogIn(String name) {
 		boolean isLoggedIn = false;
+		//Kommunikation mit Server, der dann 
 		//LDAP call and log in
 		
 		//funktion to get list of Projects from XML for that user
