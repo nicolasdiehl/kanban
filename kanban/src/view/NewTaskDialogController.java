@@ -8,6 +8,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.ITask;
+import model.Project;
 import model.Task;
 
 public class NewTaskDialogController {
@@ -27,11 +29,11 @@ public class NewTaskDialogController {
     @FXML
     private Button cancelButton;
     
-
     private Stage dialogStage;
     private Task task;
     private boolean okClicked = false;
-
+    private Project project;
+    
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
@@ -39,92 +41,104 @@ public class NewTaskDialogController {
     @FXML
     private void initialize() {
     }
-
+    
+    public NewTaskDialogController() {
+    }
+    
     /**
      * Sets the stage of this dialog.
      * 
      * @param dialogStage
      */
     public void setDialogStage(Stage dialogStage) {
-        this.dialogStage = dialogStage;
+	this.dialogStage = dialogStage;
     }
-
+    
     /**
-     * Sets the person to be edited in the dialog.
+     * Sets the task to be edited in the dialog.
      * 
      * @param task
      */
-    public void setPerson(Task task) {
-        this.task = task;
-
-        titleTextField.setText(task.getTitle());
-        descriptionTextField.setText(task.getDescribtion());
+    public void setTask(Task task) {
+	this.task = task;
+	
+	titleTextField.setText(task.getTitle());
+	descriptionTextField.setText(task.getDescribtion());
 //        categoryComboBox.setItems(task.getCategorie());
-        commentTextField.setText(task.getComment().toString());
+	commentTextField.setText(task.getComment().toString());
 //        statusComboBox.setItems(task.getStatus());
     }
-
+    
     /**
      * Returns true if the user clicked OK, false otherwise.
      * 
      * @return
      */
     public boolean isOkClicked() {
-        return okClicked;
+	return okClicked;
     }
-
+    
     /**
      * Called when the user clicks ok.
      */
     @FXML
     private void handleOk() {
-        if (isInputValid()) {
-            task.setTitle(titleTextField.getText());
-            task.setDescribtion(descriptionTextField.getText());
-            task.setCategorie(statusComboBox.getSelectionModel().getSelectedItem());
-            task.setStatus(statusComboBox.getSelectionModel().getSelectedItem());
+	if (isInputValid()) {
+	    ITask task = new Task();
+	    task.setTitle("klingt gut");
+	    task.setDescribtion("blablablblub");
+//	    tempTaskData.add(task);
 
-            okClicked = true;
-            dialogStage.close();
-        }
+//            task.setTitle(titleTextField.getText());
+//            task.setDescription(descriptionTextField.getText());
+//            task.setCategorie(statusComboBox.getSelectionModel().getSelectedItem());
+//            task.setStatus(statusComboBox.getSelectionModel().getSelectedItem());
+	    
+	    okClicked = true;
+	    Stage prevStage;
+	    prevStage = (Stage) okButton.getScene().getWindow();
+	    prevStage.close();
+	}
     }
-
+    
     /**
      * Called when the user clicks cancel.
      */
     @FXML
     private void handleCancel() {
-        dialogStage.close();
+	Stage prevStage;
+	prevStage = (Stage) cancelButton.getScene().getWindow();
+	prevStage.close();
     }
-
+    
     /**
      * Validates the user input in the text fields.
      * 
      * @return true if the input is valid
      */
     private boolean isInputValid() {
-        String errorMessage = "";
-
-        if (titleTextField.getText() == null || titleTextField.getText().length() == 0) {
-            errorMessage += "Bitte einen Titel eingeben!\n"; 
-        }
-        if (descriptionTextField.getText() == null || descriptionTextField.getText().length() == 0) {
-            errorMessage += "Bitte eine Beschreibung eingeben!\n"; 
-        }
-
-        if (errorMessage.length() == 0) {
-            return true;
-        } else {
-            // Show the error message.
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.initOwner(dialogStage);
-            alert.setTitle("Invalid Fields");
-            alert.setHeaderText("Please correct invalid fields");
-            alert.setContentText(errorMessage);
-
-            alert.showAndWait();
-
-            return false;
-        }
+	String errorMessage = "";
+	
+	if (titleTextField.getText() == null || titleTextField.getText().length() == 0) {
+	    errorMessage += "Bitte einen Titel eingeben!\n";
+	}
+	if (descriptionTextField.getText() == null || descriptionTextField.getText().length() == 0) {
+	    errorMessage += "Bitte eine Beschreibung eingeben!\n";
+	}
+	
+	if (errorMessage.length() == 0) {
+	    return true;
+	} else {
+	    // Show the error message.
+	    Alert alert = new Alert(AlertType.ERROR);
+	    alert.initOwner(dialogStage);
+	    alert.setTitle("Invalid Fields");
+	    alert.setHeaderText("Please correct invalid fields");
+	    alert.setContentText(errorMessage);
+	    
+	    alert.showAndWait();
+	    
+	    return false;
+	}
     }
 }
