@@ -21,16 +21,16 @@ public interface ITask extends ITaskFX{
 	void setTitle(String value);
 	
 	/**
-	 * get task describtion
-	 * @return task describtion
+	 * get task description
+	 * @return task description
 	 */	
-	String getDescribtion();
+	String getDescription();
 	
 	/**
-	 * set task describtion
-	 * @param value task describtion
+	 * set task description
+	 * @param value task description
 	 */	
-	void setDescribtion(String value);
+	void setDescription(String value);
 	
 	/**
 	 * get task categorie

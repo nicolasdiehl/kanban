@@ -1,6 +1,6 @@
 package control;
 
-public class Kanban {
+public class ClientControl {
 	/**
 	 * logInUser gets called by LoginButton
 	 * 
