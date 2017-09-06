@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ProjectSelectionScreenController">
+   <children>
+      <Pane prefHeight="383.0" prefWidth="800.0">
+         <children>
+            <Label layoutX="231.0" layoutY="14.0" text="Projekt Auswahl">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+            <Label layoutX="96.0" layoutY="188.0" text="Wählen Sie ein Projekt aus">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb_greeting" layoutX="75.0" layoutY="101.0" />
+            <Label fx:id="lb_date" layoutX="590.0" layoutY="101.0" text="Datum :" />
+            <TextField fx:id="tb_status" editable="false" layoutX="495.0" layoutY="226.0" />
+            <Label layoutX="509.0" layoutY="188.0" text="Projektname">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="bt_accept" layoutX="356.0" layoutY="315.0" mnemonicParsing="false" onAction="#handleAccept" text="Bestätigen" />
+            <Button fx:id="bt_ProjektAuswahl" layoutX="165.0" layoutY="231.0" mnemonicParsing="false" onAction="#handleProjektAuswahl" text="Auswahl" />
+            <TextField fx:id="tb_date" layoutX="644.0" layoutY="97.0" prefHeight="25.0" prefWidth="100.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
