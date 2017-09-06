@@ -34,6 +34,25 @@ public class KClient {
 		}
 	}
 
+	/*
+	 * Establishes a connection, tries again if fail.
+	 */
+	public static void connectToServer(InetAddress address, int port) {
+		// Connecting
+		System.out.print("Connecting.");
+		while (true) {
+			try {
+				socket = new Socket(address, port);
+				objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+				objectInputStream = new ObjectInputStream(socket.getInputStream());
+				System.out.println("..OK");
+				break;
+			} catch (IOException e) {
+				System.out.print(".");
+			}
+		}
+	}
+
 	public static void main(String args[]) throws IOException {
 
 		// Setup
@@ -63,16 +82,8 @@ public class KClient {
 			address = InetAddress.getByName(url);
 		}
 
-		// Connecting
-		try {
-			socket = new Socket(address, port);
-			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-			objectInputStream = new ObjectInputStream(socket.getInputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.println("Client Message: IO exception at client connecting to server!");
-			System.exit(1);
-		}
+		// Connect
+		connectToServer(address, port);
 
 		// Example first request
 		System.out.println("Client Message: Requesting list of Projects!");
@@ -103,6 +114,9 @@ public class KClient {
 			} catch (IOException | ClassNotFoundException | ClassCastException e) {
 				e.printStackTrace();
 				System.err.println("Client Error: Error reading socket!");
+
+				// Trying to reconnect
+				connectToServer(address, port);
 			}
 		}
 
