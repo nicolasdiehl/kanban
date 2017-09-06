@@ -45,7 +45,7 @@ public class KClient {
 
         try {
             @SuppressWarnings("unchecked")
-			ArrayList<SimpleObject> returnedList = (ArrayList<SimpleObject>) objectInputStream.readObject();
+			ArrayList<SimpleProject> returnedList = (ArrayList<SimpleProject>) objectInputStream.readObject();
             System.out.println("received " + returnedList.size() + " SimpleObject objects.");
             socket.close();
         } catch(IOException | ClassNotFoundException | ClassCastException e) {
