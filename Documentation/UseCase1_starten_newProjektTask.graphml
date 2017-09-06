@@ -36,7 +36,6 @@
       </data>
     </node>
     <node id="n1">
-      <data key="d5"/>
       <data key="d6">
         <y:SVGNode>
           <y:Geometry height="45.56999588012695" width="67.49800109863281" x="-23.374000549316406" y="243.21500205993647"/>
@@ -58,7 +57,6 @@ außerdem 2 Button mit Anmeldung und Anwendung Schließen.<y:LabelModel>
       </data>
     </node>
     <node id="n2">
-      <data key="d5"/>
       <data key="d6">
         <y:SVGNode>
           <y:Geometry height="45.56999588012695" width="67.49800109863281" x="-23.374000549316406" y="10.715002059936467"/>
@@ -80,7 +78,6 @@ außerdem 2 Button mit Anmeldung und Anwendung Schließen.<y:LabelModel>
     </node>
     <node id="n3">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:SVGNode>
           <y:Geometry height="57.5" width="31.25" x="-5.25" y="351.56999588012695"/>
@@ -102,13 +99,12 @@ außerdem 2 Button mit Anmeldung und Anwendung Schließen.<y:LabelModel>
     </node>
     <node id="n4">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:SVGNode>
           <y:Geometry height="57.5" width="31.25" x="-5.25" y="564.6399917602539"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="522.66064453125" x="78.3291015625" y="18.786865234375">Der User gibt seinen UserNamen und das Passwort ein und clickt den Button "Anmelden".<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="256.00830078125" x="78.3291015625" y="18.786865234375">Der User drückt den Knopf "Neues Projekt".<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -123,13 +119,16 @@ außerdem 2 Button mit Anmeldung und Anwendung Schließen.<y:LabelModel>
       </data>
     </node>
     <node id="n5">
-      <data key="d5"/>
       <data key="d6">
         <y:SVGNode>
           <y:Geometry height="45.56999588012695" width="67.49800109863281" x="-23.374000549316406" y="455.6049938201905"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="20.681640625" x="92.0331802368164" y="13.434412002563477">dfg<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="77.505859375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="695.623046875" x="92.0331802368164" y="-15.96793174743658">Daten werden über LDAP geprüft, wird eingeloggt, Client-user wird eingebaut, Verbindung zum Server wird aufgebaut. 
+Server legt User in Liste mit angemeldeten Usern ab. XML für den User wird vom Server gelesen, Liste mit Projekt-ids erstellt und 
+an den Client geschickt. 
+Eine neue Stage wird geladen, mit den Projekten zur Auswahl, letztes bearbeitetes vorausgewählt. 
+Buttons "neues Projekt", "Ausloggen" und "Projekt laden" werden angezeigt<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
