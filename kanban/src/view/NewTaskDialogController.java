@@ -63,7 +63,7 @@ public class NewTaskDialogController {
 	this.task = task;
 	
 	titleTextField.setText(task.getTitle());
-	descriptionTextField.setText(task.getDescribtion());
+	descriptionTextField.setText(task.getDescription());
 //        categoryComboBox.setItems(task.getCategorie());
 	commentTextField.setText(task.getComment().toString());
 //        statusComboBox.setItems(task.getStatus());
@@ -86,7 +86,7 @@ public class NewTaskDialogController {
 	if (isInputValid()) {
 	    ITask task = new Task();
 	    task.setTitle("klingt gut");
-	    task.setDescribtion("blablablblub");
+	    task.setDescription("blablablblub");
 //	    tempTaskData.add(task);
 
 //            task.setTitle(titleTextField.getText());
