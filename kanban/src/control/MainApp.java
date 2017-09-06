@@ -3,16 +3,13 @@ package control;
 import java.io.IOException;
 
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.ITask;
 import model.ITaskFX;
-import model.Project;
 import view.MainScreenController;
 import view.ProjectSelectionScreenController;
 
@@ -29,8 +26,8 @@ public class MainApp extends Application {
      * The data as an observable list of Task.
      */
 //    private ObservableList<ITaskFX> taskData = FXCollections.observableArrayList();
-    private Project tempProject = new Project("name", "description", 2);
-    private ObservableList<ITask> tempTaskData = tempProject.getTasksProperty();
+//    private Project tempProject = new Project("name", "description", 2);
+//    private ObservableList<ITask> tempTaskData = tempProject.getTasksProperty();
     
     /**
      * Constructor

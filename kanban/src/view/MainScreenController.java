@@ -1,5 +1,6 @@
 package view;
 
+import control.ClientControl;
 import control.MainApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -11,6 +12,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
+import model.ITask;
 import model.ITaskFX;
 import model.Task;
 
@@ -27,13 +29,13 @@ public class MainScreenController {
     @FXML
     private GridPane kanbanGridPane;
     @FXML
-    private TableView<ITaskFX> todoTTV;
+    private TableView<ITask> todoTTV;
 //    @FXML
 //    private TableView<Wip> wipTTV;
 //    @FXML
 //    private TableView<Done> doneTTV;
     @FXML
-    private TableColumn<ITaskFX, String> todoTTC;
+    private TableColumn<ITask, String> todoTTC;
 //    @FXML
 //    private TableColumn<Wip, String> wipTTC;
 //    @FXML
@@ -41,6 +43,8 @@ public class MainScreenController {
 
 //    @FXML
 //    private 
+    
+    private ClientControl control = ClientControl.getInstance();
     
     /**
      * Called when the user clicks the new button. Opens a dialog to edit
@@ -115,8 +119,7 @@ public class MainScreenController {
 	this.mainApp = mainApp;
 	
 //         Add observable list data to the table
-//        todoTTV.setItems((this.mainApp.tempProject.getTasksProperty()));
-    
+	todoTTV.setItems((control.getOpenProject().getTasksProperty()));
     }
     
     /**

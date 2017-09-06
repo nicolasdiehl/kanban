@@ -23,9 +23,7 @@ public class Project implements IProject, IProjectFX{
 	private Date created;					
 	//TODO delete members, add courses?
 	/**list of tasks */
-	private List<ITask> tasks;	
-	
-	private ObservableList<ITask> tasksProperty = FXCollections.observableArrayList();
+	private List<ITask> tasks;		
 	/**list of project member ids */
 	private List<Integer> members;	
 	
@@ -140,8 +138,7 @@ public class Project implements IProject, IProjectFX{
 	
 	@Override
 	public void addTask(ITask value) {
-		tasks.add(value);
-		tasksProperty.add(value);
+		tasks.add(value);		
 	}
 
 	@Override
@@ -201,7 +198,7 @@ public class Project implements IProject, IProjectFX{
 
 	@Override
 	public ObservableList<ITask> getTasksProperty() {
-		return tasksProperty;
+		return FXCollections.observableArrayList(getTasks());
 	}
 
 	@Override
