@@ -1,17 +1,19 @@
 package model;
 import java.util.*;
 
+import kanbanserver.SimpleProject;
+
 public class User {
 	private String uid;
 	private String name;
 	private String pw;
 	
 
-	private List<String> projects;
+	private List<SimpleProject> projects;
 	private String projectCurrent;
 
 	
-	public User(String uid, String name, String pw, List<String> projects, String projectCurrent) {
+	public User(String uid, String name, String pw, List<SimpleProject> projects, String projectCurrent) {
 		this.uid = uid;
 		this.name = name;
 		this.pw = pw;
@@ -38,11 +40,11 @@ public class User {
 		this.pw = pw;
 	}
 
-	public List<String> getProjects() {
+	public List<SimpleProject> getProjects() {
 		return projects;
 	}
 
-	public void setProjects(List<String> projects) {
+	public void setProjects(List<SimpleProject> projects) {
 		this.projects = projects;
 	}
 
