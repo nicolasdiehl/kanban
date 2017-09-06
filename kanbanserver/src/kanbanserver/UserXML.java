@@ -1,7 +1,4 @@
 package kanbanserver;
-/**
- * 
- */
 
 import org.w3c.dom.*;
 import java.io.File;
@@ -31,72 +28,57 @@ public class UserXML
 		// create new Directory of the user xml
 		String userXMLDirectory = directory + loginName + ".xml";
 
-		// create object of class User, returning at the end of the function
-		User userRead = new User(null, null, null, null, null);
-
-		// check if xml file exists
-		File file = new File(userXMLDirectory);
-		if (file.exists())
-		{
-			System.out.println("XML wurde gefunden");
-		} else
-		{
-			System.out.println("XML wurde NICHT gefunden");
-		}
-
 		try
 		{
 			//
 			File fXmlFile = new File(userXMLDirectory);
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document doc = builder.parse(fXmlFile);
 
-			// normalize the XML Structure; >>recommended<<
-			doc.getDocumentElement().normalize();
-
-			NodeList nList = doc.getElementsByTagName("data");
-
-			for (int nodeAtPos = 0; nodeAtPos < nList.getLength(); nodeAtPos++)
+			// check if xml file exists
+			if (fXmlFile.exists())
 			{
-				Node data = nList.item(nodeAtPos);
-				Element e = (Element) data;
+				System.out.println("XML wurde gefunden");
 
+				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder builder = factory.newDocumentBuilder();
+				Document doc = builder.parse(fXmlFile);
+
+				// normalize the XML Structure; >>recommended<<
+				doc.getDocumentElement().normalize();
+
+				NodeList nList = doc.getElementsByTagName("data");
+				
 				// get user id
 				NodeList userData = doc.getElementsByTagName("user");
-				Node uD = userData.item(0);
-				Element uData = (Element) uD;
+				Element uData = (Element) userData.item(0);
 				String uID = uData.getAttribute("uID");
-				// set uID in object userRead
-				userRead.setUid(uID);
 
-				
-				// get name
-				String name = e.getElementsByTagName("name").item(0).getTextContent().trim();
-				// set name in object userRead
-				userRead.setName(name);
+				for (int nodeAtPos = 0; nodeAtPos < nList.getLength(); nodeAtPos++)
+				{
+					Element e = (Element) nList.item(nodeAtPos);
+	
+					// get name
+					String name = e.getElementsByTagName("name").item(0).getTextContent().trim();
+	
+					// get currentProject
+					String currentProject = e.getElementsByTagName("currentProject").item(0).getTextContent().trim();
 
-				
-				// get currentProject
-				String currentProject = e.getElementsByTagName("currentProject").item(0).getTextContent().trim();
-				// set current project in object userRead
-				userRead.setProjectCurrent(currentProject);
-
-				NodeList projectList = doc.getElementsByTagName("project");
-				List<String> projectArrayList = new ArrayList<String>();
-				for (int i = 0; i < projectList.getLength(); i++)
-				{					
-					// get project id
-					NodeList pList = doc.getElementsByTagName("project");
-					Node proj = pList.item(i);
-					Element pro = (Element) proj;
-					String projectID = pro.getAttribute("pID");
-					projectArrayList.add(projectID);
+					NodeList projectList = doc.getElementsByTagName("project");
+					List<String> projectArrayList = new ArrayList<String>();
+					for (int i = 0; i < projectList.getLength(); i++)
+					{
+						// get project id
+						NodeList pList = doc.getElementsByTagName("project");
+						Node proj = pList.item(i);
+						Element pro = (Element) proj;
+						String projectID = pro.getAttribute("pID");
+						projectArrayList.add(projectID);
+					}
 					
+					return new User (uID, name, "", projectArrayList, currentProject);
 				}
-				
-				userRead.setProjects(projectArrayList);
-
+			} else
+			{
+				System.out.println("XML wurde NICHT gefunden");
 			}
 
 		} catch (ParserConfigurationException pce)
@@ -109,9 +91,7 @@ public class UserXML
 		{
 			e.printStackTrace();
 		}
-
-		// return object of class Project
-		return userRead;
+		return null;
 	}
 
 	/**
@@ -160,8 +140,7 @@ public class UserXML
 			userXML.appendChild(currentProject);
 
 			// store all authorized projects 
-			List<String> aProjects = new ArrayList<String>();
-			aProjects = user.getProjects();
+			List<String> aProjects = user.getProjects();
 
 			// loop to store every authorized project in xml
 			for (int i = 0; i < aProjects.size(); i++)
