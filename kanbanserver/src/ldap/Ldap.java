@@ -24,7 +24,8 @@ public class Ldap
  }
 
   /**
-  * Connect to LDAP Server.
+  * Connect to LDAP server
+  * Load Data from Ldap into local Ldap context
   * @return true connection successful
   * @return false connection error
   */
@@ -33,15 +34,15 @@ public class Ldap
  {
 	 try
      {
-		 String conntype = "none";
-	     Hashtable<String, String> environment = new Hashtable<String, String>();
+		 String ConnType = "none";
+	     Hashtable<String, String> Table = new Hashtable<String, String>();
 
-	     environment.put(Context.INITIAL_CONTEXT_FACTORY,"com.sun.jndi.ldap.LdapCtxFactory");
-	     environment.put(Context.PROVIDER_URL,Host);
-	     environment.put("java.naming.ldap.factory.socket", "test.MySSLSocketFactory");
-	     environment.put(Context.SECURITY_AUTHENTICATION, conntype);
+	     Table.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+	     Table.put(Context.PROVIDER_URL, Host);		//set Hostname
+	     Table.put("java.naming.ldap.factory.socket", "test.MySSLSocketFactory");	//SSL authentication factory
+	     Table.put(Context.SECURITY_AUTHENTICATION, ConnType);	//none = no login data required
 
-	     LdapContext = new InitialDirContext(environment);
+	     LdapContext = new InitialDirContext(Table);
 
 	     System.out.println("Connection successful");
 
@@ -54,8 +55,8 @@ public class Ldap
 	  }
  }
 
- /**
-  * Disconnect from the server.
+  /**
+  * Close the Ldap context
   */
  public void disconnect()
  {
@@ -74,33 +75,34 @@ public class Ldap
  }
 
  /**
-  * Filter the data in the ldap directory for the given search base.
+  * Filter the data in the ldap context for the given search base.
   *
   * @param  searchBase   search directory (ou=accounts,dc=linuxmuster-net,dc=lokal)
   * @param  searchFilter filter this value from the base (only HEMS uid)
   */
- public boolean search(String searchBase, String searchFilter)
+ public boolean search(String SearchBase, String SearchFilter)
      throws NamingException
  {
-     SearchControls searchcontrols = new SearchControls(SearchControls.SUBTREE_SCOPE,
-							         1L, //count limit
-							         0,  //time limit
-							         null,//attributes (null = all)
-							         false,// return object ?
-							         false);// dereference links?
+     SearchControls SearchControl = new SearchControls(SearchControls.SUBTREE_SCOPE,
+							         1L, 	//count limit
+							         0,  	//time limit
+							         null,	//attributes (null = all)
+							         false,	// return object
+							         false);// dereference links
 
-     NamingEnumeration<SearchResult> ne =  LdapContext.search(searchBase, "uid=" + searchFilter, searchcontrols);
+     NamingEnumeration<SearchResult> NE =  LdapContext.search(SearchBase, "uid=" + SearchFilter, SearchControl);
 
-     if (ne.hasMore())
+     if (NE.hasMore())	//Hems uid found true or false
      {
-         SearchResult sr = (SearchResult) ne.next();
-		 System.out.println(sr.getAttributes().get("uid"));
+         SearchResult Result = (SearchResult) NE.next();
+		 System.out.println(Result.getAttributes().get("uid"));	//print uid to console
 	 }
-	 else
+	 else		//uid not found on ldap
 	 {
-		 System.out.println(searchFilter +" not found on Ldap");
+		 System.out.println(SearchFilter +" not found on Ldap");
 	 }
-    return ne.hasMore();
+
+    return NE.hasMore();
  }
 
 }
