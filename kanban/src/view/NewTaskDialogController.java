@@ -1,5 +1,7 @@
 package view;
 
+import control.ClientControl;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -8,6 +10,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.IProject;
 import model.ITask;
 import model.Project;
 import model.Task;
@@ -32,7 +35,7 @@ public class NewTaskDialogController {
     private Stage dialogStage;
     private Task task;
     private boolean okClicked = false;
-    private Project project;
+    private ClientControl control = ClientControl.getInstance();
     
     /**
      * Initializes the controller class. This method is automatically called
@@ -40,9 +43,6 @@ public class NewTaskDialogController {
      */
     @FXML
     private void initialize() {
-    }
-    
-    public NewTaskDialogController() {
     }
     
     /**
@@ -85,14 +85,14 @@ public class NewTaskDialogController {
     private void handleOk() {
 	if (isInputValid()) {
 	    ITask task = new Task();
-	    task.setTitle("klingt gut");
-	    task.setDescription("blablablblub");
-//	    tempTaskData.add(task);
-
-//            task.setTitle(titleTextField.getText());
-//            task.setDescription(descriptionTextField.getText());
-//            task.setCategorie(statusComboBox.getSelectionModel().getSelectedItem());
-//            task.setStatus(statusComboBox.getSelectionModel().getSelectedItem());
+	    
+	    task.setTitle(titleTextField.getText());
+	    task.setDescription(descriptionTextField.getText());
+	    task.setCategorie(statusComboBox.getSelectionModel().getSelectedItem());
+	    task.setStatus(statusComboBox.getSelectionModel().getSelectedItem());
+	    
+	    IProject project = control.getOpenProject();
+	    project.addTask(task);
 	    
 	    okClicked = true;
 	    Stage prevStage;
