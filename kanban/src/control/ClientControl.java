@@ -7,7 +7,7 @@ import model.*;
 public class ClientControl {
 	
 	private static ClientControl instance = new ClientControl();
-	private IProject openProject;
+	private IProject openProject = new Project("name", "description", 1);
 	private List<IProject> sleepingProjects;
 	
 	
@@ -43,5 +43,13 @@ public class ClientControl {
 		
 		
 		return isNewTaskCreated;
+	}
+
+	public IProject getOpenProject() {
+	    return openProject;
+	}
+
+	public void setOpenProject(IProject openProject) {
+	    this.openProject = openProject;
 	}
 }
