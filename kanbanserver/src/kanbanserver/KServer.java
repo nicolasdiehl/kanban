@@ -7,18 +7,21 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * Main thread of the server. Handles xml and storage of data.
+ */
 public class KServer {
 	public static ArrayList<SimpleProject> listOfObjects;
 
-	public static void requestSimpleProjects() {
-
-	}
-
 	public static void main(String args[]) {
+
+		// Creation of test objects
 		listOfObjects = new ArrayList<SimpleProject>();
 		listOfObjects.add(new SimpleProject("name", "id"));
 		listOfObjects.add(new SimpleProject("name2", "id2"));
 		listOfObjects.add(new SimpleProject("name3", "id3"));
+
+		// Getting port
 		int port = 0;
 		if (args.length == 1) {
 			port = Integer.valueOf(args[0]);
@@ -26,6 +29,7 @@ public class KServer {
 			throw new IllegalArgumentException("Server Error: Argument one should be the port.");
 		}
 
+		// Waiting for clients
 		Socket connectionSocket = null;
 		ServerSocket serverSocket = null;
 		System.out.println("Server Message: Waiting for connection on port " + port + ".");
@@ -48,7 +52,7 @@ public class KServer {
 			System.err.println("Server Error: New Server socket Error!");
 		} finally {
 			// Finally runs after the "endless while" for now, no need to stop
-			// the server.
+			// the servers main thread.
 			if (serverSocket != null) {
 				try {
 					serverSocket.close();
@@ -61,6 +65,9 @@ public class KServer {
 	}
 }
 
+/*
+ * One server thread per client, handles communication.
+ */
 class ServerThread extends Thread {
 
 	Boolean receivingMessages = true;
@@ -73,6 +80,10 @@ class ServerThread extends Thread {
 		this.socket = socket;
 	}
 
+	/*
+	 * For now, returns dummy objects. Will get a list from the xml or from
+	 * projects that are created from the xml.
+	 */
 	public void sendSimpleProjects() {
 		try {
 			System.out.println("Server Message: Sending SimpleProject 's.");
@@ -84,14 +95,16 @@ class ServerThread extends Thread {
 	}
 
 	public void run() {
+
+		// Setup streams
 		try {
 			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 			objectInputStream = new ObjectInputStream(socket.getInputStream());
-
 		} catch (IOException e) {
 			System.err.println("Server Error: IO error in server thread");
 		}
 
+		// Listen for messages
 		while (receivingMessages) {
 			try {
 				currentObject = objectInputStream.readObject();
@@ -110,6 +123,7 @@ class ServerThread extends Thread {
 			}
 		}
 
+		// Shutting down after end of receivingMessages.
 		try {
 			System.out.println("Server Message: Server connection closing..");
 			if (objectOutputStream != null) {

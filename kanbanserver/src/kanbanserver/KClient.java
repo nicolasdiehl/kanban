@@ -10,12 +10,20 @@ import java.util.ArrayList;
 import model.Project;
 import model.Task;
 
+/**
+ * Is (will be) created by the gui-thread and handles communication with the
+ * server.
+ */
 public class KClient {
 
 	static Socket socket = null;
 	static ObjectOutputStream objectOutputStream = null;
 	static ObjectInputStream objectInputStream = null;
 
+	/**
+	 * Transmits a String to the server asking for a list of SimpleProject
+	 * Objects.
+	 */
 	public static void requestSimpleProjects() {
 		try {
 			System.out.println("Client Message: Sending Request to get SimpleProject 's.");
@@ -28,8 +36,13 @@ public class KClient {
 
 	public static void main(String args[]) throws IOException {
 
+		// Setup
 		Boolean receivingMessages = true;
 		String url = "";
+		InetAddress address;
+		Object currentObject = null;
+
+		// Getting CMD arguments & port
 		int port = 0;
 		if (args.length == 2) {
 			url = args[0];
@@ -38,7 +51,8 @@ public class KClient {
 			throw new IllegalArgumentException(
 					"Client Error: Argument one should be ip/url and argument two should be port.");
 		}
-		InetAddress address;
+
+		// Getting IP
 		if (url.equals("local")) {
 			// InetAddress address = InetAddress.getLocalHost();
 			System.out.println("Client Message: Using localhost as IP");
@@ -49,6 +63,7 @@ public class KClient {
 			address = InetAddress.getByName(url);
 		}
 
+		// Connecting
 		try {
 			socket = new Socket(address, port);
 			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -59,13 +74,14 @@ public class KClient {
 			System.exit(1);
 		}
 
+		// Example first request
 		System.out.println("Client Message: Requesting list of Projects!");
 		requestSimpleProjects();
 
 		System.out.println("Client Message: Address:" + address);
 		System.out.println("Client Message: Receiving objects from server.");
 
-		Object currentObject = null;
+		// Listening
 		while (receivingMessages) {
 			try {
 				currentObject = objectInputStream.readObject();
@@ -89,6 +105,8 @@ public class KClient {
 				System.err.println("Client Error: Error reading socket!");
 			}
 		}
+
+		// Shutting down after end of receivingMessages.
 		try {
 			System.out.println("Client Message: Connection closing..");
 			if (objectOutputStream != null) {
