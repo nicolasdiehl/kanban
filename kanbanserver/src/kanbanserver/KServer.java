@@ -6,11 +6,15 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Main thread of the server. Handles xml and storage of data.
  */
 public class KServer {
+
+	static List<ServerThread> serverThreads = Collections.synchronizedList(new ArrayList<ServerThread>());
 	public static ArrayList<SimpleProject> listOfObjects;
 
 	public static void main(String args[]) {
@@ -41,6 +45,9 @@ public class KServer {
 					System.out.println("Server Message: Connection OK!");
 					ServerThread serverThread = new ServerThread(connectionSocket);
 					serverThread.start();
+					synchronized (serverThreads) {
+						serverThreads.add(serverThread);
+					}
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -118,12 +125,18 @@ class ServerThread extends Thread {
 					System.err.println("Server Error: Received object is not a String!?");
 				}
 			} catch (IOException | ClassNotFoundException | ClassCastException e) {
-				// e.printStackTrace();
-				// System.err.println("Error reading socket!");
+				// TODO: Connection lost, killing thread (kill, save data??,
+				// reconnect, how to handle a broken connection?)
+				System.err.println("Server Error: Lost connection to client.");
+				receivingMessages = false;
 			}
 		}
 
 		// Shutting down after end of receivingMessages.
+
+		// TODO: Killing thread on lost connection as for now. When
+		// reconnecting, a client will get a new thread. How to reconnect client
+		// to old thread?
 		try {
 			System.out.println("Server Message: Server connection closing..");
 			if (objectOutputStream != null) {
@@ -143,6 +156,12 @@ class ServerThread extends Thread {
 
 		} catch (IOException ie) {
 			System.out.println("Server Error: Error closing Server socket, objectOutputStream or objectInputStream.");
+		} finally {
+
+			// Removing ServerThread from list.
+			synchronized (KServer.serverThreads) {
+				KServer.serverThreads.remove(this);
+			}
 		}
 	}
 }
