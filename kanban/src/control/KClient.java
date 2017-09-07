@@ -1,4 +1,4 @@
-package kanbanserver;
+package control;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -9,6 +9,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import model.Project;
+import model.SimpleProject;
 import model.Task;
 
 /**
