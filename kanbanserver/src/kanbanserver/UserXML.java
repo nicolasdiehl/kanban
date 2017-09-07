@@ -37,7 +37,7 @@ public class UserXML
 			if (file.exists())
 			{
 				// Debugging output
-				System.out.println("XML wurde gefunden");
+				//System.out.println("XML wurde gefunden");
 
 				// create new object of type document with the data of the xml
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -49,51 +49,48 @@ public class UserXML
 
 				// Nodelist to store every element in root element
 				NodeList nList = doc.getElementsByTagName("data");
-				
+
 				// get user id and store it as a string
 				NodeList userData = doc.getElementsByTagName("user");
 				Element uData = (Element) userData.item(0);
 				String uID = uData.getAttribute("uID");
 
-				// loop to get every element of nList
-				for (int nodeAtPos = 0; nodeAtPos < nList.getLength(); nodeAtPos++)
+				// get elements 
+				Element e = (Element) nList.item(0);
+
+				// get user name
+				String uName = e.getElementsByTagName("uName").item(0).getTextContent().trim();
+
+				// get current project and store name and id in object of type SimpleProject
+				NodeList cProjectData = doc.getElementsByTagName("cProject");
+				Element cpData = (Element) cProjectData.item(0);
+				SimpleProject currentProject = new SimpleProject(e.getElementsByTagName("cProject").item(0).getTextContent().trim(), cpData.getAttribute("pID"));
+
+				// get Elements of type authorizised projects
+				NodeList projectList = doc.getElementsByTagName("aProject");
+
+				// create new ArrayList of type SimpleProject to store every single authorizised project
+				List<SimpleProject> authorizisedProjects = new ArrayList<SimpleProject>();
+
+				// loop to store objects of type SimpleProject
+				for (int i = 0; i < projectList.getLength(); i++)
 				{
-					// get element of position of node
-					Element e = (Element) nList.item(nodeAtPos);
-	
-					// get user name
-					String uName = e.getElementsByTagName("uName").item(0).getTextContent().trim();
-					
-					// get current project and store name and id in object of type SimpleProject
-					NodeList cProjectData = doc.getElementsByTagName("cProject");
-					Element cpData = (Element) cProjectData.item(0);
-					SimpleProject currentProject = new SimpleProject(e.getElementsByTagName("cProject").item(0).getTextContent().trim(), cpData.getAttribute("pID"));
-					
-					// get Elements of type authorizised projects
-					NodeList projectList = doc.getElementsByTagName("aProject");
-					
-					// create new ArrayList of type SimpleProject to store every single authorizised project
-					List<SimpleProject> authorizisedProjects = new ArrayList<SimpleProject>();
-					
-					// loop to store objects of type SimpleProject
-					for (int i = 0; i < projectList.getLength(); i++)
-					{
-						// get one project
-						NodeList pList = doc.getElementsByTagName("aProject");
-						Node proj = pList.item(i);
-						Element pro = (Element) proj;
-						
-						// store data in new object of type SimpleProject in ArrayList authorizisedProjects
-						authorizisedProjects.add(new SimpleProject(pro.getTextContent(), pro.getAttribute("pID")));
-					}
-					
-					// return object of type User with user id, user name, ArrayList containing objects(SimpleObject) of authorizised projects, and an object(SimpleObject) of the current project
-					return new User (uID, uName, "", authorizisedProjects, currentProject);
+					// get one project
+					NodeList pList = doc.getElementsByTagName("aProject");
+					Node proj = pList.item(i);
+					Element pro = (Element) proj;
+
+					// store data in new object of type SimpleProject in ArrayList authorizisedProjects
+					authorizisedProjects.add(new SimpleProject(pro.getTextContent(), pro.getAttribute("pID")));
 				}
+
+				// return object of type User with user id, user name, ArrayList containing objects(SimpleObject) of authorizised projects, and an object(SimpleObject) of the current project
+				return new User(uID, uName, "", authorizisedProjects, currentProject);
+
 			} else
 			{
 				// Debugging output
-				System.out.println("XML wurde NICHT gefunden");
+				//System.out.println("XML wurde NICHT gefunden");
 			}
 
 		} catch (ParserConfigurationException pce)
@@ -106,7 +103,7 @@ public class UserXML
 		{
 			e.printStackTrace();
 		}
-		
+
 		// return null if file wasn't found
 		return null;
 	}
@@ -126,9 +123,9 @@ public class UserXML
 		if (file.exists())
 		{
 			file.delete();
-			
+
 			//Debugging output
-			System.out.println("Alte XML wurde gelöscht");
+			//System.out.println("Alte XML wurde gelöscht");
 		}
 
 		try
@@ -137,7 +134,7 @@ public class UserXML
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			Document doc = docBuilder.newDocument();
-			
+
 			// create root Element in document
 			Element rootElement = doc.createElement("data");
 			doc.appendChild(rootElement);
@@ -159,7 +156,7 @@ public class UserXML
 			// set attribute to currentProject element
 			currentProject.setAttribute("pID", user.getProjectCurrent().getId());
 			userXML.appendChild(currentProject);
-			
+
 			// add new element "pName" to currentProject
 			Element cpName = doc.createElement("pName");
 			cpName.appendChild(doc.createTextNode(user.getProjectCurrent().getName()));
@@ -176,7 +173,7 @@ public class UserXML
 				// set attribute to user element
 				aProject.setAttribute("pID", aProjects.get(i).getId());
 				userXML.appendChild(aProject);
-				
+
 				// add new element "pName" to aProject
 				Element apName = doc.createElement("pName");
 				apName.appendChild(doc.createTextNode(aProjects.get(i).getName()));
@@ -192,16 +189,18 @@ public class UserXML
 			transformer.transform(source, result);
 
 			// Debugging output
-			System.out.println("Neue User XMl wurde angelegt");
+			//System.out.println("Neue User XMl wurde angelegt");
 
 		} catch (ParserConfigurationException pce)
 		{
 			pce.printStackTrace();
-			System.out.println("Schreiben NICHT erfolgreich!");
+			// Debugging output
+			//System.out.println("Schreiben NICHT erfolgreich!");
 		} catch (TransformerException tfe)
 		{
 			tfe.printStackTrace();
-			System.out.println("Schreiben NICHT erfolgreich!");
+			// Debugging output
+			//System.out.println("Schreiben NICHT erfolgreich!");
 		}
 	}
 }
