@@ -19,15 +19,18 @@ import model.User;
  */
 public class UserXML
 {
+	private String userXMLDirectory;
+	
+	public UserXML(String directory, String login)
+	{
+		userXMLDirectory = directory + login + ".xml";
+	}
 	/**
 	 * function to read a user xml file
 	 * see:https://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
 	 */
-	public User readUserXML(String directory, String login)
+	public User readUserXML()
 	{
-		// create new Directory of the user xml
-		String userXMLDirectory = directory + login + ".xml";
-
 		try
 		{
 			// create new file for import
@@ -112,12 +115,8 @@ public class UserXML
 	 * function to write a user xml file
 	 * see:https://www.mkyong.com/java/how-to-create-xml-file-in-java-dom/
 	 */
-	public void writeUserXML(User user, String directory, String login)
+	public void writeUserXML(User user)
 	{
-
-		// directory of the xml file
-		String userXMLDirectory = directory + login + ".xml"; //"C:\\Projects\\123456789.xml"
-
 		// delete existing xml file
 		File file = new File(userXMLDirectory);
 		if (file.exists())
@@ -127,7 +126,6 @@ public class UserXML
 			//Debugging output
 			//System.out.println("Alte XML wurde gelöscht");
 		}
-
 		try
 		{
 			// create new object of type document to store the object of type User
