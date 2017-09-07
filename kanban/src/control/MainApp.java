@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.ITask;
 import model.ITaskFX;
 import view.MainScreenController;
 import view.NewTaskDialogController;
