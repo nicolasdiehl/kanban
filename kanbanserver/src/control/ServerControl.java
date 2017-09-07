@@ -17,7 +17,7 @@ public class ServerControl {
 		
 		isOk = ldap.login(userName, user);
 		//User noch irgendwie an Client zurückschicken
-		if (UserXML.readUserXML(System.getProperty("java.class.path") + "\\User\\", userName) == null) {
+		if (userXML.readUserXML(System.getProperty("java.class.path") + "\\User\\", userName) == null) {
 			isOk = false;
 		}
 		
