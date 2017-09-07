@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import model.Project;
+
 /**
  * Main thread of the server. Handles xml and storage of data.
  */
@@ -88,8 +90,8 @@ class ServerThread extends Thread {
 	}
 
 	/*
-	 * For now, returns dummy objects. Will get a list from the xml or from
-	 * projects that are created from the xml.
+	 * For now, returns dummy objects. Will get a list from the xml or from projects
+	 * that are created from the xml.
 	 */
 	public void sendSimpleProjects() {
 		try {
@@ -117,11 +119,25 @@ class ServerThread extends Thread {
 				currentObject = objectInputStream.readObject();
 				if (currentObject instanceof String) {
 					System.out.println("Server Message: Received String Object");
-					if (currentObject.equals("SimpleProjects")) {
+					String switchString = (String) currentObject;
+					String[] switchArray = switchString.split("|");
+					if (switchArray.length == 2)  {
+						switchString = switchArray[1];
+					}
+					switch (switchString) {
+					case "SimpleProjects":
 						System.out.println("Server Message: Client is requesting SimpleProject 's");
 						sendSimpleProjects();
 					}
+				} else if (currentObject instanceof Project) {
+					Project project = (Project) currentObject;
+					if (project.getID().equals("-1")) {
+						// neues XML anlegen
+					} else {
+						//XML raussuchen und updaten
+					}
 				} else {
+
 					System.err.println("Server Error: Received object is not a String!?");
 				}
 			} catch (IOException | ClassNotFoundException | ClassCastException e) {
