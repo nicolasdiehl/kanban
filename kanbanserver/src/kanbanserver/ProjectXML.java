@@ -23,7 +23,7 @@ import model.Project;
 
 public class ProjectXML
 {
-	public static Project readProjectXML(String directory, String loginName)
+	public Project readProjectXML(String directory, String loginName)
 	{
 		// create new Directory of the project xml
 		String projectXMLDirectory = directory + loginName + ".xml";
@@ -86,40 +86,6 @@ public class ProjectXML
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			Document doc = docBuilder.newDocument();
 			
-			
-//			Element rootElement = doc.createElement("data");
-//			doc.appendChild(rootElement);
-//
-//			// add new element "user" to rootElement "data"
-//			Element userXML = doc.createElement("user");
-//			rootElement.appendChild(userXML);
-//
-//			// set attribute to user element
-//			userXML.setAttribute("uID", user.getUid());
-//
-//			// add new element "name" to user
-//			Element name = doc.createElement("name");
-//			name.appendChild(doc.createTextNode(user.getName()));
-//			userXML.appendChild(name);
-//
-//			// add new element "currentProject" to user
-//			Element currentProject = doc.createElement("currentProject");
-//			currentProject.appendChild(doc.createTextNode(user.getProjectCurrent()));
-//			userXML.appendChild(currentProject);
-//
-//			// store all authorized projects 
-//			List<String> aProjects = new ArrayList<String>();
-//			aProjects = user.getProjects();
-//
-//			// loop to store every authorized project in xml
-//			for (int i = 0; i < aProjects.size(); i++)
-//			{
-//				// add new element "projectX" to "authorizedProjects"
-//				Element aProject = doc.createElement("project");
-//				// set attribute to user element
-//				aProject.setAttribute("pID", aProjects.get(i));
-//				userXML.appendChild(aProject);
-//			}
 
 			// write the content into xml file
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -129,7 +95,7 @@ public class ProjectXML
 
 			transformer.transform(source, result);
 
-			System.out.println("Neue User XMl wurde angelegt");
+			System.out.println("Neue Project XMl wurde angelegt");
 
 		} catch (ParserConfigurationException pce)
 		{
