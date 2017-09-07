@@ -25,6 +25,7 @@ public class UserXML
 	{
 		userXMLDirectory = directory + login + ".xml";
 	}
+	
 	/**
 	 * function to read a user xml file
 	 * see:https://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
@@ -117,8 +118,10 @@ public class UserXML
 	 */
 	public void writeUserXML(User user)
 	{
-		// delete existing xml file
+		// create new file
 		File file = new File(userXMLDirectory);
+		
+		// delete existing xml file
 		if (file.exists())
 		{
 			file.delete();

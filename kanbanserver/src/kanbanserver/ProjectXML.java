@@ -2,8 +2,6 @@ package kanbanserver;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -14,13 +12,18 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import model.Project;
 
 public class ProjectXML
 {
+	private String projectXMLDirectory;
+
+	public ProjectXML(String directory, String pID)
+	{
+		projectXMLDirectory = directory + pID + ".xml";
+	}
+	
 	public Project readProjectXML(String directory, String loginName)
 	{
 		// create new Directory of the project xml
@@ -64,25 +67,34 @@ public class ProjectXML
 		return projectRead;
 	}
 	
-	public static void writeProjectXML(Project project, String directory, String loginName)
+	public void writeProjectXML(Project project)
 	{
-
-		// directory of the xml file
-		String projectXMLDirectory = directory + loginName + ".xml"; //"C:\\Projects\\123456789.xml"
-
-		// delete existing xml file
+		// create new file
 		File file = new File(projectXMLDirectory);
+		
+		// delete existing xml file
 		if (file.exists())
 		{
 			file.delete();
-			System.out.println("Alte XML wurde gelöscht");
+			
+			//Debugging output
+			//System.out.println("Alte XML wurde gelöscht");
 		}
 
 		try
 		{
+			// create new object of type document to store the object of type Project
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			Document doc = docBuilder.newDocument();
+			
+			// create root Element in document
+			Element rootElement = doc.createElement("data");
+			doc.appendChild(rootElement);
+			
+			// add new element "project" to root Element "data"
+			Element projectXML = doc.createElement("project");
+			rootElement.appendChild(projectXML);
 			
 
 			// write the content into xml file
