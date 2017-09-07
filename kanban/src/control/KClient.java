@@ -24,6 +24,11 @@ public class KClient implements Runnable {
 	public Integer port;
 	public String url;
 
+	public KClient(String url, Integer port) {
+		this.port = port;
+		this.url = url;
+	}
+
 	/**
 	 * Transmits a String to the server asking for a list of SimpleProject
 	 * Objects.
