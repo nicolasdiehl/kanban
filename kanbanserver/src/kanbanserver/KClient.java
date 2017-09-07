@@ -1,75 +1,145 @@
 package kanbanserver;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 
+import model.Project;
+import model.Task;
+
+/**
+ * Is (will be) created by the gui-thread and handles communication with the
+ * server.
+ */
 public class KClient {
+
+	static Socket socket = null;
+	static ObjectOutputStream objectOutputStream = null;
+	static ObjectInputStream objectInputStream = null;
+
+	/**
+	 * Transmits a String to the server asking for a list of SimpleProject
+	 * Objects.
+	 */
+	public static void requestSimpleProjects() {
+		try {
+			System.out.println("Client Message: Sending Request to get SimpleProject 's.");
+			objectOutputStream.writeObject("SimpleProjects");
+		} catch (IOException e) {
+			System.err.println("Client Error: sending requestSimpleProjects message.");
+			e.printStackTrace();
+		}
+	}
+
+	/*
+	 * Establishes a connection, tries again if fail.
+	 */
+	public static void connectToServer(InetAddress address, int port) {
+		// Connecting
+		System.out.print("Connecting.");
+		while (true) {
+			try {
+				socket = new Socket(address, port);
+				objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+				objectInputStream = new ObjectInputStream(socket.getInputStream());
+				System.out.println("..OK");
+				break;
+			} catch (IOException e) {
+				System.out.print(".");
+			}
+		}
+	}
 
 	public static void main(String args[]) throws IOException {
 
+		// Setup
+		Boolean receivingMessages = true;
 		String url = "";
+		InetAddress address;
+		Object currentObject = null;
+
+		// Getting CMD arguments & port
 		int port = 0;
 		if (args.length == 2) {
 			url = args[0];
 			port = Integer.valueOf(args[1]);
 		} else {
-			throw new IllegalArgumentException("Argument one should be ip/url and argument two should be port.");
+			throw new IllegalArgumentException(
+					"Client Error: Argument one should be ip/url and argument two should be port.");
 		}
-		InetAddress address;
+
+		// Getting IP
 		if (url.equals("local")) {
 			// InetAddress address = InetAddress.getLocalHost();
+			System.out.println("Client Message: Using localhost as IP");
 			address = InetAddress.getByName("127.0.0.1");
-			System.out.println(address.toString());
+			System.out.println("Client Message: IP = " + address.toString());
 		} else {
+			System.out.println("Client Message: Using " + url + " as IP");
 			address = InetAddress.getByName(url);
 		}
-		Socket socket = null;
-		String line = null;
-		BufferedReader bufferedReader = null;
-		BufferedReader inputStream = null;
-		PrintWriter outputStream = null;
 
-		try {
-			socket = new Socket(address, port);
-			bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-			inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			outputStream = new PrintWriter(socket.getOutputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.print("IO exception!");
+		// Connect
+		connectToServer(address, port);
+
+		// Example first request
+		System.out.println("Client Message: Requesting list of Projects!");
+		requestSimpleProjects();
+
+		System.out.println("Client Message: Address:" + address);
+		System.out.println("Client Message: Receiving objects from server.");
+
+		// Listening
+		while (receivingMessages) {
+			try {
+				currentObject = objectInputStream.readObject();
+				if (currentObject instanceof ArrayList<?>) {
+					System.out.println("Client Message: Received Object is ArrayList.");
+					if (((ArrayList<?>) currentObject).get(0) instanceof SimpleProject) {
+						System.out.println("Client Message: Objects are SimpleProjects.");
+						@SuppressWarnings("unchecked")
+						ArrayList<SimpleProject> returnedList = (ArrayList<SimpleProject>) currentObject;
+						System.out.println("received " + returnedList.size() + " SimpleObject objects.");
+					} else if (((ArrayList<?>) currentObject).get(0) instanceof Project) {
+						System.out.println("Client Message: Objects are SimpleProject 's.");
+						// do some other stuff
+					} else if (((ArrayList<?>) currentObject).get(0) instanceof Task) {
+						System.out.println("Client Message: Objects are Task 's.");
+						// do some other other stuff
+					}
+				}
+			} catch (IOException | ClassNotFoundException | ClassCastException e) {
+				e.printStackTrace();
+				System.err.println("Client Error: Error reading socket!");
+
+				// Trying to reconnect
+				connectToServer(address, port);
+			}
 		}
 
-		System.out.println("Client address:" + address);
-		System.out.println("Enter data to echo Server (enter quit to exit):");
-
-		String response = null;
+		// Shutting down after end of receivingMessages.
 		try {
-			line = bufferedReader.readLine();
-			while (line.compareTo("quit") != 0) {
-				outputStream.println(line);
-				outputStream.flush();
-				response = inputStream.readLine();
-				System.out.println("Server response:" + response);
-				line = bufferedReader.readLine();
-
+			System.out.println("Client Message: Connection closing..");
+			if (objectOutputStream != null) {
+				objectOutputStream.close();
+				System.out.println("Client Message: ObjectOutputStream closed!");
 			}
 
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("Error reading socket!");
-		} finally {
+			if (objectInputStream != null) {
+				objectInputStream.close();
+				System.out.println("Client Message: objectInputStream closed!");
+			}
 
-			inputStream.close();
-			outputStream.close();
-			bufferedReader.close();
-			socket.close();
-			System.out.println("Connection closed!");
+			if (socket != null) {
+				socket.close();
+				System.out.println("Client Message: Socket closed!");
+			}
 
+		} catch (IOException ie) {
+			System.err.println("Client Error: Error closing clients socket, objectOutputStream or objectInputStream.");
 		}
-
 	}
 }

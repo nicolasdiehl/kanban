@@ -9,102 +9,115 @@ import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 
-public class Ldap
-{
- private String Host = null;
- private DirContext LdapContext = null;
+public class Ldap {
+	private String Host = null;
+	private String SearchBase = null;
 
- /**
-  *  Constructor for the Ldap object.
-  *  @param Hostname IP and port for LDAP server (ldaps://xx.xx.xx.xx:xxx)
-  */
- public Ldap(String Hostname)
- {
-	 this.Host = Hostname;
- }
+	private DirContext LdapContext = null;
 
-  /**
-  * Connect to LDAP server
-  * Load Data from Ldap into local Ldap context
-  * @return true connection successful
-  * @return false connection error
-  */
- public boolean connect()
-     throws NamingException
- {
-	 try
-     {
-		 String ConnType = "none";
-	     Hashtable<String, String> Table = new Hashtable<String, String>();
+	/**
+	 * Constructor for the Ldap object
+	 *
+	 * @param Hostname
+	 *            IP and port for LDAP server (ldaps://xx.xx.xx.xx:xxx)
+	 * @param LdapDirectory
+	 *            search directory (ou=accounts,dc=linuxmuster-net,dc=lokal)
+	 */
+	public Ldap(String Hostname, String LdapDirectory) {
+		this.Host = Hostname;
+		this.SearchBase = LdapDirectory;
+	}
 
-	     Table.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-	     Table.put(Context.PROVIDER_URL, Host);		//set Hostname
-	     Table.put("java.naming.ldap.factory.socket", "test.MySSLSocketFactory");	//SSL authentication factory
-	     Table.put(Context.SECURITY_AUTHENTICATION, ConnType);	//none = no login data required
+	/**
+	 * Connect to LDAP server Load Data from Ldap into local Ldap context
+	 *
+	 * @return true connection successful
+	 * @return false connection error
+	 */
+	private boolean connect() throws NamingException {
+		try {
+			String ConnType = "none";
+			Hashtable<String, String> Table = new Hashtable<String, String>();
 
-	     LdapContext = new InitialDirContext(Table);
+			Table.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+			Table.put(Context.PROVIDER_URL, Host); 											// set Hostname
+			Table.put("java.naming.ldap.factory.socket", "test.MySSLSocketFactory"); 		// SSL authentication factory
+			Table.put(Context.SECURITY_AUTHENTICATION, ConnType); 							// none = no login data required
 
-	     System.out.println("Connection successful");
 
-	     return true;
-	  }
-	  catch(Exception ex)
-	  {
-	     System.out.println("Ldap connect - " + ex);
-	     return false;
-	  }
- }
+			LdapContext = new InitialDirContext(Table);
 
-  /**
-  * Close the Ldap context
-  */
- public void disconnect()
- {
-     try
-     {
-     	if (LdapContext != null)
-     	{
-     		LdapContext.close();
-     		LdapContext = null;
-     	}
-     }
-     catch (NamingException ex)
-     {
-         System.out.println("Ldap disconnect - " + ex);
-     }
- }
+			System.out.println("Connection successful");
 
- /**
-  * Filter the data in the ldap context for the given search base.
-  *
-  * @param  searchBase   search directory (ou=accounts,dc=linuxmuster-net,dc=lokal)
-  * @param  searchFilter filter this value from the base (only HEMS uid)
-  */
- public boolean search(String SearchBase, String SearchFilter)
-     throws NamingException
- {
-     SearchControls SearchControl = new SearchControls(SearchControls.SUBTREE_SCOPE,
-							         1L, 	//count limit
-							         0,  	//time limit
-							         null,	//attributes (null = all)
-							         false,	// return object
-							         false);// dereference links
+			return true;
 
-     NamingEnumeration<SearchResult> NE =  LdapContext.search(SearchBase, "uid=" + SearchFilter, SearchControl);
+		} catch (Exception ex) {
+			System.out.println("Ldap connect - " + ex);
+			return false;
+		}
+	}
 
-     if (NE.hasMore())	//Hems uid found true or false
-     {
-         SearchResult Result = (SearchResult) NE.next();
-		 System.out.println(Result.getAttributes().get("uid"));	//print uid to console
-	 }
-	 else		//uid not found on ldap
-	 {
-		 System.out.println(SearchFilter +" not found on Ldap");
-	 }
+	/**
+	 * Close the Ldap context
+	 */
+	private void disconnect() {
+		try {
+			if (LdapContext != null) {
+				LdapContext.close();
+				LdapContext = null;
+			}
+		} catch (NamingException ex) {
+			System.out.println("Ldap disconnect - " + ex);
+		}
+	}
 
-    return NE.hasMore();
- }
+	/**
+	 * Filter the data in the ldap context for the given search base.
+	 *
+	 * @param searchBase
+	 * @param searchFilter
+	 *            filter this value from the base (only HEMS uid)
+	 */
+	private boolean search(String SearchBase, String SearchFilter) throws NamingException {
+		SearchControls SearchControl = new SearchControls(SearchControls.SUBTREE_SCOPE, 1L,     // countlimit
+																						0, 		// time limit
+																						null,   // attributes (null = all)
+																						false,  // return object
+																						false); // dereference links
 
+		NamingEnumeration<SearchResult> NE = LdapContext.search(SearchBase, "uid=" + SearchFilter, SearchControl);
+
+		if (NE.hasMore()) { // Hems uid found true or false
+
+			SearchResult SR = (SearchResult) NE.next();
+			String Temp = SR.getAttributes().get("displayname").toString();
+			Temp = Temp.substring(Temp.indexOf(':') + 2);
+			System.out.println(Temp);
+
+		} else { // uid not found on ldap
+			System.out.println(SearchFilter + " not found on Ldap");
+		}
+
+		return NE.hasMore();
+	}
+
+	/**
+	 * Login User with Hems uid
+	 *
+	 * @param HemsUid
+	 *            Hems username
+	 */
+	public boolean login(String HemsUid) {
+		Boolean Result = false;
+		try {
+			if (!connect())
+				return Result;
+
+			Result = search(SearchBase, HemsUid);
+		} catch (NamingException ex) {
+			System.out.println(ex);
+		}
+		disconnect();
+		return Result;
+	}
 }
-
-
