@@ -10,10 +10,10 @@ public class User {
 	
 
 	private List<SimpleProject> projects;
-	private String projectCurrent;
+	private SimpleProject projectCurrent;
 
 	
-	public User(String uid, String name, String pw, List<SimpleProject> projects, String projectCurrent) {
+	public User(String uid, String name, String pw, List<SimpleProject> projects, SimpleProject projectCurrent) {
 		this.uid = uid;
 		this.name = name;
 		this.pw = pw;
@@ -48,11 +48,11 @@ public class User {
 		this.projects = projects;
 	}
 
-	public String getProjectCurrent() {
+	public SimpleProject getProjectCurrent() {
 		return projectCurrent;
 	}
 
-	public void setProjectCurrent(String projectCurrent) {
+	public void setProjectCurrent(SimpleProject projectCurrent) {
 		this.projectCurrent = projectCurrent;
 	}
 }

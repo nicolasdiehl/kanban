@@ -60,10 +60,10 @@ public class UserXML
 					String name = e.getElementsByTagName("name").item(0).getTextContent().trim();
 	
 					// get currentProject
-					String currentProject = e.getElementsByTagName("currentProject").item(0).getTextContent().trim();
+					SimpleProject currentProject = new SimpleProject(e.getElementsByTagName("currentProject").item(0).getTextContent().trim(), "");
 
 					NodeList projectList = doc.getElementsByTagName("project");
-					List<String> projectArrayList = new ArrayList<String>();
+					List<SimpleProject> projectArrayList = new ArrayList<SimpleProject>();
 					for (int i = 0; i < projectList.getLength(); i++)
 					{
 						// get project id
@@ -71,7 +71,7 @@ public class UserXML
 						Node proj = pList.item(i);
 						Element pro = (Element) proj;
 						String projectID = pro.getAttribute("pID");
-						projectArrayList.add(projectID);
+						projectArrayList.add(new SimpleProject(projectID, ""));
 					}
 					
 					return new User (uID, name, "", projectArrayList, currentProject);
@@ -136,11 +136,11 @@ public class UserXML
 
 			// add new element "currentProject" to user
 			Element currentProject = doc.createElement("currentProject");
-			currentProject.appendChild(doc.createTextNode(user.getProjectCurrent()));
+			currentProject.appendChild(doc.createTextNode(user.getProjectCurrent().getId()));
 			userXML.appendChild(currentProject);
 
 			// store all authorized projects 
-			List<String> aProjects = user.getProjects();
+			List<SimpleProject> aProjects = user.getProjects();
 
 			// loop to store every authorized project in xml
 			for (int i = 0; i < aProjects.size(); i++)
@@ -148,8 +148,10 @@ public class UserXML
 				// add new element "projectX" to "authorizedProjects"
 				Element aProject = doc.createElement("project");
 				// set attribute to user element
-				aProject.setAttribute("pID", aProjects.get(i));
+				aProject.setAttribute("pID", aProjects.get(i).getId());
 				userXML.appendChild(aProject);
+				
+				
 			}
 
 			// write the content into xml file
