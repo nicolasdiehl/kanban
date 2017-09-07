@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import model.Project;
@@ -14,11 +15,13 @@ import model.Task;
  * Is (will be) created by the gui-thread and handles communication with the
  * server.
  */
-public class KClient {
+public class KClient implements Runnable {
 
 	static Socket socket = null;
 	static ObjectOutputStream objectOutputStream = null;
 	static ObjectInputStream objectInputStream = null;
+	public Integer port;
+	public String url;
 
 	/**
 	 * Transmits a String to the server asking for a list of SimpleProject
@@ -53,33 +56,36 @@ public class KClient {
 		}
 	}
 
-	public static void main(String args[]) throws IOException {
+	@Override
+	public void run() {
 
 		// Setup
 		Boolean receivingMessages = true;
-		String url = "";
 		InetAddress address;
 		Object currentObject = null;
 
-		// Getting CMD arguments & port
-		int port = 0;
-		if (args.length == 2) {
-			url = args[0];
-			port = Integer.valueOf(args[1]);
-		} else {
-			throw new IllegalArgumentException(
-					"Client Error: Argument one should be ip/url and argument two should be port.");
+		// Getting port & url
+		while (port == null || url == null) {
+			// wait for port and url
 		}
 
 		// Getting IP
-		if (url.equals("local")) {
-			// InetAddress address = InetAddress.getLocalHost();
-			System.out.println("Client Message: Using localhost as IP");
-			address = InetAddress.getByName("127.0.0.1");
-			System.out.println("Client Message: IP = " + address.toString());
-		} else {
-			System.out.println("Client Message: Using " + url + " as IP");
-			address = InetAddress.getByName(url);
+		while (true) {
+			try {
+				if (url.equals("local")) {
+					// InetAddress address = InetAddress.getLocalHost();
+					System.out.println("Client Message: Using localhost as IP");
+					address = InetAddress.getByName("127.0.0.1");
+					System.out.println("Client Message: IP = " + address.toString());
+					break;
+				} else {
+					System.out.println("Client Message: Using " + url + " as IP");
+					address = InetAddress.getByName(url);
+					break;
+				}
+			} catch (UnknownHostException e) {
+				// don't print if it fails
+			}
 		}
 
 		// Connect
