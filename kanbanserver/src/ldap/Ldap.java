@@ -8,6 +8,7 @@ import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
+import model.SimpleUser;
 
 public class Ldap {
 	private String Host = null;
@@ -29,12 +30,12 @@ public class Ldap {
 	}
 
 	/**
-	 * Connect to LDAP server Load Data from Ldap into local Ldap context
+	 * Connect to LDAP server Load Data from Ldap into local context
 	 *
 	 * @return true connection successful
 	 * @return false connection error
 	 */
-	private boolean connect() throws NamingException {
+	private boolean connect() {
 		try {
 			String ConnType = "none";
 			Hashtable<String, String> Table = new Hashtable<String, String>();
@@ -78,7 +79,11 @@ public class Ldap {
 	 * @param searchFilter
 	 *            filter this value from the base (only HEMS uid)
 	 */
-	private boolean search(String SearchBase, String SearchFilter) throws NamingException {
+	private boolean search(String SearchBase, String SearchFilter, SimpleUser User) throws NamingException {
+
+	    String FirstName;
+	    String LastName;
+
 		SearchControls SearchControl = new SearchControls(SearchControls.SUBTREE_SCOPE, 1L,     // countlimit
 																						0, 		// time limit
 																						null,   // attributes (null = all)
@@ -92,6 +97,13 @@ public class Ldap {
 			SearchResult SR = (SearchResult) NE.next();
 			String Temp = SR.getAttributes().get("displayname").toString();
 			Temp = Temp.substring(Temp.indexOf(':') + 2);
+
+			FirstName = Temp.substring(0, Temp.indexOf(' ') - 1);
+			LastName = Temp.substring(Temp.indexOf(' ') + 1);
+
+			User.setFirstName(FirstName);
+			User.setLastName(LastName);
+
 			System.out.println(Temp);
 
 		} else { // uid not found on ldap
@@ -107,13 +119,14 @@ public class Ldap {
 	 * @param HemsUid
 	 *            Hems username
 	 */
-	public boolean login(String HemsUid) {
+	public boolean login(String HemsUid, SimpleUser User) {
 		Boolean Result = false;
+		if (!connect())
+			return Result;
 		try {
-			if (!connect())
-				return Result;
 
-			Result = search(SearchBase, HemsUid);
+
+			Result = search(SearchBase, HemsUid, User);
 		} catch (NamingException ex) {
 			System.out.println(ex);
 		}
