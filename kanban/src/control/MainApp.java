@@ -9,11 +9,13 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.ITask;
 import model.ITaskFX;
 import model.Project;
 import view.MainScreenController;
+import view.NewTaskDialogController;
 import view.ProjectSelectionScreenController;
 
 public class MainApp extends Application {
@@ -21,7 +23,7 @@ public class MainApp extends Application {
     private Stage primaryStage;
     
     private BorderPane rootLayout;
-    private BorderPane loginLayout; /////////////////////
+    private AnchorPane loginLayout; /////////////////////
     private AnchorPane newTaskLayout;
     
     public static String loginName;
@@ -64,7 +66,6 @@ public class MainApp extends Application {
 	
 	// initRootLayout();
 	showLoginScreen();
-	
     }
     
     /**
@@ -98,7 +99,7 @@ public class MainApp extends Application {
 	    FXMLLoader loader = new FXMLLoader();
 	    loader.setLocation(MainApp.class.getResource("/view/LoginScreen.fxml"));
 	    
-	    loginLayout = (BorderPane) loader.load();
+	    loginLayout = (AnchorPane) loader.load();
 	    
 	    // Show the scene containing the root layout.
 	    Scene scene = new Scene(loginLayout);
@@ -154,21 +155,32 @@ public class MainApp extends Application {
 	}
     }
     
-    public boolean showNewTaskDialog(ITaskFX selectedTask) {
+    public boolean showNewTaskDialog(ITask selectedTask) {
 	
 	try {
-	    Stage stage = new Stage();
-	    stage.getIcons().add(new Image("KbLogo.png"));
-	    stage.setTitle("New Task");
-	    // Load task dialog.
+	    // Load the fxml file and create a new stage for the popup dialog.
 	    FXMLLoader loader = new FXMLLoader();
 	    loader.setLocation(MainApp.class.getResource("/view/NewTaskDialog.fxml"));
-	    
 	    newTaskLayout = (AnchorPane) loader.load();
 	    
+	    // Create the dialog Stage.
+	    Stage dialogStage = new Stage();
+	    dialogStage.getIcons().add(new Image("KbLogo.png"));
+	    dialogStage.setTitle("New Task");
+	    dialogStage.initModality(Modality.WINDOW_MODAL);
+	    dialogStage.initOwner(primaryStage);
+	    
 	    Scene scene = new Scene(newTaskLayout);
-	    stage.setScene(scene);
-	    stage.show();
+	    dialogStage.setScene(scene);
+//	    dialogStage.show();
+	    
+	    // Set the person into the controller.
+	    NewTaskDialogController controller = loader.getController();
+	    controller.setDialogStage(dialogStage);
+//	    controller.setTask(selectedTask);
+	    
+	    // Show the dialog and wait until the user closes it
+	    dialogStage.showAndWait();
 	    
 	} catch (IOException e) {
 	    e.printStackTrace();

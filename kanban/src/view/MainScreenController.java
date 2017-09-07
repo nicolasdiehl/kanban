@@ -11,6 +11,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import model.ITask;
 import model.ITaskFX;
@@ -28,6 +29,18 @@ public class MainScreenController {
     private Tab projectTab;
     @FXML
     private GridPane kanbanGridPane;
+    @FXML
+    private TextArea creatorTextArea = new TextArea();
+    @FXML
+    private TextArea creationDateTextArea = new TextArea();
+    @FXML
+    private TextArea categoryTextArea = new TextArea();
+    @FXML
+    private TextArea memberTextArea = new TextArea();
+    @FXML
+    private TextArea descriptionTextArea = new TextArea();
+    @FXML
+    private TextArea commentTextArea = new TextArea();
     @FXML
     private TableView<ITask> todoTTV;
 //    @FXML
@@ -52,7 +65,7 @@ public class MainScreenController {
      */
     @FXML
     private void handleNewTask() {
-	Task tempTask = new Task();
+	ITask tempTask = new Task();
 	mainApp.showNewTaskDialog(tempTask);
 //        boolean okClicked = mainApp.showNewTaskDialog(tempTask);
 //        if (okClicked) {
@@ -66,7 +79,7 @@ public class MainScreenController {
      */
     @FXML
     private void handleEditPerson() {
-	ITaskFX selectedTask = todoTTV.getSelectionModel().getSelectedItem();
+	ITask selectedTask = todoTTV.getSelectionModel().getSelectedItem();
 	if (selectedTask != null) {
 	    boolean okClicked = mainApp.showNewTaskDialog(selectedTask);
 	    if (okClicked) {
@@ -129,27 +142,26 @@ public class MainScreenController {
      * @param task
      *            or null
      */
-    private void showTaskDetails(ITaskFX task) {
-//	
-//        if (task != null) {
-//            // Fill the labels with info from the person object.
-//            firstNameLabel.setText(task.getTitle());
-//            lastNameLabel.setText(person.getLastName());
-//            streetLabel.setText(person.getStreet());
-//            postalCodeLabel.setText(Integer.toString(person.getPostalCode()));
-//            cityLabel.setText(person.getCity());
-//
-//            // TODO: We need a way to convert the birthday into a String! 
-//            // birthdayLabel.setText(...);
-//        } else {
-//            // Person is null, remove all the text.
-//            firstNameLabel.setText("");
-//            lastNameLabel.setText("");
-//            streetLabel.setText("");
-//            postalCodeLabel.setText("");
-//            cityLabel.setText("");
-//            birthdayLabel.setText("");
-//        }
+    private void showTaskDetails(ITask task) {
+	
+        if (task != null) {
+            // Fill the labels with info from the person object.
+            creatorTextArea.setText(task.getCreatorID());
+            creationDateTextArea.setText(task.getCreatorDate().toLocaleString());
+            categoryTextArea.setText(task.getCategorie());
+//            memberTextArea.setText(task.getMember().toString());
+            descriptionTextArea.setText(task.getDescription());
+            commentTextArea.setText(task.getComment().toString());
+
+        } else {
+            // Task is null, remove all the text.
+            creatorTextArea.setText("");
+            creationDateTextArea.setText("");
+            categoryTextArea.setText("");
+            memberTextArea.setText("");
+            descriptionTextArea.setText("");
+            commentTextArea.setText("");
+        }
     }
     
 }
