@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import model.Project;
+import model.SimpleProject;
 
 /**
  * Main thread of the server. Handles xml and storage of data.
@@ -90,8 +91,8 @@ class ServerThread extends Thread {
 	}
 
 	/*
-	 * For now, returns dummy objects. Will get a list from the xml or from projects
-	 * that are created from the xml.
+	 * For now, returns dummy objects. Will get a list from the xml or from
+	 * projects that are created from the xml.
 	 */
 	public void sendSimpleProjects() {
 		try {
@@ -99,6 +100,16 @@ class ServerThread extends Thread {
 			objectOutputStream.writeObject(KServer.listOfObjects);
 		} catch (IOException e) {
 			System.err.println("Server Error: Error sending list of simple objects to client.");
+			e.printStackTrace();
+		}
+	}
+
+	public void sendString(String str) {
+		try {
+			System.out.println("Server Message: Sending string " + str + " to client.");
+			objectOutputStream.writeObject(str);
+		} catch (IOException e) {
+			System.err.println("Server Error: Error sending string object to client.");
 			e.printStackTrace();
 		}
 	}
@@ -121,7 +132,7 @@ class ServerThread extends Thread {
 					System.out.println("Server Message: Received String Object");
 					String switchString = (String) currentObject;
 					String[] switchArray = switchString.split("|");
-					if (switchArray.length == 2)  {
+					if (switchArray.length == 2) {
 						switchString = switchArray[1];
 					}
 					switch (switchString) {
@@ -134,7 +145,7 @@ class ServerThread extends Thread {
 					if (project.getID().equals("-1")) {
 						// neues XML anlegen
 					} else {
-						//XML raussuchen und updaten
+						// XML raussuchen und updaten
 					}
 				} else {
 

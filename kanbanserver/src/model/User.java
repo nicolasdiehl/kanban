@@ -2,8 +2,6 @@ package model;
 
 import java.util.*;
 
-import kanbanserver.SimpleProject;
-
 public class User
 {
 	private String uid;
