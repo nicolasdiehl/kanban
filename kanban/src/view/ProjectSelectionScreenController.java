@@ -13,22 +13,23 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Project;
 import model.SimpleProject;
 
 public class ProjectSelectionScreenController {
 
-	@FXML
-	private Label lb_date;
+//	@FXML
+//	private Label lb_date;
 	@FXML
 	private Label lb_greeting;
-	@FXML
-	private Button bt_ProjektAuswahl;
+//	@FXML
+//	private Button bt_ProjektAuswahl;
 	@FXML
 	private Button bt_accept;
 	@FXML
-	private TextField tb_status;
-	@FXML
-	private TextField tb_date;
+//	private TextField tb_status;
+//	@FXML
+//	private TextField tb_date;
 
 	private MainApp mainApp;
 
@@ -46,7 +47,7 @@ public class ProjectSelectionScreenController {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate localDate = LocalDate.now();
 		String reportDate = dtf.format(localDate);
-		tb_date.setText(reportDate);
+//		tb_date.setText(reportDate);
 		lb_greeting.setText("Hallo " + mainApp.loginName);
 
 	}
@@ -65,14 +66,29 @@ public class ProjectSelectionScreenController {
 			File file = fileChooser.getSelectedFile();
 			String filename = file.getAbsolutePath();
 			// String[] parts = string.split("/");
-			tb_status.setText(filename);
+//			tb_status.setText(filename);
 			// This is where a real application would open the file.
 
 		} else {
-			tb_status.setText("Open command cancelled by user.");
+//			tb_status.setText("Open command cancelled by user.");
 		}
 		// In response to a button click:
 		// int returnVal = fc.showOpenDialog(aComponent);
+	}
+	
+	//TB 20170907
+	// button methods
+	/**
+	 * Called when the user clicks the new button. Opens a dialog to edit
+	 * details for a new person.
+	 */
+	@FXML
+	private void handleNewProject() {
+//		Project tmpP = new Project();
+//		boolean okClicked = mainApp.showProjectInsertDialog();
+//		if (okClicked) {
+//			mainApp.getProjektData().add(tmpP);
+//		}
 	}
 
 	@FXML

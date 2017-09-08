@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -7,32 +11,62 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ProjectSelectionScreenController">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ProjectSelectionScreenController">
    <children>
-      <Pane prefHeight="383.0" prefWidth="800.0">
-         <children>
-            <Label layoutX="231.0" layoutY="14.0" text="Projekt Auswahl">
-               <font>
-                  <Font size="48.0" />
-               </font>
-            </Label>
-            <Label layoutX="96.0" layoutY="188.0" text="Wählen Sie ein Projekt aus">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="lb_greeting" layoutX="75.0" layoutY="101.0" />
-            <Label fx:id="lb_date" layoutX="590.0" layoutY="101.0" text="Datum :" />
-            <TextField fx:id="tb_status" editable="false" layoutX="495.0" layoutY="226.0" />
-            <Label layoutX="509.0" layoutY="188.0" text="Projektname">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Button fx:id="bt_accept" layoutX="356.0" layoutY="315.0" mnemonicParsing="false" onAction="#handleAccept" text="Bestätigen" />
-            <Button fx:id="bt_ProjektAuswahl" layoutX="165.0" layoutY="231.0" mnemonicParsing="false" onAction="#handleProjektAuswahl" text="Auswahl" />
-            <TextField fx:id="tb_date" layoutX="644.0" layoutY="97.0" prefHeight="25.0" prefWidth="100.0" />
-         </children>
-      </Pane>
+      <SplitPane dividerPositions="0.2" orientation="VERTICAL" pickOnBounds="false" prefHeight="383.0" prefWidth="800.0">
+        <items>
+          <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" SplitPane.resizableWithParent="false">
+               <children>
+                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Projekt Auswahl" textAlignment="CENTER" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_greeting" layoutX="77.0" layoutY="4.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="190.0" prefWidth="798.0">
+               <children>
+                  <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <TableView id="Project" fx:id="projectOverviewTable" fixedCellSize="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <columns>
+                                    <TableColumn id="projectName" fx:id="projectNameColumn" maxWidth="-1.0" minWidth="-Infinity" prefWidth="-1.0" resizable="false" text="Projekt" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <Button fx:id="bt_accept" layoutX="279.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAccept" text="Bestätigen" />
+                              <GridPane AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
+                                 <children>
+                                    <Label text="Projektname:" />
+                                    <Label fx:id="teamNameLabel" text="Label" GridPane.columnIndex="1" />
+                                 </children>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                              </GridPane>
+                              <Button layoutX="13.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleNewProject" prefHeight="10.0" prefWidth="70.0" text="Neu" />
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
    </children>
 </AnchorPane>

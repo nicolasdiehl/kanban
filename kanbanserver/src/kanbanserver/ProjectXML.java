@@ -2,6 +2,9 @@ package kanbanserver;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -69,6 +72,9 @@ public class ProjectXML
 
 	public void writeProjectXML(Project project)
 	{
+		// essentiall to cast a date into a string
+		DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
 		// create new file
 		File file = new File(projectXMLDirectory);
 
@@ -99,15 +105,33 @@ public class ProjectXML
 			// set attribute to project element
 			projectXML.setAttribute("pID", project.getID());
 
-			// add new element "pName" to user
+			// add new element "pName" to project
 			Element pName = doc.createElement("pName");
 			pName.appendChild(doc.createTextNode(project.getName()));
 			projectXML.appendChild(pName);
 
-			// add new element "pName" to user
-			Element projName = doc.createElement("pName");
-			projName.appendChild(doc.createTextNode(project.getName()));
-			projectXML.appendChild(projName);
+			// add new element "pDescription" to project
+			Element pDescription = doc.createElement("pDescription");
+			pDescription.appendChild(doc.createTextNode(project.getDescription()));
+			projectXML.appendChild(pDescription);
+
+			// add new element "mDate" to project
+			Element mDate = doc.createElement("mDate");
+			// cast Date to String
+			String reportMDate = df.format(project.getModified());
+			// 
+			mDate.appendChild(doc.createTextNode(reportMDate));
+			projectXML.appendChild(mDate);
+
+			// add new element "cDate" to project
+			Element cDate = doc.createElement("cDate");
+			// cast Date to String
+			String reportCDate = df.format(project.getCreated());
+			cDate.appendChild(doc.createTextNode(reportCDate));
+			projectXML.appendChild(cDate);
+			
+			// loop to store every task in xml file
+			
 
 			// write the content into xml file
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
