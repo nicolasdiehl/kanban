@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import control.ServerControl;
 import model.Project;
 import model.SimpleProject;
+
 
 /**
  * Main thread of the server. Handles xml and storage of data.
@@ -18,15 +20,8 @@ import model.SimpleProject;
 public class KServer {
 
 	static List<ServerThread> serverThreads = Collections.synchronizedList(new ArrayList<ServerThread>());
-	public static ArrayList<SimpleProject> listOfObjects;
-
+	
 	public static void main(String args[]) {
-
-		// Creation of test objects
-		listOfObjects = new ArrayList<SimpleProject>();
-		listOfObjects.add(new SimpleProject("name", "id"));
-		listOfObjects.add(new SimpleProject("name2", "id2"));
-		listOfObjects.add(new SimpleProject("name3", "id3"));
 
 		// Getting port
 		int port = 0;
@@ -80,6 +75,7 @@ public class KServer {
  */
 class ServerThread extends Thread {
 
+	ServerControl serverControl;
 	Boolean receivingMessages = true;
 	Object currentObject = null;
 	ObjectOutputStream objectOutputStream = null;
@@ -94,20 +90,20 @@ class ServerThread extends Thread {
 	 * For now, returns dummy objects. Will get a list from the xml or from
 	 * projects that are created from the xml.
 	 */
-	public void sendSimpleProjects() {
+	public void sendSimpleProjects(String userName) {
 		try {
 			System.out.println("Server Message: Sending SimpleProject 's.");
-			objectOutputStream.writeObject(KServer.listOfObjects);
+			objectOutputStream.writeObject(serverControl.getProjectsForUserLogin(userName));
 		} catch (IOException e) {
 			System.err.println("Server Error: Error sending list of simple objects to client.");
 			e.printStackTrace();
 		}
 	}
 	
-	public void sendSimpleUser() {
+	public void sendSimpleUser(String userName) {
 		try {
-			System.out.println("Server Message: Sending SimpleProject 's.");
-			objectOutputStream.writeObject(KServer.listOfObjects);
+			System.out.println("Server Message: Sending SimpleUser.");
+			objectOutputStream.writeObject(serverControl.userLogin(userName));
 		} catch (IOException e) {
 			System.err.println("Server Error: Error sending list of simple objects to client.");
 			e.printStackTrace();
@@ -143,15 +139,16 @@ class ServerThread extends Thread {
 					String switchString = (String) currentObject;
 					String[] switchArray = switchString.split("|");
 					if (switchArray.length == 2) {
-						switchString = switchArray[1];
+						switchString = switchArray[0];
 					}
 					switch (switchString) {
-					case "SimpleProjects":
-						System.out.println("Server Message: Client is requesting SimpleProject 's");
-						sendSimpleProjects();
+//					case "SimpleProjects":
+//						System.out.println("Server Message: Client is requesting SimpleProject 's");
+//						sendSimpleProjects();
 					case "Login":
 						System.out.println("Server Message: Client is requesting SimpleProject 's");
-						sendSimpleProjects();
+						sendSimpleUser(switchArray[1]);
+						sendSimpleProjects(switchArray[1]);
 					}
 				} else if (currentObject instanceof Project) {
 					Project project = (Project) currentObject;

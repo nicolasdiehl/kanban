@@ -7,7 +7,7 @@ import model.*;
 public class ClientControl {
 	
 	private static ClientControl instance = new ClientControl();
-	private IProject openProject = new Project("name", "description", 1);
+	private IProject openProject = new Project("title", "description", "me");
 	private List<IProject> sleepingProjects;
 	
 	
