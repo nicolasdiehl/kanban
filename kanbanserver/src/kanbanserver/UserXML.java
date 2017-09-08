@@ -12,6 +12,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import model.SimpleProject;
 import model.User;
 
 /**
@@ -19,66 +20,82 @@ import model.User;
  */
 public class UserXML
 {
+	private String userXMLDirectory;
+	
+	public UserXML(String directory, String login)
+	{
+		userXMLDirectory = directory + login + ".xml";
+	}
+	
 	/**
 	 * function to read a user xml file
 	 * see:https://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
 	 */
-	public static User readUserXML(String directory, String loginName)
+	public User readUserXML()
 	{
-		// create new Directory of the user xml
-		String userXMLDirectory = directory + loginName + ".xml";
-
 		try
 		{
-			//
-			File fXmlFile = new File(userXMLDirectory);
+			// create new file for import
+			File file = new File(userXMLDirectory);
 
 			// check if xml file exists
-			if (fXmlFile.exists())
+			if (file.exists())
 			{
-				System.out.println("XML wurde gefunden");
+				// Debugging output
+				//System.out.println("XML wurde gefunden");
 
+				// create new object of type document with the data of the xml
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder builder = factory.newDocumentBuilder();
-				Document doc = builder.parse(fXmlFile);
+				Document doc = builder.parse(file);
 
-				// normalize the XML Structure; >>recommended<<
+				// normalize the xml structure in the doc object; >>recommended<<
 				doc.getDocumentElement().normalize();
 
+				// Nodelist to store every element in root element
 				NodeList nList = doc.getElementsByTagName("data");
-				
-				// get user id
+
+				// get user id and store it as a string
 				NodeList userData = doc.getElementsByTagName("user");
 				Element uData = (Element) userData.item(0);
 				String uID = uData.getAttribute("uID");
 
-				for (int nodeAtPos = 0; nodeAtPos < nList.getLength(); nodeAtPos++)
-				{
-					Element e = (Element) nList.item(nodeAtPos);
-	
-					// get name
-					String name = e.getElementsByTagName("name").item(0).getTextContent().trim();
-	
-					// get currentProject
-					String currentProject = e.getElementsByTagName("currentProject").item(0).getTextContent().trim();
+				// get elements 
+				Element e = (Element) nList.item(0);
 
-					NodeList projectList = doc.getElementsByTagName("project");
-					List<String> projectArrayList = new ArrayList<String>();
-					for (int i = 0; i < projectList.getLength(); i++)
-					{
-						// get project id
-						NodeList pList = doc.getElementsByTagName("project");
-						Node proj = pList.item(i);
-						Element pro = (Element) proj;
-						String projectID = pro.getAttribute("pID");
-						projectArrayList.add(projectID);
-					}
-					
-					return new User (uID, name, "", projectArrayList, currentProject);
+				// get user name
+				String uName = e.getElementsByTagName("uName").item(0).getTextContent().trim();
+
+				// get current project and store name and id in object of type SimpleProject
+				NodeList cProjectData = doc.getElementsByTagName("cProject");
+				Element cpData = (Element) cProjectData.item(0);
+				SimpleProject currentProject = new SimpleProject(e.getElementsByTagName("cProject").item(0).getTextContent().trim(), cpData.getAttribute("pID"));
+
+				// get Elements of type authorizised projects
+				NodeList projectList = doc.getElementsByTagName("aProject");
+
+				// create new ArrayList of type SimpleProject to store every single authorizised project
+				List<SimpleProject> authorizisedProjects = new ArrayList<SimpleProject>();
+
+				// loop to store objects of type SimpleProject
+				for (int i = 0; i < projectList.getLength(); i++)
+				{
+					// get one project
+					NodeList pList = doc.getElementsByTagName("aProject");
+					Node proj = pList.item(i);
+					Element pro = (Element) proj;
+
+					// store data in new object of type SimpleProject in ArrayList authorizisedProjects
+					authorizisedProjects.add(new SimpleProject(pro.getTextContent(), pro.getAttribute("pID")));
 				}
+
+				// return object of type User with user id, user name, ArrayList containing objects(SimpleObject) of authorizised projects, and an object(SimpleObject) of the current project
+				return new User(uID, uName, "", authorizisedProjects, currentProject);
+
 			} else
 			{
-				System.out.println("XML wurde NICHT gefunden");
+				// Debugging output
+				//System.out.println("XML wurde NICHT gefunden");
 			}
 
 		} catch (ParserConfigurationException pce)
@@ -91,6 +108,8 @@ public class UserXML
 		{
 			e.printStackTrace();
 		}
+
+		// return null if file wasn't found
 		return null;
 	}
 
@@ -98,58 +117,69 @@ public class UserXML
 	 * function to write a user xml file
 	 * see:https://www.mkyong.com/java/how-to-create-xml-file-in-java-dom/
 	 */
-	public static void writeUserXML(User user, String directory, String loginName)
+	public void writeUserXML(User user)
 	{
-
-		// directory of the xml file
-		String userXMLDirectory = directory + loginName + ".xml"; //"C:\\Projects\\123456789.xml"
-
-		// delete existing xml file
+		// create new file
 		File file = new File(userXMLDirectory);
+		
+		// delete existing xml file
 		if (file.exists())
 		{
 			file.delete();
-			System.out.println("Alte XML wurde gelöscht");
-		}
 
+			//Debugging output
+			//System.out.println("Alte XML wurde gelöscht");
+		}
 		try
 		{
+			// create new object of type document to store the object of type User
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-
-			// root element "data"
 			Document doc = docBuilder.newDocument();
+
+			// create root Element in document
 			Element rootElement = doc.createElement("data");
 			doc.appendChild(rootElement);
 
-			// add new element "user" to rootElement "data"
+			// add new element "user" to root Element "data"
 			Element userXML = doc.createElement("user");
 			rootElement.appendChild(userXML);
 
 			// set attribute to user element
 			userXML.setAttribute("uID", user.getUid());
 
-			// add new element "name" to user
-			Element name = doc.createElement("name");
-			name.appendChild(doc.createTextNode(user.getName()));
-			userXML.appendChild(name);
+			// add new element "uName" to user
+			Element uName = doc.createElement("uName");
+			uName.appendChild(doc.createTextNode(user.getName()));
+			userXML.appendChild(uName);
 
-			// add new element "currentProject" to user
-			Element currentProject = doc.createElement("currentProject");
-			currentProject.appendChild(doc.createTextNode(user.getProjectCurrent()));
+			// add new element "cProject" to user
+			Element currentProject = doc.createElement("cProject");
+			// set attribute to currentProject element
+			currentProject.setAttribute("pID", user.getProjectCurrent().getId());
 			userXML.appendChild(currentProject);
 
-			// store all authorized projects 
-			List<String> aProjects = user.getProjects();
+			// add new element "pName" to currentProject
+			Element cpName = doc.createElement("pName");
+			cpName.appendChild(doc.createTextNode(user.getProjectCurrent().getName()));
+			currentProject.appendChild(cpName);
+
+			// store all authorized projects in a list of type SimpleProject
+			List<SimpleProject> aProjects = user.getProjects();
 
 			// loop to store every authorized project in xml
 			for (int i = 0; i < aProjects.size(); i++)
 			{
-				// add new element "projectX" to "authorizedProjects"
-				Element aProject = doc.createElement("project");
+				// add new element "aProject" to user
+				Element aProject = doc.createElement("aProject");
 				// set attribute to user element
-				aProject.setAttribute("pID", aProjects.get(i));
+				aProject.setAttribute("pID", aProjects.get(i).getId());
 				userXML.appendChild(aProject);
+
+				// add new element "pName" to aProject
+				Element apName = doc.createElement("pName");
+				apName.appendChild(doc.createTextNode(aProjects.get(i).getName()));
+				aProject.appendChild(apName);
 			}
 
 			// write the content into xml file
@@ -160,16 +190,19 @@ public class UserXML
 
 			transformer.transform(source, result);
 
-			System.out.println("Neue User XMl wurde angelegt");
+			// Debugging output
+			//System.out.println("Neue User XMl wurde angelegt");
 
 		} catch (ParserConfigurationException pce)
 		{
 			pce.printStackTrace();
-			System.out.println("Schreiben NICHT erfolgreich!");
+			// Debugging output
+			//System.out.println("Schreiben NICHT erfolgreich!");
 		} catch (TransformerException tfe)
 		{
 			tfe.printStackTrace();
-			System.out.println("Schreiben NICHT erfolgreich!");
+			// Debugging output
+			//System.out.println("Schreiben NICHT erfolgreich!");
 		}
 	}
 }

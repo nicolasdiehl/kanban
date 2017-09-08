@@ -1,5 +1,13 @@
 package view;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
 import control.ClientControl;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,20 +28,20 @@ public class NewTaskDialogController {
     @FXML
     private TextField titleTextField;
     @FXML
-    private TextArea descriptionTextField;
+    private TextArea descriptionTextField = new TextArea();
     @FXML
     private ComboBox<String> categoryComboBox;
     @FXML
     private ComboBox<String> statusComboBox;
     @FXML
-    private TextArea commentTextField;
+    private TextArea commentTextField = new TextArea();
     @FXML
     private Button okButton;
     @FXML
     private Button cancelButton;
     
     private Stage dialogStage;
-    private Task task;
+    private ITask task;
     private boolean okClicked = false;
     private ClientControl control = ClientControl.getInstance();
     
@@ -59,7 +67,7 @@ public class NewTaskDialogController {
      * 
      * @param task
      */
-    public void setTask(Task task) {
+    public void setTask(ITask task) {
 	this.task = task;
 	
 	titleTextField.setText(task.getTitle());
@@ -81,14 +89,21 @@ public class NewTaskDialogController {
     /**
      * Called when the user clicks ok.
      */
+    @SuppressWarnings("deprecation")
     @FXML
     private void handleOk() {
 	if (isInputValid()) {
 	    ITask task = new Task();
+	    Date date = new Date();
+	    List<String> items = Arrays.asList(commentTextField.getText().split("\\s*\\n\\s*"));
 	    
+	    task.setCreatorDate(date);
+	    task.setCreatorID("");
 	    task.setTitle(titleTextField.getText());
 	    task.setDescription(descriptionTextField.getText());
 	    task.setCategorie(statusComboBox.getSelectionModel().getSelectedItem());
+	    task.setComment(items);
+	    System.out.println(items.toString());
 	    task.setStatus(statusComboBox.getSelectionModel().getSelectedItem());
 	    
 	    IProject project = control.getOpenProject();

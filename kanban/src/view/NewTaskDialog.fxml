@@ -31,10 +31,10 @@
             <Label text="Status:" GridPane.rowIndex="4" />
             <Label text="Kommentar:" GridPane.rowIndex="3" />
             <TextField fx:id="titleTextField" promptText="Titel" GridPane.columnIndex="1" />
-            <TextArea fx:id="commentTextField" prefHeight="200.0" prefWidth="200.0" promptText="Kommentar" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <ComboBox fx:id="statusComboBox" prefHeight="25.0" prefWidth="500.0" promptText="ToDo" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextArea fx:id="descriptionTextField" prefHeight="200.0" prefWidth="200.0" promptText="Beschreibung" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ComboBox fx:id="categoryComboBox" prefHeight="25.0" prefWidth="500.0" promptText="Kategorie auswählen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextArea fx:id="commentTextField" prefHeight="200.0" prefWidth="200.0" promptText="Kommentar" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ComboBox fx:id="statusComboBox" prefHeight="25.0" prefWidth="500.0" promptText="ToDo" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
       <Button fx:id="cancelButton" cancelButton="true" layoutX="512.5" layoutY="350.0" mnemonicParsing="false" onAction="#handleCancel" prefWidth="75.0" text="Cancel" />

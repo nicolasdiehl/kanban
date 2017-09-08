@@ -2,9 +2,6 @@ package kanbanserver;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -13,17 +10,21 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import model.Project;
 
 public class ProjectXML
 {
-	public static Project readProjectXML(String directory, String loginName)
+	private String projectXMLDirectory;
+
+	public ProjectXML(String directory, String pID)
+	{
+		projectXMLDirectory = directory + pID + ".xml";
+	}
+
+	public Project readProjectXML(String directory, String loginName)
 	{
 		// create new Directory of the project xml
 		String projectXMLDirectory = directory + loginName + ".xml";
@@ -65,61 +66,48 @@ public class ProjectXML
 
 		return projectRead;
 	}
-	
-	public static void writeProjectXML(Project project, String directory, String loginName)
-	{
 
-		// directory of the xml file
-		String projectXMLDirectory = directory + loginName + ".xml"; //"C:\\Projects\\123456789.xml"
+	public void writeProjectXML(Project project)
+	{
+		// create new file
+		File file = new File(projectXMLDirectory);
 
 		// delete existing xml file
-		File file = new File(projectXMLDirectory);
 		if (file.exists())
 		{
 			file.delete();
-			System.out.println("Alte XML wurde gelöscht");
+
+			//Debugging output
+			//System.out.println("Alte XML wurde gelöscht");
 		}
 
 		try
 		{
+			// create new object of type document to store the object of type Project
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			Document doc = docBuilder.newDocument();
-			
-			
-//			Element rootElement = doc.createElement("data");
-//			doc.appendChild(rootElement);
-//
-//			// add new element "user" to rootElement "data"
-//			Element userXML = doc.createElement("user");
-//			rootElement.appendChild(userXML);
-//
-//			// set attribute to user element
-//			userXML.setAttribute("uID", user.getUid());
-//
-//			// add new element "name" to user
-//			Element name = doc.createElement("name");
-//			name.appendChild(doc.createTextNode(user.getName()));
-//			userXML.appendChild(name);
-//
-//			// add new element "currentProject" to user
-//			Element currentProject = doc.createElement("currentProject");
-//			currentProject.appendChild(doc.createTextNode(user.getProjectCurrent()));
-//			userXML.appendChild(currentProject);
-//
-//			// store all authorized projects 
-//			List<String> aProjects = new ArrayList<String>();
-//			aProjects = user.getProjects();
-//
-//			// loop to store every authorized project in xml
-//			for (int i = 0; i < aProjects.size(); i++)
-//			{
-//				// add new element "projectX" to "authorizedProjects"
-//				Element aProject = doc.createElement("project");
-//				// set attribute to user element
-//				aProject.setAttribute("pID", aProjects.get(i));
-//				userXML.appendChild(aProject);
-//			}
+
+			// create root Element in document
+			Element rootElement = doc.createElement("data");
+			doc.appendChild(rootElement);
+
+			// add new element "project" to root Element "data"
+			Element projectXML = doc.createElement("project");
+			rootElement.appendChild(projectXML);
+
+			// set attribute to project element
+			projectXML.setAttribute("pID", project.getID());
+
+			// add new element "pName" to user
+			Element pName = doc.createElement("pName");
+			pName.appendChild(doc.createTextNode(project.getName()));
+			projectXML.appendChild(pName);
+
+			// add new element "pName" to user
+			Element projName = doc.createElement("pName");
+			projName.appendChild(doc.createTextNode(project.getName()));
+			projectXML.appendChild(projName);
 
 			// write the content into xml file
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -129,7 +117,7 @@ public class ProjectXML
 
 			transformer.transform(source, result);
 
-			System.out.println("Neue User XMl wurde angelegt");
+			System.out.println("Neue Project XMl wurde angelegt");
 
 		} catch (ParserConfigurationException pce)
 		{
