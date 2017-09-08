@@ -49,7 +49,7 @@ public class LoginScreenController {
 	MainApp mainApp = new MainApp();
 	mainApp = mainApp.getInstance();
 	//MainApp gets altered to pass Users full name to next Stage
-	clientControl.userLogIn(usernameTextfield.getText(), mainApp);
+	clientControl.userLogIn(usernameTextfield.getText());
 	
 	mainApp.loginName = "";
 	
@@ -71,7 +71,7 @@ public class LoginScreenController {
     @FXML
     private void initialize() {
 	// Initialize the person table with the two columns.
-    	clientControl = clientControl.getInstance();
+    	clientControl = ClientControl.getInstance();
     }
     
     /**

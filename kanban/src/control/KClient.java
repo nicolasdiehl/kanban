@@ -80,6 +80,7 @@ public class KClient implements Runnable {
 		Boolean receivingMessages = true;
 		InetAddress address;
 		Object currentObject = null;
+		clientControl = ClientControl.getInstance();
 
 		// Getting port & url
 		while (port == null || url == null) {

@@ -22,13 +22,15 @@ public class ClientControl {
 	 * 
 	 * @param 
 	 */
-	public void userLogIn(String name, MainApp mainApp) {
+	public void userLogIn(String name) {
+		kclient = new KClient("",0);
+		System.out.println(name);
 		kclient.requestLogIn(name);
 		kclient.requestSimpleProjects(name);
-		this.mainApp = mainApp;
+//		this.mainApp = mainApp;
 	}	
 	public void simpleUserReturnedFromLogIn(SimpleUser simpleUserObj) {
-		mainApp.loginName = simpleUserObj.getFirstName() + " " + simpleUserObj.getLastName();
+//		mainApp.loginName = simpleUserObj.getFirstName() + " " + simpleUserObj.getLastName();
 	}
 	
 	public void simpleProjectsReturnedFromLogin(ArrayList<SimpleProject> returnedList) {
