@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import model.Project;
 import model.SimpleProject;
+import model.SimpleUser;
 import model.Task;
 
 /**
@@ -23,6 +24,7 @@ public class KClient implements Runnable {
 	private ObjectInputStream objectInputStream = null;
 	private Integer port;
 	private String url;
+	private ClientControl clientControl;
 
 	public KClient(String url, Integer port) {
 		this.port = port;
@@ -33,10 +35,19 @@ public class KClient implements Runnable {
 	 * Transmits a String to the server asking for a list of SimpleProject
 	 * Objects.
 	 */
-	public void requestSimpleProjects() {
+	public void requestSimpleProjects(String userName) {
 		try {
 			System.out.println("Client Message: Sending Request to get SimpleProject 's.");
-			objectOutputStream.writeObject("SimpleProjects");
+			objectOutputStream.writeObject("SimpleProjects|" + userName);
+		} catch (IOException e) {
+			System.err.println("Client Error: sending requestSimpleProjects message.");
+			e.printStackTrace();
+		}
+	}
+	public void requestLogIn(String userName) {
+		try {
+			System.out.println("Client Message: Sending Request to Log in.");
+			objectOutputStream.writeObject("Login|" + userName);
 		} catch (IOException e) {
 			System.err.println("Client Error: sending requestSimpleProjects message.");
 			e.printStackTrace();
@@ -99,7 +110,7 @@ public class KClient implements Runnable {
 
 		// Example first request
 		System.out.println("Client Message: Requesting list of Projects!");
-		requestSimpleProjects();
+//		requestSimpleProjects();
 
 		System.out.println("Client Message: Address:" + address);
 		System.out.println("Client Message: Receiving objects from server.");
@@ -115,6 +126,7 @@ public class KClient implements Runnable {
 						@SuppressWarnings("unchecked")
 						ArrayList<SimpleProject> returnedList = (ArrayList<SimpleProject>) currentObject;
 						System.out.println("received " + returnedList.size() + " SimpleObject objects.");
+						clientControl.simpleProjectsReturnedFromLogin(returnedList);
 					} else if (((ArrayList<?>) currentObject).get(0) instanceof Project) {
 						System.out.println("Client Message: Objects are SimpleProject 's.");
 						// do some other stuff
@@ -122,6 +134,10 @@ public class KClient implements Runnable {
 						System.out.println("Client Message: Objects are Task 's.");
 						// do some other other stuff
 					}
+				}
+				if (currentObject instanceof SimpleUser) {
+					System.out.println("Client Message: Object is SimpleUser.");
+					clientControl.simpleUserReturnedFromLogIn((SimpleUser)currentObject);
 				}
 			} catch (IOException | ClassNotFoundException | ClassCastException e) {
 				e.printStackTrace();

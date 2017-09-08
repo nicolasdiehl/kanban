@@ -3,6 +3,7 @@ package view;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
+import control.ClientControl;
 import control.MainApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -27,7 +28,7 @@ public class LoginScreenController {
     
     // Reference to the main application.
     private MainApp mainApp;
-    
+    private ClientControl clientControl;
     Stage prevStage;
     
     /**
@@ -46,8 +47,15 @@ public class LoginScreenController {
     public void dropLoginButton() {
 	
 	MainApp mainApp = new MainApp();
+	mainApp = mainApp.getInstance();
+	//MainApp gets altered to pass Users full name to next Stage
+	clientControl.userLogIn(usernameTextfield.getText(), mainApp);
 	
-	mainApp.loginName = this.usernameTextfield.getText();
+	mainApp.loginName = "";
+	
+	while (mainApp.loginName == "") {
+		
+	}
 	
 	// mainApp.showMainScreen();
 	mainApp.showProjectScreen();
@@ -63,7 +71,7 @@ public class LoginScreenController {
     @FXML
     private void initialize() {
 	// Initialize the person table with the two columns.
-	
+    	clientControl = clientControl.getInstance();
     }
     
     /**

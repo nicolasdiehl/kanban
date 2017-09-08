@@ -25,8 +25,8 @@ class ServerThread extends Thread {
 	}
 
 	/*
-	 * For now, returns dummy objects. Will get a list from the xml or from
-	 * projects that are created from the xml.
+	 * For now, returns dummy objects. Will get a list from the xml or from projects
+	 * that are created from the xml.
 	 */
 	public void sendSimpleProjects(String userName) {
 		try {
@@ -37,13 +37,13 @@ class ServerThread extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void sendSimpleUser(String userName) {
 		try {
 			System.out.println("Server Message: Sending SimpleUser.");
 			objectOutputStream.writeObject(serverControl.userLogin(userName));
 		} catch (IOException e) {
-			System.err.println("Server Error: Error sending list of simple objects to client.");
+			System.err.println("Server Error: Error sending SimpleUser object to client.");
 			e.printStackTrace();
 		}
 	}
@@ -80,13 +80,16 @@ class ServerThread extends Thread {
 						switchString = switchArray[0];
 					}
 					switch (switchString) {
-//					case "SimpleProjects":
-//						System.out.println("Server Message: Client is requesting SimpleProject 's");
-//						sendSimpleProjects();
+					// case "SimpleProjects":
+					// System.out.println("Server Message: Client is requesting SimpleProject 's");
+					// sendSimpleProjects();
 					case "Login":
 						System.out.println("Server Message: Client is requesting SimpleProject 's");
 						sendSimpleUser(switchArray[1]);
 						sendSimpleProjects(switchArray[1]);
+						break;
+					default:
+						break;
 					}
 				} else if (currentObject instanceof Project) {
 					Project project = (Project) currentObject;
@@ -134,9 +137,9 @@ class ServerThread extends Thread {
 		} finally {
 
 			// Removing ServerThread from list.
-//			synchronized (KServer.serverThreads) {
-//				KServer.serverThreads.remove(this);
-//			}
+			synchronized (KServer.serverThreads) {
+				KServer.serverThreads.remove(this);
+			}
 		}
 	}
 }
