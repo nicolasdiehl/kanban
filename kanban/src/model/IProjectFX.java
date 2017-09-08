@@ -77,12 +77,12 @@ public interface IProjectFX {
 	 * get a list of member ids and converts it to a ObservableList of member ids
 	 * @return ObservableList of member ids
 	 */
-	ObservableList<Integer> getMembersProperty();
+	ObservableList<String> getMembersProperty();
 		
 	/**
 	 * convert ObservableList of member ids to list of member id and set member id  list
 	 * @param value ObservableList of member ids
 	 */
-	void setMembers(ObservableList<Integer> value);
+	void setMembers(ObservableList<String> value);
 
 }

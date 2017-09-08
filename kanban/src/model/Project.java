@@ -27,7 +27,7 @@ public class Project implements IProject, IProjectFX{
 	
 	private ObservableList<ITask> tasksProperty = FXCollections.observableArrayList();
 	/**list of project member ids */
-	private List<Integer> members;	
+	private List<String> members;	
 	
 	/**
 	 * constructor for loading project
@@ -39,7 +39,7 @@ public class Project implements IProject, IProjectFX{
 	 * @param members		list of member ids
 	 * @param id						project id
 	 */
-	public Project(String name,String description,Date modified, Date created, List<ITask> tasks ,List<Integer> members, String id ) {
+	public Project(String name,String description,Date modified, Date created, List<ITask> tasks ,List<String> members, String id ) {
 		this.name = name;
 		this.description = description;
 		this.modified = modified;
@@ -58,12 +58,12 @@ public class Project implements IProject, IProjectFX{
 	 * @param description		project description
 	 * @param creator			creator id
 	 */
-	public Project(String name,String description ,int creator ) {
+	public Project(String name,String description ,String creator ) {
 			this(name, description,null,null,new ArrayList<ITask>(),null,UUID.randomUUID().toString());
 			Date current = new Date();
 			modified = current;
 			created = current;		
-			members = new ArrayList<Integer>();
+			members = new ArrayList<String>();
 			members.add(creator);
 	}
 	
@@ -129,12 +129,12 @@ public class Project implements IProject, IProjectFX{
 	}
 
 	@Override
-	public List<Integer> getMembers() {
-		return new ArrayList<Integer>(members);
+	public List<String> getMembers() {
+		return new ArrayList<String>(members);
 	}
 
 	@Override
-	public void setMembers(List<Integer> value) {
+	public void setMembers(List<String> value) {
 		members = value;		
 	}
 	
@@ -210,13 +210,13 @@ public class Project implements IProject, IProjectFX{
 	}
 
 	@Override
-	public ObservableList<Integer> getMembersProperty() {
+	public ObservableList<String> getMembersProperty() {
 		
-		return (ObservableList<Integer>)getMembers();
+		return (ObservableList<String>)getMembers();
 	}
 
 	@Override
-	public void setMembers(ObservableList<Integer> value) {
+	public void setMembers(ObservableList<String> value) {
 		members = value;	
 	}
 }
