@@ -23,7 +23,7 @@ public class ProjectXML
 	{
 		projectXMLDirectory = directory + pID + ".xml";
 	}
-	
+
 	public Project readProjectXML(String directory, String loginName)
 	{
 		// create new Directory of the project xml
@@ -66,17 +66,17 @@ public class ProjectXML
 
 		return projectRead;
 	}
-	
+
 	public void writeProjectXML(Project project)
 	{
 		// create new file
 		File file = new File(projectXMLDirectory);
-		
+
 		// delete existing xml file
 		if (file.exists())
 		{
 			file.delete();
-			
+
 			//Debugging output
 			//System.out.println("Alte XML wurde gelöscht");
 		}
@@ -87,15 +87,27 @@ public class ProjectXML
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			Document doc = docBuilder.newDocument();
-			
+
 			// create root Element in document
 			Element rootElement = doc.createElement("data");
 			doc.appendChild(rootElement);
-			
+
 			// add new element "project" to root Element "data"
 			Element projectXML = doc.createElement("project");
 			rootElement.appendChild(projectXML);
-			
+
+			// set attribute to project element
+			projectXML.setAttribute("pID", project.getID());
+
+			// add new element "pName" to user
+			Element pName = doc.createElement("pName");
+			pName.appendChild(doc.createTextNode(project.getName()));
+			projectXML.appendChild(pName);
+
+			// add new element "pName" to user
+			Element projName = doc.createElement("pName");
+			projName.appendChild(doc.createTextNode(project.getName()));
+			projectXML.appendChild(projName);
 
 			// write the content into xml file
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
