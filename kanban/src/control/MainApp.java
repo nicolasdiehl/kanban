@@ -8,9 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.ITaskFX;
+import mvc.controller.MainApp;
+import mvc.controller.MitgliedInsertDialogController;
 import view.MainScreenController;
+import view.NewProjectDialogController;
 import view.ProjectSelectionScreenController;
 
 public class MainApp extends Application {
@@ -150,6 +154,8 @@ public class MainApp extends Application {
 	    e.printStackTrace();
 	}
     }
+    
+    
     
     public boolean showNewTaskDialog(ITaskFX selectedTask) {
 	
