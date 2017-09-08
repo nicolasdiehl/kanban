@@ -62,6 +62,7 @@
             <ContextMenu>
               <items>
                 <MenuItem fx:id="newTaskContext" mnemonicParsing="false" onAction="#handleNewTask" text="Neuer Task" />
+                  <MenuItem fx:id="editSelectedTaskContextMenuItem" mnemonicParsing="false" onAction="#handleEditPerson" text="Edit Selected Task" />
               </items>
             </ContextMenu>
          </contextMenu>
@@ -94,8 +95,8 @@
             <Label text="Kommentare:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <TextArea fx:id="categoryTextArea" editable="false" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="200.0" promptText="Kategorie" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <TextArea fx:id="memberTextArea" editable="false" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="200.0" promptText="Teilnehmer" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <TextArea fx:id="descriptionTextArea" editable="false" maxHeight="55.0" minHeight="55.0" prefHeight="55.0" prefWidth="200.0" promptText="Beschreibung" GridPane.columnIndex="2" GridPane.rowIndex="4" GridPane.rowSpan="2" />
-            <TextArea fx:id="commentTextArea" editable="false" maxHeight="55.0" minHeight="55.0" prefHeight="55.0" prefWidth="200.0" promptText="Kommentare" GridPane.columnIndex="2" GridPane.rowIndex="6" GridPane.rowSpan="2" />
+            <TextArea fx:id="descriptionTextArea" editable="false" maxHeight="55.0" minHeight="55.0" prefHeight="55.0" prefWidth="200.0" promptText="Beschreibung" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="4" GridPane.rowSpan="2" />
+            <TextArea fx:id="commentTextArea" editable="false" maxHeight="55.0" minHeight="55.0" prefHeight="55.0" prefWidth="200.0" promptText="Kommentare" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="6" GridPane.rowSpan="2" />
             <TextArea fx:id="creationDateTextArea" editable="false" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="200.0" promptText="Erstellungsdatum" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <TextArea fx:id="creatorTextArea" editable="false" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="200.0" promptText="Ersteller" GridPane.columnIndex="2" />
          </children>

@@ -1,5 +1,7 @@
 package view;
 
+import java.util.function.Consumer;
+
 import control.ClientControl;
 import control.MainApp;
 import javafx.fxml.FXML;
@@ -26,6 +28,8 @@ public class MainScreenController {
     @FXML
     private MenuItem newTaskContextMenuItem;
     @FXML
+    private MenuItem editSelectedTaskContextMenuItem;
+    @FXML
     private Tab projectTab;
     @FXML
     private GridPane kanbanGridPane;
@@ -43,19 +47,17 @@ public class MainScreenController {
     private TextArea commentTextArea = new TextArea();
     @FXML
     private TableView<ITask> todoTTV;
-//    @FXML
-//    private TableView<Wip> wipTTV;
-//    @FXML
-//    private TableView<Done> doneTTV;
+    @FXML
+    private TableView<ITask> wipTTV;
+    @FXML
+    private TableView<ITask> doneTTV;
     @FXML
     private TableColumn<ITask, String> todoTTC;
-//    @FXML
-//    private TableColumn<Wip, String> wipTTC;
-//    @FXML
-//    private TableColumn<Done, String> doneTTC;
+    @FXML
+    private TableColumn<ITask, String> wipTTC;
+    @FXML
+    private TableColumn<ITask, String> doneTTC;
 
-//    @FXML
-//    private 
     
     private ClientControl control = ClientControl.getInstance();
     
@@ -144,6 +146,13 @@ public class MainScreenController {
      */
     private void showTaskDetails(ITask task) {
 	
+        creatorTextArea.setText("");
+        creationDateTextArea.setText("");
+        categoryTextArea.setText("");
+        memberTextArea.setText("");
+        descriptionTextArea.setText("");
+        commentTextArea.setText("");
+        
         if (task != null) {
             // Fill the labels with info from the person object.
             creatorTextArea.setText(task.getCreatorID());
@@ -151,7 +160,10 @@ public class MainScreenController {
             categoryTextArea.setText(task.getCategorie());
 //            memberTextArea.setText(task.getMember().toString());
             descriptionTextArea.setText(task.getDescription());
-            commentTextArea.setText(task.getComment().toString());
+            for (String element : task.getComment()) {
+		commentTextArea.appendText("- " + element + ";\n");
+	    }
+//            commentTextArea.setText(task.getComment().toString());
 
         } else {
             // Task is null, remove all the text.
