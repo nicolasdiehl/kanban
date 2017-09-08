@@ -103,6 +103,16 @@ class ServerThread extends Thread {
 			e.printStackTrace();
 		}
 	}
+	
+	public void sendSimpleUser() {
+		try {
+			System.out.println("Server Message: Sending SimpleProject 's.");
+			objectOutputStream.writeObject(KServer.listOfObjects);
+		} catch (IOException e) {
+			System.err.println("Server Error: Error sending list of simple objects to client.");
+			e.printStackTrace();
+		}
+	}
 
 	public void sendString(String str) {
 		try {
@@ -137,6 +147,9 @@ class ServerThread extends Thread {
 					}
 					switch (switchString) {
 					case "SimpleProjects":
+						System.out.println("Server Message: Client is requesting SimpleProject 's");
+						sendSimpleProjects();
+					case "Login":
 						System.out.println("Server Message: Client is requesting SimpleProject 's");
 						sendSimpleProjects();
 					}

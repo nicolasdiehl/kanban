@@ -3,6 +3,7 @@ package control;
 import kanbanserver.UserXML;
 import ldap.Ldap;
 import model.SimpleUser;
+import model.User;
 
 public class ServerControl {
 	
@@ -13,15 +14,21 @@ public class ServerControl {
 	public boolean userLogin (String userName) {
 		boolean isOk = false;
 		
-		SimpleUser user = new SimpleUser();
-		
-		isOk = ldap.login(userName, user);
+		SimpleUser userSimple = new SimpleUser();
+		User user;
+		isOk = ldap.login(userName, userSimple);
 		//User noch irgendwie an Client zurückschicken
-		if (userXML.readUserXML(System.getProperty("java.class.path") + "\\User\\", userName) == null) {
-			isOk = false;
+		if (!isOk) {
+			return isOk;
 		}
-		
-		
+		userXML = new UserXML(System.getProperty("java.class.path") + "\\User\\", userName);
+		user = userXML.readUserXML();
+		if (user == null) {
+			isOk = false;
+		}else {
+			
+		}
+				
 		return isOk;
 	}
 }
