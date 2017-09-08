@@ -21,8 +21,8 @@ public class KClient implements Runnable {
 	static Socket socket = null;
 	static ObjectOutputStream objectOutputStream = null;
 	static ObjectInputStream objectInputStream = null;
-	public Integer port;
-	public String url;
+	private Integer port;
+	private String url;
 
 	public KClient(String url, Integer port) {
 		this.port = port;
