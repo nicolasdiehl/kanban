@@ -18,9 +18,9 @@ import model.Task;
  */
 public class KClient implements Runnable {
 
-	static Socket socket = null;
-	static ObjectOutputStream objectOutputStream = null;
-	static ObjectInputStream objectInputStream = null;
+	private Socket socket = null;
+	private ObjectOutputStream objectOutputStream = null;
+	private ObjectInputStream objectInputStream = null;
 	private Integer port;
 	private String url;
 
@@ -33,7 +33,7 @@ public class KClient implements Runnable {
 	 * Transmits a String to the server asking for a list of SimpleProject
 	 * Objects.
 	 */
-	public static void requestSimpleProjects() {
+	public void requestSimpleProjects() {
 		try {
 			System.out.println("Client Message: Sending Request to get SimpleProject 's.");
 			objectOutputStream.writeObject("SimpleProjects");
@@ -46,7 +46,7 @@ public class KClient implements Runnable {
 	/*
 	 * Establishes a connection, tries again if fail.
 	 */
-	public static void connectToServer(InetAddress address, int port) {
+	public void connectToServer(InetAddress address, int port) {
 		// Connecting
 		System.out.print("Connecting.");
 		while (true) {
