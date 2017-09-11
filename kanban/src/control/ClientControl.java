@@ -1,5 +1,6 @@
 package control;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.*;
@@ -7,26 +8,33 @@ import model.*;
 public class ClientControl {
 	
 	private static ClientControl instance = new ClientControl();
-	private IProject openProject = new Project("name", "description", 1);
+	private IProject openProject = new Project("title", "description", "me");
 	private List<IProject> sleepingProjects;
-	
-	
+	private MainApp mainApp;
+	private KClient kclient;
 	public static ClientControl getInstance() {
 		return instance;
 	}
-	
+	/*		===================   LOGIN SECTION START ============*/
 	/**
 	 * logInUser gets called by LoginButton
+	 * starts request to server for full User Names and users projectlist
 	 * 
-	 * @return
+	 * @param 
 	 */
-	public boolean userLogIn(String name) {
-		boolean isLoggedIn = false;
-		//Kommunikation mit Server, der dann 
-		//LDAP call and log in
+	public void userLogIn(String name) {
+		kclient = new KClient("",0);
+		System.out.println(name);
+		kclient.requestLogIn(name);
+		kclient.requestSimpleProjects(name);
+//		this.mainApp = mainApp;
+	}	
+	public void simpleUserReturnedFromLogIn(SimpleUser simpleUserObj) {
+//		mainApp.loginName = simpleUserObj.getFirstName() + " " + simpleUserObj.getLastName();
+	}
+	
+	public void simpleProjectsReturnedFromLogin(ArrayList<SimpleProject> returnedList) {
 		
-		//funktion to get list of Projects from XML for that user
-		return isLoggedIn;
 	}
 	
 	public boolean projectCreate() {

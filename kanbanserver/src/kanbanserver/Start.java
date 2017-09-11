@@ -15,12 +15,12 @@ public class Start {
 			KServer.main(args);
 		} else if (args.length == 2) {
 			System.out.println("Running as client");
-			try {
-				KClient.main(args);
-			} catch (IOException e) {
-				System.out.println("Start Caught KClient's Exception!");
-				e.printStackTrace();
-			}
+//			try {
+//				KClient.main(args);
+//			} catch (IOException e) {
+//				System.out.println("Start Caught KClient's Exception!");
+//				e.printStackTrace();
+//			}
 		} else
 			System.out.println("Exiting, no argments given!");
 	}

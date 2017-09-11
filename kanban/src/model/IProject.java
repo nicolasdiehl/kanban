@@ -84,13 +84,13 @@ public interface IProject extends IProjectFX{
 	 * get list of member ids
 	 * @return integer list of member ids
 	 */
-	List<Integer> getMembers();
+	List<String> getMembers();
 	
 	/**
 	 * set list of member ids
 	 * @param value	list of member ids
 	 */
-	void setMembers(List<Integer> value);
+	void setMembers(List<String> value);
 	
 	/**
 	 * add task to list

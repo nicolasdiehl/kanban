@@ -16,81 +16,83 @@ import view.NewTaskDialogController;
 import view.ProjectSelectionScreenController;
 
 public class MainApp extends Application {
-    
-    private Stage primaryStage;
-    
-    private BorderPane rootLayout;
-    private AnchorPane loginLayout; /////////////////////
-    private AnchorPane newTaskLayout;
-    
-    public static String loginName;
-    /**
-     * The data as an observable list of Task.
-     */
-    // private ObservableList<ITaskFX> taskData =
-    // FXCollections.observableArrayList();
-    // private Project tempProject = new Project("name", "description", 2);
-    // private ObservableList<ITask> tempTaskData =
-    // tempProject.getTasksProperty();
-    
-    /**
-     * Constructor
-     */
-    public MainApp() {
-	// Add some sample data
-	// ITask task = new Task();
-	// task.setTitle("klingt gut");
-	// task.setDescribtion("blablablblub");
-	// taskData.add(task);
-	//
-	// task = new Task();
-	// task.setTitle("noch eins");
-	// taskData.add(task);
-    }
-    
-    /**
-     * Returns the data as an observable list of Persons.
-     * 
-     * @return
-     */
-    // public ObservableList<ITaskFX> getTaskData() {
-    // return taskData;
-    // }
-    
-    @Override
-    public void start(Stage primaryStage) {
-	this.primaryStage = primaryStage;
-	this.primaryStage.getIcons().add(new Image("KbLogo.png"));
-	this.primaryStage.setTitle("HEMS Kanban");
+
+	private Stage primaryStage;
+
+	private BorderPane rootLayout;
+	private AnchorPane loginLayout; /////////////////////
+	private AnchorPane newTaskLayout;
+	private static ClientControl clientControl;
 	
-	// initRootLayout();
-	showLoginScreen();
-    }
-    
-    /**
-     * Initializes the root layout.
-     */
-    public void initRootLayout() {
-	try {
-	    
-	    Stage stage = new Stage();
-	    stage.getIcons().add(new Image("KbLogo.png"));
-	    stage.setTitle("HEMS Kanban");
-	    
-	    // Load root layout from fxml file.
-	    FXMLLoader loader = new FXMLLoader();
-	    loader.setLocation(MainApp.class.getResource("/view/rootLayout.fxml"));
-	    rootLayout = (BorderPane) loader.load();
-	    
-	    // Show the scene containing the root layout.
-	    Scene scene = new Scene(rootLayout);
-	    stage.setScene(scene);
-	    stage.show();
-	    
-	} catch (IOException e) {
-	    e.printStackTrace();
+	public static String loginName;
+	/**
+	 * The data as an observable list of Task.
+	 */
+	// private ObservableList<ITaskFX> taskData =
+	// FXCollections.observableArrayList();
+	// private Project tempProject = new Project("name", "description", 2);
+	// private ObservableList<ITask> tempTaskData =
+	// tempProject.getTasksProperty();
+
+	/**
+	 * Constructor
+	 */
+	public MainApp() {
+		// Add some sample data
+		// ITask task = new Task();
+		// task.setTitle("klingt gut");
+		// task.setDescribtion("blablablblub");
+		// taskData.add(task);
+		//
+		// task = new Task();
+		// task.setTitle("noch eins");
+		// taskData.add(task);
 	}
-    }
+
+	/**
+	 * Returns the data as an observable list of Persons.
+	 * 
+	 * @return
+	 */
+	// public ObservableList<ITaskFX> getTaskData() {
+	// return taskData;
+	// }
+
+	@Override
+	public void start(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+		this.primaryStage.getIcons().add(new Image("KbLogo.png"));
+		this.primaryStage.setTitle("HEMS Kanban");
+
+		// initRootLayout();
+		showLoginScreen();
+	}
+
+	/**
+	 * Initializes the root layout.
+	 */
+	public void initRootLayout() {
+		try {
+
+			Stage stage = new Stage();
+			stage.getIcons().add(new Image("KbLogo.png"));
+			stage.setTitle("HEMS Kanban");
+
+			// Load root layout from fxml file.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("/view/rootLayout.fxml"));
+			rootLayout = (BorderPane) loader.load();
+
+			// Show the scene containing the root layout.
+			Scene scene = new Scene(rootLayout);
+			stage.setScene(scene);
+			stage.show();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+    
     
     public void showLoginScreen() {
 	try {
@@ -218,9 +220,9 @@ public class MainApp extends Application {
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
-	
 	return false;
     }
+
     
     /**
      * Returns the main stage.

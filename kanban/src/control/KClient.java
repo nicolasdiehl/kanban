@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import model.Project;
 import model.SimpleProject;
+import model.SimpleUser;
 import model.Task;
 
 /**
@@ -18,11 +19,12 @@ import model.Task;
  */
 public class KClient implements Runnable {
 
-	static Socket socket = null;
-	static ObjectOutputStream objectOutputStream = null;
-	static ObjectInputStream objectInputStream = null;
-	public Integer port;
-	public String url;
+	private Socket socket = null;
+	private ObjectOutputStream objectOutputStream = null;
+	private ObjectInputStream objectInputStream = null;
+	private Integer port;
+	private String url;
+	private ClientControl clientControl;
 
 	public KClient(String url, Integer port) {
 		this.port = port;
@@ -33,10 +35,20 @@ public class KClient implements Runnable {
 	 * Transmits a String to the server asking for a list of SimpleProject
 	 * Objects.
 	 */
-	public static void requestSimpleProjects() {
+	public void requestSimpleProjects(String userName) {
 		try {
 			System.out.println("Client Message: Sending Request to get SimpleProject 's.");
-			objectOutputStream.writeObject("SimpleProjects");
+			objectOutputStream.writeObject("SimpleProjects|" + userName);
+		} catch (IOException e) {
+			System.err.println("Client Error: sending requestSimpleProjects message.");
+			e.printStackTrace();
+		}
+	}
+	public void requestLogIn(String userName) {
+		try {
+			System.out.println("Client Message: Sending Request to Log in.");
+			String sendstring = "Login|" + userName;
+			objectOutputStream.writeObject(sendstring);
 		} catch (IOException e) {
 			System.err.println("Client Error: sending requestSimpleProjects message.");
 			e.printStackTrace();
@@ -46,7 +58,7 @@ public class KClient implements Runnable {
 	/*
 	 * Establishes a connection, tries again if fail.
 	 */
-	public static void connectToServer(InetAddress address, int port) {
+	public void connectToServer(InetAddress address, int port) {
 		// Connecting
 		System.out.print("Connecting.");
 		while (true) {
@@ -69,6 +81,7 @@ public class KClient implements Runnable {
 		Boolean receivingMessages = true;
 		InetAddress address;
 		Object currentObject = null;
+		clientControl = ClientControl.getInstance();
 
 		// Getting port & url
 		while (port == null || url == null) {
@@ -98,11 +111,11 @@ public class KClient implements Runnable {
 		connectToServer(address, port);
 
 		// Example first request
-		System.out.println("Client Message: Requesting list of Projects!");
-		requestSimpleProjects();
+//		System.out.println("Client Message: Requesting list of Projects!");
+//		requestSimpleProjects();
 
-		System.out.println("Client Message: Address:" + address);
-		System.out.println("Client Message: Receiving objects from server.");
+//		System.out.println("Client Message: Address:" + address);
+//		System.out.println("Client Message: Receiving objects from server.");
 
 		// Listening
 		while (receivingMessages) {
@@ -115,6 +128,7 @@ public class KClient implements Runnable {
 						@SuppressWarnings("unchecked")
 						ArrayList<SimpleProject> returnedList = (ArrayList<SimpleProject>) currentObject;
 						System.out.println("received " + returnedList.size() + " SimpleObject objects.");
+						clientControl.simpleProjectsReturnedFromLogin(returnedList);
 					} else if (((ArrayList<?>) currentObject).get(0) instanceof Project) {
 						System.out.println("Client Message: Objects are SimpleProject 's.");
 						// do some other stuff
@@ -122,6 +136,10 @@ public class KClient implements Runnable {
 						System.out.println("Client Message: Objects are Task 's.");
 						// do some other other stuff
 					}
+				}
+				if (currentObject instanceof SimpleUser) {
+					System.out.println("Client Message: Object is SimpleUser.");
+					clientControl.simpleUserReturnedFromLogIn((SimpleUser)currentObject);
 				}
 			} catch (IOException | ClassNotFoundException | ClassCastException e) {
 				e.printStackTrace();

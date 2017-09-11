@@ -2,6 +2,9 @@ package kanbanserver;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -23,7 +26,7 @@ public class ProjectXML
 	{
 		projectXMLDirectory = directory + pID + ".xml";
 	}
-	
+
 	public Project readProjectXML(String directory, String loginName)
 	{
 		// create new Directory of the project xml
@@ -66,17 +69,20 @@ public class ProjectXML
 
 		return projectRead;
 	}
-	
+
 	public void writeProjectXML(Project project)
 	{
+		// essentiall to cast a date into a string
+		DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
 		// create new file
 		File file = new File(projectXMLDirectory);
-		
+
 		// delete existing xml file
 		if (file.exists())
 		{
 			file.delete();
-			
+
 			//Debugging output
 			//System.out.println("Alte XML wurde gelöscht");
 		}
@@ -87,14 +93,44 @@ public class ProjectXML
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			Document doc = docBuilder.newDocument();
-			
+
 			// create root Element in document
 			Element rootElement = doc.createElement("data");
 			doc.appendChild(rootElement);
-			
+
 			// add new element "project" to root Element "data"
 			Element projectXML = doc.createElement("project");
 			rootElement.appendChild(projectXML);
+
+			// set attribute to project element
+			projectXML.setAttribute("pID", project.getID());
+
+			// add new element "pName" to project
+			Element pName = doc.createElement("pName");
+			pName.appendChild(doc.createTextNode(project.getName()));
+			projectXML.appendChild(pName);
+
+			// add new element "pDescription" to project
+			Element pDescription = doc.createElement("pDescription");
+			pDescription.appendChild(doc.createTextNode(project.getDescription()));
+			projectXML.appendChild(pDescription);
+
+			// add new element "mDate" to project
+			Element mDate = doc.createElement("mDate");
+			// cast Date to String
+			String reportMDate = df.format(project.getModified());
+			// 
+			mDate.appendChild(doc.createTextNode(reportMDate));
+			projectXML.appendChild(mDate);
+
+			// add new element "cDate" to project
+			Element cDate = doc.createElement("cDate");
+			// cast Date to String
+			String reportCDate = df.format(project.getCreated());
+			cDate.appendChild(doc.createTextNode(reportCDate));
+			projectXML.appendChild(cDate);
+			
+			// loop to store every task in xml file
 			
 
 			// write the content into xml file
