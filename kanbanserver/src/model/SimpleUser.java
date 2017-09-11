@@ -1,8 +1,11 @@
 package model;
 
+import java.io.Serializable;
+
 import javafx.beans.property.SimpleStringProperty;
 
-public class SimpleUser {
+public class SimpleUser implements Serializable{
+	private static final long serialVersionUID = -2398503995120490637L;
 	private String firstName;
 	private String lastName;
 
