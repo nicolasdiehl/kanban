@@ -67,8 +67,7 @@ public class MainScreenController {
      */
     @FXML
     private void handleNewTask() {
-	ITask tempTask = new Task();
-	mainApp.showNewTaskDialog(tempTask);
+	mainApp.showNewTaskDialog();
 //        boolean okClicked = mainApp.showNewTaskDialog(tempTask);
 //        if (okClicked) {
 //            mainApp.getTaskData().add(tempTask);
@@ -83,7 +82,7 @@ public class MainScreenController {
     private void handleEditPerson() {
 	ITask selectedTask = todoTTV.getSelectionModel().getSelectedItem();
 	if (selectedTask != null) {
-	    boolean okClicked = mainApp.showNewTaskDialog(selectedTask);
+	    boolean okClicked = mainApp.showEditTaskDialog(selectedTask);
 	    if (okClicked) {
 		showTaskDetails(selectedTask);
 	    }

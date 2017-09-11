@@ -51,17 +51,17 @@ public class NewTaskDialogController {
      */
     @FXML
     private void initialize() {
-	 ITask task = new Task();
-	    Date date = new Date();
-	    List<String> items = Arrays.asList(commentTextField.getText().split("\\s*\\n\\s*"));
-	    
-	    task.setCreatorDate(date);
-	    task.setCreatorID("");
-	    task.setTitle(titleTextField.getText());
-	    task.setDescription(descriptionTextField.getText());
-	    task.setCategorie(statusComboBox.getSelectionModel().getSelectedItem());
-	    task.setComment(items);
-	    task.setStatus(statusComboBox.getSelectionModel().getSelectedItem());
+//	 ITask task = new Task();
+//	    Date date = new Date();
+//	    List<String> items = Arrays.asList(commentTextField.getText().split("\\s*\\n\\s*"));
+//	    
+//	    task.setCreatorDate(date);
+//	    task.setCreatorID("");
+//	    task.setTitle(titleTextField.getText());
+//	    task.setDescription(descriptionTextField.getText());
+//	    task.setCategorie(statusComboBox.getSelectionModel().getSelectedItem());
+//	    task.setComment(items);
+//	    task.setStatus(statusComboBox.getSelectionModel().getSelectedItem());
     }
     
     /**
