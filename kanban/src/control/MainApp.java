@@ -23,7 +23,7 @@ public class MainApp extends Application {
 	private AnchorPane loginLayout; /////////////////////
 	private AnchorPane newTaskLayout;
 	private static ClientControl clientControl;
-
+	
 	public static String loginName;
 	/**
 	 * The data as an observable list of Task.
@@ -197,15 +197,13 @@ public class MainApp extends Application {
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
-	public MainApp getInstance() {
-		return this;
-	}
 
 	public static void main(String[] args) {
 		// Start Client thread?
 		System.out.println("starting thread of client");
 		Thread clientThread = new Thread(new KClient("local", 6667));
 		clientThread.start();
+		
 		launch(args);
 	}
 }

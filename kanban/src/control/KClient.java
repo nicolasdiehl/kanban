@@ -47,7 +47,8 @@ public class KClient implements Runnable {
 	public void requestLogIn(String userName) {
 		try {
 			System.out.println("Client Message: Sending Request to Log in.");
-			objectOutputStream.writeObject("Login|" + userName);
+			String sendstring = "Login|" + userName;
+			objectOutputStream.writeObject(sendstring);
 		} catch (IOException e) {
 			System.err.println("Client Error: sending requestSimpleProjects message.");
 			e.printStackTrace();
@@ -110,11 +111,11 @@ public class KClient implements Runnable {
 		connectToServer(address, port);
 
 		// Example first request
-		System.out.println("Client Message: Requesting list of Projects!");
+//		System.out.println("Client Message: Requesting list of Projects!");
 //		requestSimpleProjects();
 
-		System.out.println("Client Message: Address:" + address);
-		System.out.println("Client Message: Receiving objects from server.");
+//		System.out.println("Client Message: Address:" + address);
+//		System.out.println("Client Message: Receiving objects from server.");
 
 		// Listening
 		while (receivingMessages) {

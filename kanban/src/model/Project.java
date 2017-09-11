@@ -146,7 +146,7 @@ public class Project implements IProject, IProjectFX{
 
 	@Override
 	public void addMember(int value) {
-		members.add(value);	
+//		members.add(value);	
 	}
 
 	@Override

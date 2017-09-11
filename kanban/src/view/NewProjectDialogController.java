@@ -90,7 +90,7 @@ public class NewProjectDialogController {
 			 * refresh ObservableList when the user clicks ok.
 			 */
 			MainApp mainApp = new MainApp();
-			mainApp.refreshProjectList();
+//			mainApp.refreshProjectList();
 		}
 	}
 
