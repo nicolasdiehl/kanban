@@ -42,7 +42,7 @@ public class Ldap {
 
 			Table.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 			Table.put(Context.PROVIDER_URL, Host); // set Hostname
-			Table.put("java.naming.ldap.factory.socket", "test.MySSLSocketFactory"); // SSL authentication factory
+			Table.put("java.naming.ldap.factory.socket", "Ldap.MySSLSocketFactory"); // SSL authentication factory
 			Table.put(Context.SECURITY_AUTHENTICATION, ConnType); // none = no login data required
 
 			LdapContext = new InitialDirContext(Table);
@@ -52,7 +52,7 @@ public class Ldap {
 			return true;
 
 		} catch (Exception ex) {
-			System.out.println("Ldap connect - " + ex);
+			System.out.println("Ldap connect error- " + ex);
 			return false;
 		}
 	}
@@ -65,9 +65,10 @@ public class Ldap {
 			if (LdapContext != null) {
 				LdapContext.close();
 				LdapContext = null;
+				System.out.println("Ldap context closed");
 			}
 		} catch (NamingException ex) {
-			System.out.println("Ldap disconnect - " + ex);
+			System.out.println("Ldap context close error - " + ex);
 		}
 	}
 
@@ -103,7 +104,7 @@ public class Ldap {
 			User.setFirstName(FirstName);
 			User.setLastName(LastName);
 
-			System.out.println(Temp);
+			System.out.println("Uid found on Ldap - name: " + Temp);
 
 		} else { // uid not found on ldap
 			System.out.println(SearchFilter + " not found on Ldap");
