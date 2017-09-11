@@ -199,10 +199,6 @@ public class MainApp extends Application {
 	}
 
 	public static void main(String[] args) {
-		// Start Client thread?
-		System.out.println("starting thread of client");
-		Thread clientThread = new Thread(new KClient("local", 6667));
-		clientThread.start();
 		
 		launch(args);
 	}

@@ -11,10 +11,21 @@ public class ClientControl {
 	private IProject openProject = new Project("title", "description", "me");
 	private List<IProject> sleepingProjects;
 	private MainApp mainApp;
+	private Thread clientThread;
 	private KClient kclient;
+	
 	public static ClientControl getInstance() {
 		return instance;
 	}
+	
+	public ClientControl() {
+		// Start Client thread?
+		System.out.println("starting thread of client");
+		kclient = new KClient("local", 6667);
+		this.clientThread = new Thread(kclient);
+		this.clientThread.start();
+	}
+	
 	/*		===================   LOGIN SECTION START ============*/
 	/**
 	 * logInUser gets called by LoginButton
@@ -22,15 +33,14 @@ public class ClientControl {
 	 * 
 	 * @param 
 	 */
-	public void userLogIn(String name) {
-		kclient = new KClient("",0);
+	public void userLogIn(String name, MainApp mainApp) {
 		System.out.println(name);
 		kclient.requestLogIn(name);
 		kclient.requestSimpleProjects(name);
-//		this.mainApp = mainApp;
+		this.mainApp = mainApp;
 	}	
 	public void simpleUserReturnedFromLogIn(SimpleUser simpleUserObj) {
-//		mainApp.loginName = simpleUserObj.getFirstName() + " " + simpleUserObj.getLastName();
+		mainApp.loginName = simpleUserObj.getFirstName() + " " + simpleUserObj.getLastName();
 	}
 	
 	public void simpleProjectsReturnedFromLogin(ArrayList<SimpleProject> returnedList) {

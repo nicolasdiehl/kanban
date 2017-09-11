@@ -25,6 +25,7 @@ public class KClient implements Runnable {
 	private Integer port;
 	private String url;
 	private ClientControl clientControl;
+	private Object message;
 
 	public KClient(String url, Integer port) {
 		this.port = port;
@@ -52,6 +53,8 @@ public class KClient implements Runnable {
 		} catch (IOException e) {
 			System.err.println("Client Error: sending requestSimpleProjects message.");
 			e.printStackTrace();
+		}finally {
+			System.out.println("Request sent");
 		}
 	}
 

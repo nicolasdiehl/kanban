@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.regex.Pattern;
 
 import control.ServerControl;
 import model.Project;
+import model.SimpleUser;
 
 /*
  * One server thread per client, handles communication.
@@ -41,7 +43,11 @@ class ServerThread extends Thread {
 	public void sendSimpleUser(String userName) {
 		try {
 			System.out.println("Server Message: Sending SimpleUser.");
-			objectOutputStream.writeObject(serverControl.userLogin(userName));
+			SimpleUser userDummy = new SimpleUser();
+			userDummy.setFirstName("Hans");
+			userDummy.setLastName("Dampf");
+			objectOutputStream.writeObject(userDummy);
+//			objectOutputStream.writeObject(serverControl.userLogin(userName));
 		} catch (IOException e) {
 			System.err.println("Server Error: Error sending SimpleUser object to client.");
 			e.printStackTrace();
@@ -75,7 +81,8 @@ class ServerThread extends Thread {
 				if (currentObject instanceof String) {
 					System.out.println("Server Message: Received String Object");
 					String switchString = (String) currentObject;
-					String[] switchArray = switchString.split("|");
+					String[] switchArray = switchString.split(Pattern.quote("|"));
+					System.out.println(switchArray[0]);
 					if (switchArray.length == 2) {
 						switchString = switchArray[0];
 					}
