@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import control.ServerControl;
 import model.Project;
+import model.SimpleProject;
 import model.SimpleUser;
 
 /*
@@ -33,7 +35,8 @@ class ServerThread extends Thread {
 	public void sendSimpleProjects(String userName) {
 		try {
 			System.out.println("Server Message: Sending SimpleProject 's.");
-			objectOutputStream.writeObject(serverControl.getProjectsForUserLogin(userName));
+			ArrayList<SimpleProject> projectList = serverControl.getProjectsForUserLogin(userName);
+			objectOutputStream.writeObject(projectList);
 		} catch (IOException e) {
 			System.err.println("Server Error: Error sending list of simple objects to client.");
 			e.printStackTrace();
@@ -43,10 +46,8 @@ class ServerThread extends Thread {
 	public void sendSimpleUser(String userName) {
 		try {
 			System.out.println("Server Message: Sending SimpleUser.");
-			SimpleUser userDummy = new SimpleUser();
-			userDummy.setFirstName("Hans");
-			userDummy.setLastName("Dampf");
-			objectOutputStream.writeObject(userDummy);
+			SimpleUser simpleUser = serverControl.userLogin(userName);
+			objectOutputStream.writeObject(simpleUser);
 //			objectOutputStream.writeObject(serverControl.userLogin(userName));
 		} catch (IOException e) {
 			System.err.println("Server Error: Error sending SimpleUser object to client.");
@@ -65,7 +66,7 @@ class ServerThread extends Thread {
 	}
 
 	public void run() {
-
+		serverControl = new ServerControl();
 		// Setup streams
 		try {
 			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
