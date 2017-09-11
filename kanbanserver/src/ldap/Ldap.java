@@ -41,10 +41,9 @@ public class Ldap {
 			Hashtable<String, String> Table = new Hashtable<String, String>();
 
 			Table.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-			Table.put(Context.PROVIDER_URL, Host); 											// set Hostname
-			Table.put("java.naming.ldap.factory.socket", "test.MySSLSocketFactory"); 		// SSL authentication factory
-			Table.put(Context.SECURITY_AUTHENTICATION, ConnType); 							// none = no login data required
-
+			Table.put(Context.PROVIDER_URL, Host); // set Hostname
+			Table.put("java.naming.ldap.factory.socket", "test.MySSLSocketFactory"); // SSL authentication factory
+			Table.put(Context.SECURITY_AUTHENTICATION, ConnType); // none = no login data required
 
 			LdapContext = new InitialDirContext(Table);
 
@@ -81,14 +80,14 @@ public class Ldap {
 	 */
 	private boolean search(String SearchBase, String SearchFilter, SimpleUser User) throws NamingException {
 
-	    String FirstName;
-	    String LastName;
+		String FirstName;
+		String LastName;
 
-		SearchControls SearchControl = new SearchControls(SearchControls.SUBTREE_SCOPE, 1L,     // countlimit
-																						0, 		// time limit
-																						null,   // attributes (null = all)
-																						false,  // return object
-																						false); // dereference links
+		SearchControls SearchControl = new SearchControls(SearchControls.SUBTREE_SCOPE, 1L, // countlimit
+				0, // time limit
+				null, // attributes (null = all)
+				false, // return object
+				false); // dereference links
 
 		NamingEnumeration<SearchResult> NE = LdapContext.search(SearchBase, "uid=" + SearchFilter, SearchControl);
 
@@ -124,7 +123,6 @@ public class Ldap {
 		if (!connect())
 			return Result;
 		try {
-
 
 			Result = search(SearchBase, HemsUid, User);
 		} catch (NamingException ex) {

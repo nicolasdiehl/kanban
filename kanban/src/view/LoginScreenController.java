@@ -47,7 +47,7 @@ public class LoginScreenController {
 
 		// MainApp gets altered to pass Users full name to next Stage
 //		 try {
-		clientControl.userLogIn(usernameTextfield.getText());
+		clientControl.userLogIn(usernameTextfield.getText(), mainApp);
 //		 } catch (NullPointerException e) {
 //		 e.printStackTrace();
 //		 }
