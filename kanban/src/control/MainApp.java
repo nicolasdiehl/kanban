@@ -12,6 +12,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.ITask;
 import view.MainScreenController;
+import view.NewProjectDialogController;
 import view.NewTaskDialogController;
 import view.ProjectSelectionScreenController;
 
@@ -193,6 +194,37 @@ public class MainApp extends Application {
 	    e.printStackTrace();    
 	}
 	return false;
+    }
+    
+    public void showProjectInsertDialog() {
+	try {
+	    // Load the fxml file and create a new stage for the popup dialog.
+	    FXMLLoader loader = new FXMLLoader();
+	    loader.setLocation(MainApp.class.getResource("/view/NewProjectDialog.fxml"));
+	    newTaskLayout = (AnchorPane) loader.load();
+	    
+	    // Create the dialog Stage.
+	    Stage dialogStage = new Stage();
+	    dialogStage.getIcons().add(new Image("KbLogo.png"));
+	    dialogStage.setTitle("New Project");
+	    dialogStage.initModality(Modality.WINDOW_MODAL);
+	    dialogStage.initOwner(primaryStage);
+	    
+	    Scene scene = new Scene(newTaskLayout);
+	    dialogStage.setScene(scene);
+	    // dialogStage.show();
+	    
+	    // Set the task into the controller.
+	    NewProjectDialogController controller = loader.getController();
+	    controller.setDialogStage(dialogStage);
+	    // controller.setTask(selectedTask);
+	    
+	    // Show the dialog and wait until the user closes it
+	    dialogStage.showAndWait();
+	    
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}	
     }
     
     public static void main(String[] args) {
