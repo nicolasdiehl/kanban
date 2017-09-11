@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,7 +17,10 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import model.ITask;
 import model.Project;
+import model.SimpleProject;
+import model.User;
 
 public class ProjectXML
 {
@@ -52,7 +56,11 @@ public class ProjectXML
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document doc = builder.parse(fXmlFile);
+			
+			
 
+			
+			
 			// normalize the XML Structure; >>recommended<<
 			doc.getDocumentElement().normalize();
 
@@ -130,8 +138,67 @@ public class ProjectXML
 			cDate.appendChild(doc.createTextNode(reportCDate));
 			projectXML.appendChild(cDate);
 			
-			// loop to store every task in xml file
+			// store all authorized projects in a list of type SimpleProject
+			List<ITask> taskList = project.getTasks();
 			
+			// loop to store every task in xml file
+			for (int i = 0; i < taskList.size(); i++)
+			{
+				// add new element "task" to project
+				Element task = doc.createElement("task");
+				projectXML.appendChild(task);
+				// add attribute title to task
+				task.setAttribute("tName", taskList.get(i).getTitle());
+				// add new element "description" to task
+				Element tDescription = doc.createElement("tDescription");
+				tDescription.appendChild(doc.createTextNode(taskList.get(i).getDescription()));
+				task.appendChild(tDescription);
+				// add new element "categorie" to task
+				Element tCategorie = doc.createElement("tCategorie");
+				tCategorie.appendChild(doc.createTextNode(taskList.get(i).getCategorie()));
+				task.appendChild(tCategorie);
+				// add new element "status" to task
+				Element tStatus = doc.createElement("tStatus");
+				tStatus.appendChild(doc.createTextNode(taskList.get(i).getStatus()));
+				task.appendChild(tStatus);
+				// add new element "creatorID" to task
+				Element tCreatorID = doc.createElement("tCreatorID");
+				tCreatorID.appendChild(doc.createTextNode(taskList.get(i).getCreatorID()));
+				task.appendChild(tCreatorID);
+				// add new element "lastCall" to task
+				Element tLastCall = doc.createElement("tLastCall");
+				// cast Date to String
+				String reportLastCall = df.format(taskList.get(i).getLastCall());
+				tLastCall.appendChild(doc.createTextNode(reportLastCall));
+				task.appendChild(tLastCall);
+				// add new element "dateCreate" to task
+				Element tDateCreate = doc.createElement("tDateCreate");
+				// cast Date to String
+				String reportDateCreate = df.format(taskList.get(i).getCreatorDate());
+				tDateCreate.appendChild(doc.createTextNode(reportDateCreate));
+				task.appendChild(tDateCreate);
+							
+				// loop to store the memberList in project xml
+				
+				
+//				// add new element "comment" to task
+//				Element tComment = doc.createElement("tComment");
+//				task.appendChild(tComment);
+//				
+//				// store all comments in a list of type String
+//				List<String> comments = taskList.get(i).getComment();
+//				// loop to store the commentlines in comment
+//				for (int d = 0; d < comments.size(); d++)
+//				{
+//					// add new element "commentline" to comment
+//					Element tCommentLine = doc.createElement("tCommentLine");
+//					
+//					tComment.appendChild(tCommentLine);
+//					
+//				}
+//				
+//				// add new element "List<String> comment" to task
+			}
 
 			// write the content into xml file
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
