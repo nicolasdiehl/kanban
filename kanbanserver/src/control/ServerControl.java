@@ -17,7 +17,7 @@ public class ServerControl {
 
 	public SimpleUser userLogin(String userName) {
 		
-		Ldap ldap = new Ldap("","");
+		Ldap ldap = new Ldap("ldaps://10.16.1.1:636","ou=accounts,dc=linuxmuster-net,dc=lokal");
 		SimpleUser userSimple = new SimpleUser();
 
 		ldap.login(userName, userSimple);

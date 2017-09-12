@@ -41,6 +41,7 @@ public class ClientControl {
 	}	
 	public void simpleUserReturnedFromLogIn(SimpleUser simpleUserObj) {
 		mainApp.loginName = simpleUserObj.getFirstName() + " " + simpleUserObj.getLastName();
+		System.out.println(mainApp.loginName);
 	}
 	
 	public void simpleProjectsReturnedFromLogin(ArrayList<SimpleProject> returnedList) {
