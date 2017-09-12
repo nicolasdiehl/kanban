@@ -75,7 +75,7 @@ public class UserXML
 				NodeList projectList = doc.getElementsByTagName("aProject");
 
 				// create new ArrayList of type SimpleProject to store every single authorizised project
-				List<SimpleProject> authorizisedProjects = new ArrayList<SimpleProject>();
+				ArrayList<SimpleProject> authorizisedProjects = new ArrayList<SimpleProject>();
 
 				// loop to store objects of type SimpleProject
 				for (int i = 0; i < projectList.getLength(); i++)
@@ -90,7 +90,7 @@ public class UserXML
 				}
 
 				// return object of type User with user id, user name, ArrayList containing objects(SimpleObject) of authorizised projects, and an object(SimpleObject) of the current project
-				return new User(uID, uName, "", authorizisedProjects, currentProject);
+				return new User(uID, uName,  authorizisedProjects, currentProject);
 
 			} else
 			{
