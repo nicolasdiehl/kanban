@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 import java.util.*;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class User implements Serializable
@@ -47,6 +48,14 @@ public class User implements Serializable
 		this.name = name;
 		this.pw = pw;
 		this.projects = projects;
+		this.setProjectCurrent(projectCurrent);
+	}
+	public User(String uid, String name, String pw, List<SimpleProject> projects, SimpleProject projectCurrent)
+	{
+		this.uid = uid;
+		this.name = name;
+		this.pw = pw;
+		this.projects = FXCollections.observableArrayList(projects);
 		this.setProjectCurrent(projectCurrent);
 	}
 

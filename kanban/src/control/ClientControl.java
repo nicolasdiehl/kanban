@@ -36,7 +36,7 @@ public class ClientControl {
 	 * @param 
 	 */
 	public void userLogIn(String name, MainApp mainApp) {
-		user = new User(name, "", null, "");
+		user = new User(name, "", null, null);
 		System.out.println(name);
 		kclient.requestLogIn(name);
 		kclient.requestSimpleProjects(name);
