@@ -24,9 +24,11 @@ public class Project implements IProject, IProjectFX, Serializable{
 	private Date created;					
 	//TODO delete members, add courses?
 	/**list of tasks */
-	private List<ITask> tasks;		
+	private List<ITask> tasks;	
+	
+	private ObservableList<ITask> tasksProperty = FXCollections.observableArrayList();
 	/**list of project member ids */
-	private List<Integer> members;	
+	private List<String> members;	
 	
 	/**
 	 * constructor for loading project
@@ -38,7 +40,7 @@ public class Project implements IProject, IProjectFX, Serializable{
 	 * @param members		list of member ids
 	 * @param id						project id
 	 */
-	public Project(String name,String description,Date modified, Date created, List<ITask> tasks ,List<Integer> members, String id ) {
+	public Project(String name,String description,Date modified, Date created, List<ITask> tasks ,List<String> members, String id ) {
 		this.name = name;
 		this.description = description;
 		this.modified = modified;
@@ -50,19 +52,19 @@ public class Project implements IProject, IProjectFX, Serializable{
 	
 	/**
 	 *  constructor for creating new project, 
-	 *  creates unique id for the project, 
+	 *  creates id = -1 for the project, 
 	 *  sets current dateTime to modified and created, 
 	 *  creates members list and adds creator id to the list
 	 * @param name 				project name
 	 * @param description		project description
 	 * @param creator			creator id
 	 */
-	public Project(String name,String description ,int creator ) {
-			this(name, description,null,null,new ArrayList<ITask>(),null,UUID.randomUUID().toString());
+	public Project(String name,String description ,String creator ) {
+			this(name, description,null,null,new ArrayList<ITask>(),null,"-1");
 			Date current = new Date();
 			modified = current;
 			created = current;		
-			members = new ArrayList<Integer>();
+			members = new ArrayList<String>();
 			members.add(creator);
 	}
 	
@@ -128,23 +130,24 @@ public class Project implements IProject, IProjectFX, Serializable{
 	}
 
 	@Override
-	public List<Integer> getMembers() {
-		return new ArrayList<Integer>(members);
+	public List<String> getMembers() {
+		return new ArrayList<String>(members);
 	}
 
 	@Override
-	public void setMembers(List<Integer> value) {
+	public void setMembers(List<String> value) {
 		members = value;		
 	}
 	
 	@Override
 	public void addTask(ITask value) {
-		tasks.add(value);		
+		tasks.add(value);
+		tasksProperty.add(value);
 	}
 
 	@Override
 	public void addMember(int value) {
-		members.add(value);	
+//		members.add(value);	
 	}
 
 	@Override
@@ -199,7 +202,7 @@ public class Project implements IProject, IProjectFX, Serializable{
 
 	@Override
 	public ObservableList<ITask> getTasksProperty() {
-		return FXCollections.observableArrayList(getTasks());
+		return tasksProperty;
 	}
 
 	@Override
@@ -208,13 +211,13 @@ public class Project implements IProject, IProjectFX, Serializable{
 	}
 
 	@Override
-	public ObservableList<Integer> getMembersProperty() {
+	public ObservableList<String> getMembersProperty() {
 		
-		return (ObservableList<Integer>)getMembers();
+		return (ObservableList<String>)getMembers();
 	}
 
 	@Override
-	public void setMembers(ObservableList<Integer> value) {
+	public void setMembers(ObservableList<String> value) {
 		members = value;	
 	}
 }
