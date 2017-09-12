@@ -10,6 +10,7 @@ public class ClientControl {
 	private static ClientControl instance = new ClientControl();
 	private IProject openProject = new Project("title", "description", "me");
 	private List<IProject> sleepingProjects;
+	private ArrayList<SimpleProject> receivedSimpleProjects = new ArrayList<SimpleProject>();
 	private MainApp mainApp;
 	private Thread clientThread;
 	private KClient kclient;
@@ -77,5 +78,13 @@ public class ClientControl {
 
 	public void setOpenProject(IProject openProject) {
 	    this.openProject = openProject;
+	}
+
+	public ArrayList<SimpleProject> getReceivedSimpleProjects() {
+		return receivedSimpleProjects;
+	}
+
+	public void setReceivedSimpleProjects(ArrayList<SimpleProject> receivedSimpleProjects) {
+		this.receivedSimpleProjects = receivedSimpleProjects;
 	}
 }
