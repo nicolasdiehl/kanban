@@ -41,6 +41,8 @@ public class NewProjectDialogController {
 	@FXML
 	private void initialize() {
 		this.clientControl = ClientControl.getInstance();
+//		setting creator to logged in user uid;
+		creatorNameField.setText(clientControl.getUser().getUid());
 	}
 
 	/**

@@ -59,6 +59,10 @@ public class ClientControl {
 		return isProjectCreated;
 	}
 	
+	public User getUser() {
+		return user;
+	}
+
 	public boolean projectNewTask() {
 		boolean isNewTaskCreated = false;
 		
