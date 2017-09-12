@@ -23,13 +23,9 @@ public class User implements Serializable
 	 */
 	private String name;
 	/**
-	 * pw --> ldap passwort
-	 */
-	private String pw;
-	/**
 	 * projects --> String list of all Projects the user worked on 
 	 */
-	private ObservableList<SimpleProject> projects;
+	private ArrayList<SimpleProject> projects;
 	/**
 	 * project current --> project object, the user is currently working with
 	 */
@@ -42,22 +38,14 @@ public class User implements Serializable
 	 * @param projects			list of all projects the user worked on
 	 * @param project current	project object the user is working on 
 	 */
-	public User(String uid, String name, String pw, ObservableList<SimpleProject> projects, SimpleProject projectCurrent)
+	public User(String uid, String name, ArrayList<SimpleProject> projects, SimpleProject projectCurrent)
 	{
 		this.uid = uid;
 		this.name = name;
-		this.pw = pw;
 		this.projects = projects;
 		this.setProjectCurrent(projectCurrent);
 	}
-	public User(String uid, String name, String pw, List<SimpleProject> projects, SimpleProject projectCurrent)
-	{
-		this.uid = uid;
-		this.name = name;
-		this.pw = pw;
-		this.projects = FXCollections.observableArrayList(projects);
-		this.setProjectCurrent(projectCurrent);
-	}
+	
 
 	public String getUid()
 	{
@@ -78,18 +66,7 @@ public class User implements Serializable
 	{
 		this.name = name;
 	}
-
-	public String getPw()
-	{
-		return pw;
-	}
-
-	public void setPw(String pw)
-	{
-		this.pw = pw;
-	}
-
-	public ObservableList<SimpleProject> getProjects()
+	public ArrayList<SimpleProject> getProjects()
 	{
 		projects.add(new SimpleProject("hallo", UUID.randomUUID().toString()));
 		projects.add(new SimpleProject("hallo2", UUID.randomUUID().toString()));
@@ -99,7 +76,7 @@ public class User implements Serializable
 		return projects;
 	}
 
-	public void setProjects(ObservableList<SimpleProject> projects)
+	public void setProjects(ArrayList<SimpleProject> projects)
 	{
 		this.projects = projects;
 	}
