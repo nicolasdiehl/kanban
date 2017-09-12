@@ -43,6 +43,8 @@ public class KClient implements Runnable {
 		} catch (IOException e) {
 			System.err.println("Client Error: sending requestSimpleProjects message.");
 			e.printStackTrace();
+		}finally {
+			System.out.println("SimpleProject request sent");
 		}
 	}
 	public void requestLogIn(String userName) {
@@ -54,7 +56,18 @@ public class KClient implements Runnable {
 			System.err.println("Client Error: sending requestSimpleProjects message.");
 			e.printStackTrace();
 		}finally {
-			System.out.println("Request sent");
+			System.out.println("Login request sent");
+		}
+	}
+	public void sendNewProject(Project project) {
+		try {
+			System.out.println("Client Message: Sending new project to Server");
+			objectOutputStream.writeObject(project);
+		} catch (IOException e) {
+			System.err.println("Client Error: sending new project message.");
+			e.printStackTrace();
+		}finally {
+			System.out.println("New Project sent");
 		}
 	}
 

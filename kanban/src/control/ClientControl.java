@@ -13,6 +13,7 @@ public class ClientControl {
 	private MainApp mainApp;
 	private Thread clientThread;
 	private KClient kclient;
+	private User user;
 	
 	public static ClientControl getInstance() {
 		return instance;
@@ -34,13 +35,15 @@ public class ClientControl {
 	 * @param 
 	 */
 	public void userLogIn(String name, MainApp mainApp) {
+		user = new User(name, "", null, "");
 		System.out.println(name);
 		kclient.requestLogIn(name);
 		kclient.requestSimpleProjects(name);
 		this.mainApp = mainApp;
 	}	
 	public void simpleUserReturnedFromLogIn(SimpleUser simpleUserObj) {
-		mainApp.loginName = simpleUserObj.getFirstName() + " " + simpleUserObj.getLastName();
+		user.setName(simpleUserObj.getFirstName() + " " + simpleUserObj.getLastName());
+		mainApp.loginName = user.getName();
 		System.out.println(mainApp.loginName);
 	}
 	
@@ -48,10 +51,10 @@ public class ClientControl {
 		
 	}
 	
-	public boolean projectCreate() {
+	public boolean projectCreate(Project projectNew) {
 		boolean isProjectCreated = false;
-		//auslesen der ganzen textboxen
 		//anlegen der Projekt-XML
+		kclient.sendNewProject(projectNew);
 		
 		return isProjectCreated;
 	}

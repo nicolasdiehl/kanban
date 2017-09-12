@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
+import control.ClientControl;
 import control.MainApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -30,6 +31,8 @@ public class NewProjectDialogController {
 
 	private Stage dialogStage;
 	private boolean okClicked = false;
+	
+	private ClientControl clientControl;
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -37,7 +40,7 @@ public class NewProjectDialogController {
 	 */
 	@FXML
 	private void initialize() {
-		
+		this.clientControl = ClientControl.getInstance();
 	}
 
 	/**
@@ -76,8 +79,7 @@ public class NewProjectDialogController {
 		if (isInputValid()) {
 			Project prject = new Project(projectNameField.getText(),projectDescriptionField.getText(),creatorNameField.getText());
 			try{
-			//To Do
-			//save to xml
+			clientControl.projectCreate(prject);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -103,6 +103,7 @@ class ServerThread extends Thread {
 					Project project = (Project) currentObject;
 					if (project.getID().equals("-1")) {
 						// neues XML anlegen
+						serverControl.createNewProjectXML((Project)currentObject);
 					} else {
 						// XML raussuchen und updaten
 					}

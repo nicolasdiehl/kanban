@@ -51,7 +51,7 @@ public class Project implements IProject, IProjectFX{
 	
 	/**
 	 *  constructor for creating new project, 
-	 *  creates unique id for the project, 
+	 *  creates id = -1 for the project, 
 	 *  sets current dateTime to modified and created, 
 	 *  creates members list and adds creator id to the list
 	 * @param name 				project name
@@ -59,7 +59,7 @@ public class Project implements IProject, IProjectFX{
 	 * @param creator			creator id
 	 */
 	public Project(String name,String description ,String creator ) {
-			this(name, description,null,null,new ArrayList<ITask>(),null,UUID.randomUUID().toString());
+			this(name, description,null,null,new ArrayList<ITask>(),null,"-1");
 			Date current = new Date();
 			modified = current;
 			created = current;		

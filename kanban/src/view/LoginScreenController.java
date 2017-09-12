@@ -45,17 +45,21 @@ public class LoginScreenController {
 	@FXML
 	public void dropLoginButton() {
 
-//		 MainApp gets altered to pass Users full name to next Stage
-		 try {
-		clientControl.userLogIn(usernameTextfield.getText(), mainApp);
-		 } catch (NullPointerException e) {
-		 e.printStackTrace();
-		 }
+		// MainApp gets altered to pass Users full name to next Stage
+		try {
+			clientControl.userLogIn(usernameTextfield.getText(), mainApp);
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 
 		while (mainApp.loginName == "") {
 			// Wait till name gets altered in other Thread, could be done better with
 			// Threads;
-			System.out.println(mainApp.loginName);
+			if (mainApp.loginName == "") {
+				System.out.print(".");
+			} else {
+				System.out.println(mainApp.loginName + " logged in.");
+			}
 		}
 		// mainApp.showMainScreen();
 		mainApp.showProjectScreen();

@@ -4,17 +4,21 @@ import java.util.*;
 public class User {
 	private String uid;
 	private String name;
-	private String pw;
 	
 
 	private List<String> projects;
 	private String projectCurrent;
 
-	
-	public User(String uid, String name, String pw, List<String> projects, String projectCurrent) {
+	/**
+	 * User Constructor
+	 * @param uid
+	 * @param name
+	 * @param projects
+	 * @param projectCurrent
+	 */
+	public User(String uid, String name, List<String> projects, String projectCurrent) {
 		this.uid = uid;
 		this.name = name;
-		this.pw = pw;
 		this.projects = projects;
 		this.setProjectCurrent(projectCurrent);
 	}
@@ -30,12 +34,6 @@ public class User {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getPw() {
-		return pw;
-	}
-	public void setPw(String pw) {
-		this.pw = pw;
 	}
 
 	public List<String> getProjects() {

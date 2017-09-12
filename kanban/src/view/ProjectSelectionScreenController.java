@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 
+import control.ClientControl;
 import control.MainApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -31,6 +32,7 @@ public class ProjectSelectionScreenController {
 //	@FXML
 //	private TextField tb_date;
     
+    private ClientControl clientControl;
     private MainApp mainApp;
     
     ArrayList<SimpleProject> listOfProjectNames = new ArrayList<SimpleProject>();
@@ -43,6 +45,7 @@ public class ProjectSelectionScreenController {
     
     @FXML
     private void initialize() {
+    	this.clientControl = ClientControl.getInstance();
 	// Initialize current Date and User and show them in a textfield
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	LocalDate localDate = LocalDate.now();

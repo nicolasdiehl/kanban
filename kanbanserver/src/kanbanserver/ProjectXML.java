@@ -78,8 +78,9 @@ public class ProjectXML
 		return projectRead;
 	}
 
-	public void writeProjectXML(Project project)
+	public boolean writeProjectXML(Project project)
 	{
+		boolean isWritten = false;
 		// essentiall to cast a date into a string
 		DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
@@ -209,6 +210,7 @@ public class ProjectXML
 			transformer.transform(source, result);
 
 			System.out.println("Neue Project XMl wurde angelegt");
+			isWritten = true;
 
 		} catch (ParserConfigurationException pce)
 		{
@@ -219,5 +221,6 @@ public class ProjectXML
 			tfe.printStackTrace();
 			System.out.println("Schreiben NICHT erfolgreich!");
 		}
+		return isWritten;
 	}
 }

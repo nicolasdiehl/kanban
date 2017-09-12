@@ -1,9 +1,12 @@
 package control;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
+import kanbanserver.ProjectXML;
 import kanbanserver.UserXML;
 import ldap.Ldap;
+import model.Project;
 import model.SimpleProject;
 import model.SimpleUser;
 import model.User;
@@ -12,7 +15,7 @@ public class ServerControl {
 
 
 	private UserXML userXML;
-	
+	private ProjectXML projectXML;
 	
 
 	public SimpleUser userLogin(String userName) {
@@ -35,6 +38,17 @@ public class ServerControl {
 		}else {
 			return null;
 		}
-			
+	}
+	/**
+	 * 
+	 * @param newProject
+	 * @return boolean for successful XML-write
+	 */
+	public boolean createNewProjectXML(Project newProject) {
+		boolean successfulCreate = false;
+		newProject.setID(UUID.randomUUID().toString());
+		projectXML = new ProjectXML(System.getProperty("java.class.path") + "\\User\\", newProject.getID());
+		successfulCreate = projectXML.writeProjectXML(newProject);
+		return successfulCreate;
 	}
 }
