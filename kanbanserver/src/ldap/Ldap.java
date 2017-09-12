@@ -98,7 +98,7 @@ public class Ldap {
 			String Temp = SR.getAttributes().get("displayname").toString();
 			Temp = Temp.substring(Temp.indexOf(':') + 2);
 
-			FirstName = Temp.substring(0, Temp.indexOf(' ') - 1);
+			FirstName = Temp.substring(0, Temp.indexOf(' '));
 			LastName = Temp.substring(Temp.indexOf(' ') + 1);
 
 			User.setFirstName(FirstName);
