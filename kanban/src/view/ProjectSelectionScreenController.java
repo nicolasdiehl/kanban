@@ -50,6 +50,7 @@ public class ProjectSelectionScreenController {
 	String reportDate = dtf.format(localDate);
 //		tb_date.setText(reportDate);
 	lb_greeting.setText("Hallo " + mainApp.loginName);
+	listOfProjectNames = clientControl.getSimpleProjects();
 //	projectNameColumn.setCellValueFactory(cellData -> cellData.getValue().getProjects());
     }
     
