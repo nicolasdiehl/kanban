@@ -1,16 +1,17 @@
 package model;
+import java.io.Serializable;
 import java.util.*;
 
 import javafx.beans.property.*;
 import javafx.collections.*;
 
-public class Project implements IProject, IProjectFX{
+public class Project implements IProject, IProjectFX, Serializable{
 /**
  * project class containing id, name, description, date last modified, creation date
  * @version 1.1
  */
 
-
+	private static final long serialVersionUID = -2398522995120490637L;
 	/**project id*/
 	private String id;	
 	/**project name */
