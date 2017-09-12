@@ -1,16 +1,47 @@
 package model;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class User
+import javafx.collections.ObservableList;
+
+public class User implements Serializable
 {
+	private static final long serialVersionUID = -2398524575120480637L;
+	
+	/*
+	 * declaration of attributes
+	 */
+	
+	/**
+	 * uid --> UserID
+	 */
 	private String uid;
+	/**
+	 * name --> ldap name
+	 */
 	private String name;
+	/**
+	 * pw --> ldap passwort
+	 */
 	private String pw;
-	private List<SimpleProject> projects;
+	/**
+	 * projects --> String list of all Projects the user worked on 
+	 */
+	private ObservableList<SimpleProject> projects;
+	/**
+	 * project current --> project object, the user is currently working with
+	 */
 	private SimpleProject projectCurrent;
 
-	public User(String uid, String name, String pw, List<SimpleProject> projects, SimpleProject projectCurrent)
+	/**
+	 * constructor for loading project
+	 * @param name				user name
+	 * @param pw				user pw
+	 * @param projects			list of all projects the user worked on
+	 * @param project current	project object the user is working on 
+	 */
+	public User(String uid, String name, String pw, ObservableList<SimpleProject> projects, SimpleProject projectCurrent)
 	{
 		this.uid = uid;
 		this.name = name;
@@ -49,7 +80,7 @@ public class User
 		this.pw = pw;
 	}
 
-	public List<SimpleProject> getProjects()
+	public ObservableList<SimpleProject> getProjects()
 	{
 		projects.add(new SimpleProject("hallo", UUID.randomUUID().toString()));
 		projects.add(new SimpleProject("hallo2", UUID.randomUUID().toString()));
@@ -59,7 +90,7 @@ public class User
 		return projects;
 	}
 
-	public void setProjects(List<SimpleProject> projects)
+	public void setProjects(ObservableList<SimpleProject> projects)
 	{
 		this.projects = projects;
 	}
