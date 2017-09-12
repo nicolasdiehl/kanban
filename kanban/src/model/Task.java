@@ -9,9 +9,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 
-public class Task implements ITask, ITaskFX, Serializable {
-	
-	private static final long serialVersionUID = -2398503995120190637L;
+public class Task implements ITask, ITaskFX {
 	
 	/**
 	 * declaration of attributes 
