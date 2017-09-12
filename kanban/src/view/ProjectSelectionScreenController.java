@@ -17,6 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import model.Project;
 import model.SimpleProject;
+import model.User;
 
 public class ProjectSelectionScreenController {
     
@@ -25,9 +26,9 @@ public class ProjectSelectionScreenController {
     @FXML
     private Button bt_accept;
     @FXML
-    private TableView<Project> projectOverviewTable;
+    private TableView<User> projectOverviewTable;
     @FXML
-    private TableColumn<Project, String> projectNameColumn;
+    private TableColumn<User, String> projectNameColumn;
     
     private ClientControl clientControl;
     private MainApp mainApp;
@@ -49,7 +50,7 @@ public class ProjectSelectionScreenController {
 	String reportDate = dtf.format(localDate);
 //		tb_date.setText(reportDate);
 	lb_greeting.setText("Hallo " + mainApp.loginName);
-	projectNameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
+//	projectNameColumn.setCellValueFactory(cellData -> cellData.getValue().getProjects());
     }
     
     @FXML
