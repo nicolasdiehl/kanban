@@ -82,7 +82,7 @@ public class MainScreenController {
     private void handleEditPerson() {
 	ITask selectedTask = todoTTV.getSelectionModel().getSelectedItem();
 	if (selectedTask != null) {
-	    boolean okClicked = mainApp.showEditTaskDialog(selectedTask);
+	    boolean okClicked = mainApp.showEditTaskDialog(selectedTask, "edit");
 	    if (okClicked) {
 		showTaskDetails(selectedTask);
 	    }

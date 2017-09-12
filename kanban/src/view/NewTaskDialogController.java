@@ -1,15 +1,10 @@
 package view;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import control.ClientControl;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -20,7 +15,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.IProject;
 import model.ITask;
-import model.Project;
 import model.Task;
 
 public class NewTaskDialogController {
@@ -51,17 +45,7 @@ public class NewTaskDialogController {
      */
     @FXML
     private void initialize() {
-//	 ITask task = new Task();
-//	    Date date = new Date();
-//	    List<String> items = Arrays.asList(commentTextField.getText().split("\\s*\\n\\s*"));
-//	    
-//	    task.setCreatorDate(date);
-//	    task.setCreatorID("");
-//	    task.setTitle(titleTextField.getText());
-//	    task.setDescription(descriptionTextField.getText());
-//	    task.setCategorie(statusComboBox.getSelectionModel().getSelectedItem());
-//	    task.setComment(items);
-//	    task.setStatus(statusComboBox.getSelectionModel().getSelectedItem());
+	statusComboBox.getItems().addAll("ToDo", "Work in Progress", "Done");
     }
     
     /**
@@ -85,7 +69,7 @@ public class NewTaskDialogController {
 	descriptionTextField.setText(task.getDescription());
 //        categoryComboBox.setItems(task.getCategorie());
 	commentTextField.setText(task.getComment().toString());
-//        statusComboBox.setItems(task.getStatus());
+	statusComboBox.getItems();
     }
     
     /**
@@ -100,10 +84,9 @@ public class NewTaskDialogController {
     /**
      * Called when the user clicks ok.
      */
-    @SuppressWarnings("deprecation")
     @FXML
     private void handleOk() {
-	if (isInputValid()) {
+	if (isInputValid() && dialogStage.getTitle().equals("New Task")) {
 	    ITask task = new Task();
 	    Date date = new Date();
 	    List<String> items = Arrays.asList(commentTextField.getText().split("\\s*\\n\\s*"));
@@ -118,11 +101,28 @@ public class NewTaskDialogController {
 	    
 	    IProject project = control.getOpenProject();
 	    project.addTask(task);
+	    System.out.println(task.getStatus() + "hello");
 	    
 	    okClicked = true;
 	    Stage prevStage;
 	    prevStage = (Stage) okButton.getScene().getWindow();
 	    prevStage.close();
+	} else if (isInputValid() && dialogStage.getTitle().equals("Edit Task")) {
+	    Date date = new Date();
+	    List<String> items = Arrays.asList(commentTextField.getText().split("\\s*\\n\\s*"));
+	    
+	    task.setCreatorDate(date);
+	    task.setCreatorID("");
+	    task.setTitle(titleTextField.getText());
+	    task.setDescription(descriptionTextField.getText());
+	    task.setCategorie(statusComboBox.getSelectionModel().getSelectedItem());
+	    task.setComment(items);
+	    task.setStatus(statusComboBox.getSelectionModel().getSelectedItem());
+	    okClicked = true;
+	    Stage prevStage;
+	    prevStage = (Stage) okButton.getScene().getWindow();
+	    prevStage.close();
+	    
 	}
     }
     

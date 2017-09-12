@@ -163,7 +163,7 @@ public class MainApp extends Application {
 	return false;
     }
     
-    public boolean showEditTaskDialog(ITask selectedTask) {
+    public boolean showEditTaskDialog(ITask selectedTask, String editOrNewTask) {
 	
 	try {
 	    // Load the fxml file and create a new stage for the popup dialog.

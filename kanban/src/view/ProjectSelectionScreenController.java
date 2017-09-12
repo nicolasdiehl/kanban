@@ -97,10 +97,10 @@ public class ProjectSelectionScreenController {
     @FXML
     private void handleAccept() {
 	
-	listOfProjectNames.add(new SimpleProject("ich", "123"));
-	listOfProjectNames.add(new SimpleProject("du", "234"));
-	listOfProjectNames.add(new SimpleProject("er", "345"));
-	System.out.println(listOfProjectNames.get(0).getName());
+//	listOfProjectNames.add(new SimpleProject("ich", "123"));
+//	listOfProjectNames.add(new SimpleProject("du", "234"));
+//	listOfProjectNames.add(new SimpleProject("er", "345"));
+//	System.out.println(listOfProjectNames.get(0).getName());
 	
 	MainApp mainApp = new MainApp();
 	
