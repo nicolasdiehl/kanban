@@ -15,6 +15,7 @@ public class ClientControl {
 	private Thread clientThread;
 	private KClient kclient;
 	private User user;
+//	private ArrayList<SimpleProject> simpleProjects;
 	
 	public static ClientControl getInstance() {
 		return instance;
@@ -36,7 +37,7 @@ public class ClientControl {
 	 * @param 
 	 */
 	public void userLogIn(String name, MainApp mainApp) {
-		user = new User(name, "", null, "");
+		user = new User(name, "", null, null);
 		System.out.println(name);
 		kclient.requestLogIn(name);
 		kclient.requestSimpleProjects(name);
@@ -49,9 +50,13 @@ public class ClientControl {
 	}
 	
 	public void simpleProjectsReturnedFromLogin(ArrayList<SimpleProject> returnedList) {
-		
+		user.setProjects(returnedList);
 	}
 	
+	public List<SimpleProject> getSimpleProjects() {
+		return user.getProjects();
+	}
+
 	public boolean projectCreate(Project projectNew) {
 		boolean isProjectCreated = false;
 		//anlegen der Projekt-XML

@@ -16,7 +16,7 @@ public class ServerControl {
 
 	private UserXML userXML;
 	private ProjectXML projectXML;
-	
+	private User user;
 
 	public SimpleUser userLogin(String userName) {
 		
@@ -24,7 +24,7 @@ public class ServerControl {
 		SimpleUser userSimple = new SimpleUser();
 
 		ldap.login(userName, userSimple);
-
+		user = new User(userName, userSimple.getFirstName() + " " + userSimple.getLastName(), null, null);
 		return userSimple;
 	}
 
@@ -50,5 +50,8 @@ public class ServerControl {
 		projectXML = new ProjectXML(System.getProperty("java.class.path") + "\\User\\", newProject.getID());
 		successfulCreate = projectXML.writeProjectXML(newProject);
 		return successfulCreate;
+	}
+	public User getUser() {
+		return user;
 	}
 }

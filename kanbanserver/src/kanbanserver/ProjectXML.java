@@ -77,7 +77,6 @@ public class ProjectXML
 
 		return projectRead;
 	}
-
 	public boolean writeProjectXML(Project project)
 	{
 		boolean isWritten = false;

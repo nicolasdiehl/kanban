@@ -4,6 +4,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 
@@ -12,30 +13,28 @@ import control.MainApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import model.Project;
 import model.SimpleProject;
+import model.User;
 
 public class ProjectSelectionScreenController {
     
-//	@FXML
-//	private Label lb_date;
     @FXML
     private Label lb_greeting;
-//	@FXML
-//	private Button bt_ProjektAuswahl;
     @FXML
     private Button bt_accept;
     @FXML
-//	private TextField tb_status;
-//	@FXML
-//	private TextField tb_date;
+    private TableView<User> projectOverviewTable;
+    @FXML
+    private TableColumn<User, String> projectNameColumn;
     
     private ClientControl clientControl;
     private MainApp mainApp;
     
-    ArrayList<SimpleProject> listOfProjectNames = new ArrayList<SimpleProject>();
+    List<SimpleProject> listOfProjectNames = new ArrayList<SimpleProject>();
     
     Stage prevStage;
     
@@ -52,7 +51,8 @@ public class ProjectSelectionScreenController {
 	String reportDate = dtf.format(localDate);
 //		tb_date.setText(reportDate);
 	lb_greeting.setText("Hallo " + mainApp.loginName);
-	
+	listOfProjectNames = clientControl.getSimpleProjects();
+//	projectNameColumn.setCellValueFactory(cellData -> cellData.getValue().getProjects());
     }
     
     @FXML

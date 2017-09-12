@@ -1,0 +1,13 @@
+diff a/kanban/src/view/ProjectSelectionScreenController.java b/kanban/src/view/ProjectSelectionScreenController.java	(rejected hunks)
+@@ -50,7 +50,11 @@
+  	String reportDate = dtf.format(localDate);
+  //		tb_date.setText(reportDate);
+  	lb_greeting.setText("Hallo " + mainApp.loginName);
+++<<<<<<< HEAD
+ +	listOfProjectNames = clientControl.getSimpleProjects();
+++=======
++ //	projectNameColumn.setCellValueFactory(cellData -> cellData.getValue().getProjects());
+++>>>>>>> 8bcc9f3e675a11d365c52fa2c8168238198ec8df
+      }
+      
+      @FXML

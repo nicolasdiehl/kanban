@@ -36,6 +36,7 @@ class ServerThread extends Thread {
 		try {
 			System.out.println("Server Message: Sending SimpleProject 's.");
 			ArrayList<SimpleProject> projectList = serverControl.getProjectsForUserLogin(userName);
+			serverControl.getUser().setProjects(projectList);
 			objectOutputStream.writeObject(projectList);
 		} catch (IOException e) {
 			System.err.println("Server Error: Error sending list of simple objects to client.");
@@ -48,7 +49,7 @@ class ServerThread extends Thread {
 			System.out.println("Server Message: Sending SimpleUser.");
 			SimpleUser simpleUser = serverControl.userLogin(userName);
 			objectOutputStream.writeObject(simpleUser);
-//			objectOutputStream.writeObject(serverControl.userLogin(userName));
+			// objectOutputStream.writeObject(serverControl.userLogin(userName));
 		} catch (IOException e) {
 			System.err.println("Server Error: Error sending SimpleUser object to client.");
 			e.printStackTrace();
@@ -103,7 +104,9 @@ class ServerThread extends Thread {
 					Project project = (Project) currentObject;
 					if (project.getID().equals("-1")) {
 						// neues XML anlegen
-						serverControl.createNewProjectXML((Project)currentObject);
+						if (serverControl.createNewProjectXML((Project) currentObject)) {
+							
+						}
 					} else {
 						// XML raussuchen und updaten
 					}
@@ -124,7 +127,9 @@ class ServerThread extends Thread {
 		// TODO: Killing thread on lost connection as for now. When
 		// reconnecting, a client will get a new thread. How to reconnect client
 		// to old thread?
-		try {
+		try
+
+		{
 			System.out.println("Server Message: Server connection closing..");
 			if (objectOutputStream != null) {
 				objectOutputStream.close();
