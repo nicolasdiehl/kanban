@@ -33,8 +33,8 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <JFXPasswordField fx:id="passwortTextfield" alignment="CENTER" focusColor="#808080" maxWidth="175.0" minWidth="175.0" prefWidth="175.0" promptText="Passwort" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <JFXTextField fx:id="usernameTextfield" alignment="CENTER" focusColor="#808080" maxWidth="175.0" minWidth="175.0" prefHeight="20.0" prefWidth="175.0" promptText="Username" GridPane.columnIndex="1" />
+            <JFXPasswordField fx:id="passwortTextfield" alignment="CENTER" focusColor="#808080" maxWidth="175.0" minWidth="175.0" prefWidth="175.0" promptText="Passwort" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Button fx:id="loginButton" mnemonicParsing="false" onAction="#dropLoginButton" prefWidth="175.0" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font size="14.0" />

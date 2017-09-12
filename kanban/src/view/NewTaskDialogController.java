@@ -46,6 +46,11 @@ public class NewTaskDialogController {
     @FXML
     private void initialize() {
 	statusComboBox.getItems().addAll("ToDo", "Work in Progress", "Done");
+	try {
+	    statusComboBox.setValue(task.getStatus());
+	} catch (Exception e) {
+	    statusComboBox.setValue("ToDo");
+	}
     }
     
     /**
