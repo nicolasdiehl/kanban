@@ -32,7 +32,8 @@ public class LoginScreenController {
 	Stage prevStage;
 
 	/**
-	 * The constructor. The constructor is called before the initialize() method.
+	 * The constructor. The constructor is called before the initialize()
+	 * method.
 	 */
 	public LoginScreenController() {
 
@@ -68,7 +69,8 @@ public class LoginScreenController {
 				System.out.println(mainApp.loginName + " logged in.");
 			}
 		}
-		if (mainApp.loginName.equals("null null")) {
+		// TODO: block entry when null, enable when shipping.
+		if (mainApp.loginName.equals("null null") && false) {
 			System.out.println("Client Message: User does not exist!");
 			usernameTextfield.setText(usernameTextfield.getText() + " nicht gefunden");
 			mainApp.loginName = "";
