@@ -80,7 +80,7 @@ public class User implements Serializable
 		this.pw = pw;
 	}
 
-	public List<SimpleProject> getProjects()
+	public ObservableList<SimpleProject> getProjects()
 	{
 		return projects;
 	}
