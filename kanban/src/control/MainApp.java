@@ -31,7 +31,7 @@ public class MainApp extends Application {
      * Constructor
      */
     public MainApp() {
-    }    
+    }
     
     @Override
     public void start(Stage primaryStage) {
@@ -67,6 +67,9 @@ public class MainApp extends Application {
 	}
     }
     
+    /**
+     * Shows the first Screen.
+     */
     public void showLoginScreen() {
 	try {
 	    // Load login screen.
@@ -86,7 +89,9 @@ public class MainApp extends Application {
     }
     
     /**
-     * Shows the task overview inside the root layout.
+     * Shows the third screen.
+     * This is the task overview Screen, which is the main screen
+     * inside the root layout.
      */
     public void showMainScreen() {
 	try {
@@ -109,13 +114,17 @@ public class MainApp extends Application {
 	}
     }
     
+    /**
+     * Shows the second screen.
+     * This is the project selection screen inside the root layout.
+     */
     public void showProjectScreen() {
 	try {
 	    initRootLayout();
 	    // Load project overview.
 	    FXMLLoader loader = new FXMLLoader();
 	    loader.setLocation(MainApp.class.getResource("/view/ProjectSelectionScreen.fxml"));
-	    AnchorPane ProjectScreen = (AnchorPane) loader.load();
+	    BorderPane ProjectScreen = (BorderPane) loader.load();
 	    
 	    // Set project selection into the center of root layout.
 	    rootLayout.setCenter(ProjectScreen);
@@ -129,6 +138,12 @@ public class MainApp extends Application {
 	}
     }
     
+    /**
+     * Shows the creation screen for a new task.
+     * 
+     * @return false
+     *         as a flag.
+     */
     public boolean showNewTaskDialog() {
 	
 	try {
@@ -163,7 +178,14 @@ public class MainApp extends Application {
 	return false;
     }
     
-    public boolean showEditTaskDialog(ITask selectedTask, String editOrNewTask) {
+    /**
+     * Shows the screen to edit the selected Task.
+     * 
+     * @param selectedTask
+     * @return false
+     *         as a flag.
+     */
+    public boolean showEditTaskDialog(ITask selectedTask) {
 	
 	try {
 	    // Load the fxml file and create a new stage for the popup dialog.
@@ -191,11 +213,14 @@ public class MainApp extends Application {
 	    dialogStage.showAndWait();
 	    
 	} catch (IOException e) {
-	    e.printStackTrace();    
+	    e.printStackTrace();
 	}
 	return false;
     }
     
+    /**
+     * Shows the screen to create a new project.
+     */
     public void showProjectInsertDialog() {
 	try {
 	    // Load the fxml file and create a new stage for the popup dialog.
@@ -224,11 +249,10 @@ public class MainApp extends Application {
 	    
 	} catch (IOException e) {
 	    e.printStackTrace();
-	}	
+	}
     }
     
     public static void main(String[] args) {
-	
 	launch(args);
     }
     

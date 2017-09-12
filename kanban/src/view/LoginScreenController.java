@@ -43,6 +43,10 @@ public class LoginScreenController {
 		this.prevStage = stage;
 	}
 
+	/**
+	 * The Login Button connects to the Server with the UserName of Ldap
+	 * and closes the Login Screen
+	 */
 	@FXML
 	public void dropLoginButton() {
 

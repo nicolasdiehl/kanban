@@ -91,11 +91,12 @@ public class NewTaskDialogController {
      */
     @FXML
     private void handleOk() {
-	if (isInputValid() && dialogStage.getTitle().equals("New Task")) {
+	if (isInputValid() && dialogStage.getTitle().equals("New Task")) { // Called if a new Task will be created
 	    ITask task = new Task();
 	    Date date = new Date();
 	    List<String> items = Arrays.asList(commentTextField.getText().split("\\s*\\n\\s*"));
 	    
+	    // sets the information of the task
 	    task.setCreatorDate(date);
 	    task.setCreatorID("");
 	    task.setTitle(titleTextField.getText());
@@ -104,18 +105,22 @@ public class NewTaskDialogController {
 	    task.setComment(items);
 	    task.setStatus(statusComboBox.getSelectionModel().getSelectedItem());
 	    
+	    // adds the task to the project
 	    IProject project = control.getOpenProject();
 	    project.addTask(task);
 	    System.out.println(task.getStatus() + "hello");
 	    
+	    // Closes the Dialogscreen
 	    okClicked = true;
 	    Stage prevStage;
 	    prevStage = (Stage) okButton.getScene().getWindow();
 	    prevStage.close();
-	} else if (isInputValid() && dialogStage.getTitle().equals("Edit Task")) {
+	    
+	} else if (isInputValid() && dialogStage.getTitle().equals("Edit Task")) { // Called if a selected Task will be edited
 	    Date date = new Date();
 	    List<String> items = Arrays.asList(commentTextField.getText().split("\\s*\\n\\s*"));
 	    
+	    // sets the new information of the task
 	    task.setCreatorDate(date);
 	    task.setCreatorID("");
 	    task.setTitle(titleTextField.getText());
@@ -123,11 +128,12 @@ public class NewTaskDialogController {
 	    task.setCategorie(statusComboBox.getSelectionModel().getSelectedItem());
 	    task.setComment(items);
 	    task.setStatus(statusComboBox.getSelectionModel().getSelectedItem());
+	    
+	    // Closes the Dialogscreen
 	    okClicked = true;
 	    Stage prevStage;
 	    prevStage = (Stage) okButton.getScene().getWindow();
 	    prevStage.close();
-	    
 	}
     }
     
