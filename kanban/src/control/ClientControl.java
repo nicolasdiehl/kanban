@@ -14,7 +14,7 @@ public class ClientControl {
 	private Thread clientThread;
 	private KClient kclient;
 	private User user;
-	private ArrayList<SimpleProject> simpleProjects;
+//	private ArrayList<SimpleProject> simpleProjects;
 	
 	public static ClientControl getInstance() {
 		return instance;
@@ -49,11 +49,11 @@ public class ClientControl {
 	}
 	
 	public void simpleProjectsReturnedFromLogin(ArrayList<SimpleProject> returnedList) {
-		simpleProjects = returnedList;
+		user.setProjects(returnedList);
 	}
 	
-	public ArrayList<SimpleProject> getSimpleProjects() {
-		return simpleProjects;
+	public List<SimpleProject> getSimpleProjects() {
+		return user.getProjects();
 	}
 
 	public boolean projectCreate(Project projectNew) {

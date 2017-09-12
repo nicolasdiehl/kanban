@@ -4,6 +4,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 
@@ -33,7 +34,7 @@ public class ProjectSelectionScreenController {
     private ClientControl clientControl;
     private MainApp mainApp;
     
-    ArrayList<SimpleProject> listOfProjectNames = new ArrayList<SimpleProject>();
+    List<SimpleProject> listOfProjectNames = new ArrayList<SimpleProject>();
     
     Stage prevStage;
     
