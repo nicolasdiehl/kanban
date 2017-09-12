@@ -42,7 +42,7 @@ public class Ldap {
 
 			Table.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 			Table.put(Context.PROVIDER_URL, Host); // set Hostname
-			Table.put("java.naming.ldap.factory.socket", "Ldap.MySSLSocketFactory"); // SSL authentication factory
+			Table.put("java.naming.ldap.factory.socket", "ldap.MySSLSocketFactory"); // SSL authentication factory
 			Table.put(Context.SECURITY_AUTHENTICATION, ConnType); // none = no login data required
 
 			LdapContext = new InitialDirContext(Table);
