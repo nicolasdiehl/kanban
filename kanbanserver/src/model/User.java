@@ -51,6 +51,11 @@ public class User
 
 	public List<SimpleProject> getProjects()
 	{
+		projects.add(new SimpleProject("hallo", UUID.randomUUID().toString()));
+		projects.add(new SimpleProject("hallo2", UUID.randomUUID().toString()));
+		projects.add(new SimpleProject("hallo3", UUID.randomUUID().toString()));
+		projects.add(new SimpleProject("hallo4", UUID.randomUUID().toString()));
+	
 		return projects;
 	}
 

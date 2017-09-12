@@ -48,7 +48,7 @@ class ServerThread extends Thread {
 			System.out.println("Server Message: Sending SimpleUser.");
 			SimpleUser simpleUser = serverControl.userLogin(userName);
 			objectOutputStream.writeObject(simpleUser);
-//			objectOutputStream.writeObject(serverControl.userLogin(userName));
+			// objectOutputStream.writeObject(serverControl.userLogin(userName));
 		} catch (IOException e) {
 			System.err.println("Server Error: Error sending SimpleUser object to client.");
 			e.printStackTrace();
@@ -103,7 +103,7 @@ class ServerThread extends Thread {
 					Project project = (Project) currentObject;
 					if (project.getID().equals("-1")) {
 						// neues XML anlegen
-						serverControl.createNewProjectXML((Project)currentObject);
+						serverControl.createNewProjectXML((Project) currentObject);
 					} else {
 						// XML raussuchen und updaten
 					}
