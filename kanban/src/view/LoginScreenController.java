@@ -53,19 +53,32 @@ public class LoginScreenController {
 		}
 
 		while (mainApp.loginName == "") {
-			// Wait till name gets altered in other Thread, could be done better with
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// Wait till name gets altered in other Thread, could be done better
+			// with
 			// Threads;
 			if (mainApp.loginName == "") {
-				System.out.print(".");
+				// System.out.print(".");
 			} else {
 				System.out.println(mainApp.loginName + " logged in.");
 			}
 		}
-		// mainApp.showMainScreen();
-		mainApp.showProjectScreen();
+		if (mainApp.loginName.equals("null null")) {
+			System.out.println("Client Message: User does not exist!");
+			usernameTextfield.setText(usernameTextfield.getText() + " nicht gefunden");
+			mainApp.loginName = "";
+		} else {
+			System.out.println("'" + mainApp.loginName + "' in else!");
+			mainApp.showProjectScreen();
 
-		prevStage = (Stage) loginButton.getScene().getWindow();
-		prevStage.close();
+			prevStage = (Stage) loginButton.getScene().getWindow();
+			prevStage.close();
+		}
 	}
 
 	/**
