@@ -45,19 +45,18 @@ public class LoginScreenController {
 	@FXML
 	public void dropLoginButton() {
 
-		// MainApp gets altered to pass Users full name to next Stage
-//		 try {
-//		clientControl.userLogIn(usernameTextfield.getText(), mainApp);
-////		 } catch (NullPointerException e) {
-////		 e.printStackTrace();
-////		 }
-//
-//		mainApp.loginName = "";
-//
-//		while (mainApp.loginName == "") {
-//			// Wait till name gets altered in other Thread, could be done better with
-//			// Threads;
-//		}
+//		 MainApp gets altered to pass Users full name to next Stage
+		 try {
+		clientControl.userLogIn(usernameTextfield.getText(), mainApp);
+		 } catch (NullPointerException e) {
+		 e.printStackTrace();
+		 }
+
+		while (mainApp.loginName == "") {
+			// Wait till name gets altered in other Thread, could be done better with
+			// Threads;
+			System.out.println(mainApp.loginName);
+		}
 		// mainApp.showMainScreen();
 		mainApp.showProjectScreen();
 
@@ -74,7 +73,8 @@ public class LoginScreenController {
 		// Initialize the person table with the two columns.
 		clientControl = ClientControl.getInstance();
 
-		mainApp = new MainApp();
+		this.mainApp = new MainApp();
+		this.mainApp.loginName = "";
 	}
 
 	/**
@@ -84,7 +84,6 @@ public class LoginScreenController {
 	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
-
 		// Add observable list data to the table
 
 	}
