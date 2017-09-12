@@ -147,6 +147,7 @@ public class KClient implements Runnable {
 						clientControl.simpleProjectsReturnedFromLogin(returnedList);
 					} else if (((ArrayList<?>) currentObject).get(0) instanceof Project) {
 						System.out.println("Client Message: Objects are SimpleProject 's.");
+						ClientControl.getInstance().setReceivedSimpleProjects((ArrayList<SimpleProject>) currentObject);
 						// do some other stuff
 					} else if (((ArrayList<?>) currentObject).get(0) instanceof Task) {
 						System.out.println("Client Message: Objects are Task 's.");
