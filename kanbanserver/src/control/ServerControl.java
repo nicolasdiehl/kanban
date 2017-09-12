@@ -10,10 +10,14 @@ import model.User;
 
 public class ServerControl {
 
-	private Ldap ldap;
+
 	private UserXML userXML;
+	
+	
 
 	public SimpleUser userLogin(String userName) {
+		
+		Ldap ldap = new Ldap("","");
 		SimpleUser userSimple = new SimpleUser();
 
 		ldap.login(userName, userSimple);

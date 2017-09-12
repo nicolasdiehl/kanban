@@ -47,17 +47,17 @@ public class LoginScreenController {
 
 		// MainApp gets altered to pass Users full name to next Stage
 //		 try {
-		clientControl.userLogIn(usernameTextfield.getText(), mainApp);
-//		 } catch (NullPointerException e) {
-//		 e.printStackTrace();
-//		 }
-
-		mainApp.loginName = "";
-
-		while (mainApp.loginName == "") {
-			// Wait till name gets altered in other Thread, could be done better with
-			// Threads;
-		}
+//		clientControl.userLogIn(usernameTextfield.getText(), mainApp);
+////		 } catch (NullPointerException e) {
+////		 e.printStackTrace();
+////		 }
+//
+//		mainApp.loginName = "";
+//
+//		while (mainApp.loginName == "") {
+//			// Wait till name gets altered in other Thread, could be done better with
+//			// Threads;
+//		}
 		// mainApp.showMainScreen();
 		mainApp.showProjectScreen();
 
