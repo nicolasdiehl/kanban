@@ -169,41 +169,46 @@ public class UserXML
 			uName.appendChild(doc.createTextNode(user.getName()));
 			userXML.appendChild(uName);
 
-			// add new element "cProject" to user
-			Element currentProject = doc.createElement("cProject");
-			
-			// set attribute to currentProject element
-			currentProject.setAttribute("pID", user.getProjectCurrent().getId());
-			userXML.appendChild(currentProject);
+			try {
+				// add new element "cProject" to user
+				Element currentProject = doc.createElement("cProject");
+				
+				// set attribute to currentProject element
+				currentProject.setAttribute("pID", user.getProjectCurrent().getId());
+				userXML.appendChild(currentProject);
 
-			// add new element "pName" to currentProject
-			Element cpName = doc.createElement("pName");
-			cpName.appendChild(doc.createTextNode(user.getProjectCurrent().getName()));
-			currentProject.appendChild(cpName);
+				// add new element "pName" to currentProject
+				Element cpName = doc.createElement("pName");
+				cpName.appendChild(doc.createTextNode(user.getProjectCurrent().getName()));
+				currentProject.appendChild(cpName);
 
-			// store all authorized projects in a list of type SimpleProject
-			List<SimpleProject> aProjects = user.getProjects();
+				// store all authorized projects in a list of type SimpleProject
+				List<SimpleProject> aProjects = user.getProjects();
 
-			// loop to store every authorized project in xml
-			for (int i = 0; i < aProjects.size(); i++)
-			{
-				// add new element "aProject" to user
-				Element aProject = doc.createElement("aProject");
-				// set attribute to user element
-				aProject.setAttribute("pID", aProjects.get(i).getId());
-				userXML.appendChild(aProject);
+				// loop to store every authorized project in xml
+				for (int i = 0; i < aProjects.size(); i++)
+				{
+					// add new element "aProject" to user
+					Element aProject = doc.createElement("aProject");
+					// set attribute to user element
+					aProject.setAttribute("pID", aProjects.get(i).getId());
+					userXML.appendChild(aProject);
 
-				// add new element "pName" to aProject
-				Element apName = doc.createElement("pName");
-				apName.appendChild(doc.createTextNode(aProjects.get(i).getName()));
-				aProject.appendChild(apName);
+					// add new element "pName" to aProject
+					Element apName = doc.createElement("pName");
+					apName.appendChild(doc.createTextNode(aProjects.get(i).getName()));
+					aProject.appendChild(apName);
+				}
+			} catch (NullPointerException nullE) {
+				// TODO Auto-generated catch block
+				nullE.printStackTrace();
 			}
 
 			// write the content into xml file
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File(userXMLDirectory));
+			StreamResult result = new StreamResult(file);
 			
 			// change indicator because writing was succesfull
 			isWritten = true;
@@ -218,13 +223,13 @@ public class UserXML
 			pce.printStackTrace();
 			
 			// Debugging output
-			System.out.println("Schreiben NICHT erfolgreich!");
+			System.out.println("Schreiben NICHT erfolgreich(Parser)!");
 		} catch (TransformerException tfe)
 		{
 			tfe.printStackTrace();
 			
 			// Debugging output
-			System.out.println("Schreiben NICHT erfolgreich!");
+			System.out.println("Schreiben NICHT erfolgreich!(Tranformer)");
 		}
 		
 		// return indicator
