@@ -18,6 +18,11 @@ public class ServerControl {
 	private ProjectXML projectXML;
 	private User user;
 
+	/**
+	 * Constructor
+	 * @param userName
+	 * @return
+	 */
 	public SimpleUser userLogin(String userName) {
 		
 		Ldap ldap = new Ldap("ldaps://10.16.1.1:636","ou=accounts,dc=linuxmuster-net,dc=lokal");
@@ -27,7 +32,12 @@ public class ServerControl {
 		user = new User(userName, userSimple.getFirstName() + " " + userSimple.getLastName(), null, null);
 		return userSimple;
 	}
-
+	
+	/**
+	 * 
+	 * @param userName
+	 * @return
+	 */
 	public ArrayList<SimpleProject> getProjectsForUserLogin(String userName) {
 		User user;
 		

@@ -28,9 +28,10 @@ class ServerThread extends Thread {
 		this.socket = socket;
 	}
 
-	/*
+	/**
 	 * For now, returns dummy objects. Will get a list from the xml or from projects
 	 * that are created from the xml.
+	 * @param userName
 	 */
 	public void sendSimpleProjects(String userName) {
 		try {
@@ -44,6 +45,10 @@ class ServerThread extends Thread {
 		}
 	}
 
+	/**
+	 * 
+	 * @param userName
+	 */
 	public void sendSimpleUser(String userName) {
 		try {
 			System.out.println("Server Message: Sending SimpleUser.");
@@ -56,6 +61,10 @@ class ServerThread extends Thread {
 		}
 	}
 
+	/**
+	 * 
+	 * @param str
+	 */
 	public void sendString(String str) {
 		try {
 			System.out.println("Server Message: Sending string " + str + " to client.");
