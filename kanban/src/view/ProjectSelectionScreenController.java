@@ -26,7 +26,8 @@ public class ProjectSelectionScreenController {
     private ClientControl clientControl = ClientControl.getInstance();
     private MainApp mainApp;
     
-    ObservableList<SimpleProject> listOfProjectNames = FXCollections.observableArrayList(clientControl.getSimpleProjects());
+    ObservableList<SimpleProject> listOfProjectNames;
+    //= FXCollections.observableArrayList(clientControl.getSimpleProjects());
     
     Stage prevStage;
     
