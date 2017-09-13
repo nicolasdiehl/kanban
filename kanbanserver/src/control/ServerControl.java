@@ -28,8 +28,9 @@ public class ServerControl {
 		Ldap ldap = new Ldap("ldaps://10.16.1.1:636","ou=accounts,dc=linuxmuster-net,dc=lokal");
 		SimpleUser userSimple = new SimpleUser();
 
-		ldap.login(userName, userSimple);
-		user = new User(userName, userSimple.getFirstName() + " " + userSimple.getLastName(), null, null);
+		if(ldap.login(userName, userSimple)) {
+			user = new User(userName, userSimple.getFirstName() + " " + userSimple.getLastName(), null, null);
+		}
 		return userSimple;
 	}
 	
@@ -39,7 +40,6 @@ public class ServerControl {
 	 * @return
 	 */
 	public ArrayList<SimpleProject> getProjectsForUserLogin(String userName) {
-		User user;
 		
 		userXML = new UserXML(System.getProperty("java.class.path") + "\\User\\", userName);
 		user = userXML.readUserXML();

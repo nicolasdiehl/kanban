@@ -49,16 +49,21 @@ class ServerThread extends Thread {
 	 * 
 	 * @param userName
 	 */
-	public void sendSimpleUser(String userName) {
+	public boolean sendSimpleUser(String userName) {
+		boolean successfulLdap = false;
 		try {
 			System.out.println("Server Message: Sending SimpleUser.");
 			SimpleUser simpleUser = serverControl.userLogin(userName);
+			if (simpleUser.getFirstName() != null) {
+				successfulLdap = true;
+			}
 			objectOutputStream.writeObject(simpleUser);
 			// objectOutputStream.writeObject(serverControl.userLogin(userName));
 		} catch (IOException e) {
 			System.err.println("Server Error: Error sending SimpleUser object to client.");
 			e.printStackTrace();
 		}
+		return successfulLdap;
 	}
 
 	/**
@@ -103,8 +108,9 @@ class ServerThread extends Thread {
 					// sendSimpleProjects();
 					case "Login":
 						System.out.println("Server Message: Client is requesting SimpleProject 's");
-						sendSimpleUser(switchArray[1]);
-						sendSimpleProjects(switchArray[1]);
+						if(sendSimpleUser(switchArray[1])) {							
+							sendSimpleProjects(switchArray[1]);
+						}
 						break;
 					default:
 						break;
