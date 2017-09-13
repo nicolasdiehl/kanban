@@ -26,6 +26,11 @@ public class User implements Serializable
 	 * projects --> String list of all Projects the user worked on 
 	 */
 	private ArrayList<SimpleProject> projects;
+	
+	/**
+	 * 
+	 */
+	private ObservableList<SimpleProject> projectsProperty = FXCollections.observableArrayList();
 	/**
 	 * project current --> project object, the user is currently working with
 	 */

@@ -2,6 +2,9 @@ package model;
 
 import java.util.*;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+
 public class User {
 
 	private String uid;
@@ -52,8 +55,8 @@ public class User {
 		return projectCurrent;
 	}
 
-	public Project getObservableProjectCurrent() {
-		return projectCurrent;
+	public ObjectProperty<Project> getObservableProjectCurrent() {
+		return new SimpleObjectProperty<Project>(projectCurrent);
 	}
 	
 	public void setProjectCurrent(Project projectCurrent) {
