@@ -78,6 +78,7 @@ public class ClientControl {
 	public boolean projectCreate(Project projectNew) {
 		boolean isProjectCreated = false;
 		//anlegen der Projekt-XML
+		user.setProjectCurrent(projectNew);
 		kclient.sendProject(projectNew);
 		
 		return isProjectCreated;
