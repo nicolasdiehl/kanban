@@ -106,6 +106,11 @@ public class MainScreenController {
      */
     @FXML
     private void initialize() {
+	try{
+	    projectTab.setText(control.getUser().getProjectCurrent().getName());
+	}catch(Exception e){
+	    projectTab.setText("test");
+	}
 	// Initialize the task table with one column.
 	todoTTC.setCellValueFactory(cellData -> cellData.getValue().getTitleProperty());
 	// Clear task details.

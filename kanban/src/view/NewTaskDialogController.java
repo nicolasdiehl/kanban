@@ -106,7 +106,7 @@ public class NewTaskDialogController {
 	    task.setStatus(statusComboBox.getSelectionModel().getSelectedItem());
 	    
 	    // adds the task to the project
-	    IProject project = control.getOpenProject();
+	    IProject project = control.getUser().getProjectCurrent();
 	    project.addTask(task);
 	    System.out.println(task.getStatus() + "hello");
 	    
