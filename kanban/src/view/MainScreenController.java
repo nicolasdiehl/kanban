@@ -1,7 +1,5 @@
 package view;
 
-import java.util.function.Consumer;
-
 import control.ClientControl;
 import control.MainApp;
 import javafx.fxml.FXML;
@@ -16,8 +14,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import model.ITask;
-import model.ITaskFX;
-import model.Task;
 
 public class MainScreenController {
     
@@ -57,21 +53,16 @@ public class MainScreenController {
     private TableColumn<ITask, String> wipTTC;
     @FXML
     private TableColumn<ITask, String> doneTTC;
-
     
     private ClientControl control = ClientControl.getInstance();
     
     /**
-     * Called when the user clicks the new button. Opens a dialog to edit
-     * details for a new task.
+     * Called when the user clicks the new button.
+     * Opens a dialog to create a new task.
      */
     @FXML
     private void handleNewTask() {
 	mainApp.showNewTaskDialog();
-//        boolean okClicked = mainApp.showNewTaskDialog(tempTask);
-//        if (okClicked) {
-//            mainApp.getTaskData().add(tempTask);
-//        }
     }
     
     /**
@@ -145,34 +136,34 @@ public class MainScreenController {
      */
     private void showTaskDetails(ITask task) {
 	
-        creatorTextArea.setText("");
-        creationDateTextArea.setText("");
-        categoryTextArea.setText("");
-        memberTextArea.setText("");
-        descriptionTextArea.setText("");
-        commentTextArea.setText("");
-        
-        if (task != null) {
-            // Fill the labels with info from the person object.
-            creatorTextArea.setText(task.getCreatorID());
-            creationDateTextArea.setText(task.getCreatorDate().toLocaleString());
-            categoryTextArea.setText(task.getCategorie());
+	creatorTextArea.setText("");
+	creationDateTextArea.setText("");
+	categoryTextArea.setText("");
+	memberTextArea.setText("");
+	descriptionTextArea.setText("");
+	commentTextArea.setText("");
+	
+	if (task != null) {
+	    // Fill the labels with info from the person object.
+	    creatorTextArea.setText(task.getCreatorID());
+	    creationDateTextArea.setText(task.getCreatorDate().toLocaleString());
+	    categoryTextArea.setText(task.getCategorie());
 //            memberTextArea.setText(task.getMember().toString());
-            descriptionTextArea.setText(task.getDescription());
-            for (String element : task.getComment()) {
+	    descriptionTextArea.setText(task.getDescription());
+	    for (String element : task.getComment()) {
 		commentTextArea.appendText("- " + element + ";\n");
 	    }
 //            commentTextArea.setText(task.getComment().toString());
-
-        } else {
-            // Task is null, remove all the text.
-            creatorTextArea.setText("");
-            creationDateTextArea.setText("");
-            categoryTextArea.setText("");
-            memberTextArea.setText("");
-            descriptionTextArea.setText("");
-            commentTextArea.setText("");
-        }
+	
+	} else {
+	    // Task is null, remove all the text.
+	    creatorTextArea.setText("");
+	    creationDateTextArea.setText("");
+	    categoryTextArea.setText("");
+	    memberTextArea.setText("");
+	    descriptionTextArea.setText("");
+	    commentTextArea.setText("");
+	}
     }
     
 }

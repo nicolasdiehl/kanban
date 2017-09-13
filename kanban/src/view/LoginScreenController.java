@@ -32,7 +32,8 @@ public class LoginScreenController {
 	Stage prevStage;
 
 	/**
-	 * The constructor. The constructor is called before the initialize() method.
+	 * The constructor. The constructor is called before the initialize()
+	 * method.
 	 */
 	public LoginScreenController() {
 
@@ -42,6 +43,10 @@ public class LoginScreenController {
 		this.prevStage = stage;
 	}
 
+	/**
+	 * The Login Button connects to the Server with the UserName of Ldap
+	 * and closes the Login Screen
+	 */
 	@FXML
 	public void dropLoginButton() {
 
@@ -53,19 +58,33 @@ public class LoginScreenController {
 		}
 
 		while (mainApp.loginName == "") {
-			// Wait till name gets altered in other Thread, could be done better with
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// Wait till name gets altered in other Thread, could be done better
+			// with
 			// Threads;
 			if (mainApp.loginName == "") {
-				System.out.print(".");
+				// System.out.print(".");
 			} else {
 				System.out.println(mainApp.loginName + " logged in.");
 			}
 		}
-		// mainApp.showMainScreen();
-		mainApp.showProjectScreen();
+		// TODO: block entry when null, enable when shipping.
+		if (mainApp.loginName.equals("null null") && false) {
+			System.out.println("Client Message: User does not exist!");
+			usernameTextfield.setText(usernameTextfield.getText() + " nicht gefunden");
+			mainApp.loginName = "";
+		} else {
+			System.out.println("'" + mainApp.loginName + "' in else!");
+			mainApp.showProjectScreen();
 
-		prevStage = (Stage) loginButton.getScene().getWindow();
-		prevStage.close();
+			prevStage = (Stage) loginButton.getScene().getWindow();
+			prevStage.close();
+		}
 	}
 
 	/**
