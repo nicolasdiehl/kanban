@@ -31,6 +31,11 @@ public class UserXML
 		userXMLDirectory = directory + login + ".xml";
 	}
 	
+	public String getDirectory()
+	{
+		return userXMLDirectory;
+	}
+	
 
 	public User readUserXML()
 	{
