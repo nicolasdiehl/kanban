@@ -1,5 +1,6 @@
 package control;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -42,7 +43,13 @@ public class ServerControl {
 	public ArrayList<SimpleProject> getProjectsForUserLogin(String userName) {
 		
 		userXML = new UserXML(System.getProperty("java.class.path") + "\\User\\", userName);
-		user = userXML.readUserXML();
+		File f = new File(userXML.getUserXMLDirectory());
+		if(f.exists() && !f.isDirectory())
+		{
+			user = userXML.readUserXML();
+		}else {
+			userXML.writeUserXML(user);
+		}
 		if (user != null) {
 			return (ArrayList<SimpleProject>) user.getProjects();
 		}else {

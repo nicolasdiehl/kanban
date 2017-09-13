@@ -119,6 +119,11 @@ public class UserXML
 		return null;
 	}
 
+	public String getUserXMLDirectory() {
+		return userXMLDirectory;
+	}
+
+
 	public boolean writeUserXML(User user)
 	{
 		/**
