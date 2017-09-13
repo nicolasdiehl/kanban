@@ -52,6 +52,10 @@ public class User {
 		return projectCurrent;
 	}
 
+	public Project getObservableProjectCurrent() {
+		return projectCurrent;
+	}
+	
 	public void setProjectCurrent(Project projectCurrent) {
 		this.projectCurrent = projectCurrent;
 	}
