@@ -15,11 +15,15 @@ import javax.xml.transform.stream.StreamResult;
 import model.SimpleProject;
 import model.User;
 
-/**
- * @author Norman Dettmer
- */
 public class UserXML
 {
+	/**
+	 * UserXML class to read and write a XML
+	 * 
+	 * An object of this class needs a directory and the project id to generate a file (to find and to store the XML)
+	 */
+	
+	// create the directory file
 	private String userXMLDirectory;
 	
 	public UserXML(String directory, String login)
@@ -27,12 +31,14 @@ public class UserXML
 		userXMLDirectory = directory + login + ".xml";
 	}
 	
-	/**
-	 * function to read a user xml file
-	 * see:https://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
-	 */
+
 	public User readUserXML()
 	{
+		/**
+		 * Function to read a user XML
+		 * @return an object of class User
+		 */
+		
 		try
 		{
 			// create new file for import
@@ -42,7 +48,7 @@ public class UserXML
 			if (file.exists())
 			{
 				// Debugging output
-				//System.out.println("XML wurde gefunden");
+				System.out.println("XML wurde gefunden");
 
 				// create new object of type document with the data of the xml
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -95,7 +101,7 @@ public class UserXML
 			} else
 			{
 				// Debugging output
-				//System.out.println("XML wurde NICHT gefunden");
+				System.out.println("XML wurde NICHT gefunden");
 			}
 
 		} catch (ParserConfigurationException pce)
@@ -113,22 +119,27 @@ public class UserXML
 		return null;
 	}
 
-	/**
-	 * function to write a user xml file
-	 * see:https://www.mkyong.com/java/how-to-create-xml-file-in-java-dom/
-	 */
-	public void writeUserXML(User user)
+	public boolean writeUserXML(User user)
 	{
+		/**
+		 *  Function to write auser XML
+		 * @return boolean indicating if writing was succesfull
+		 */
+		
+		// indicator
+		boolean isWritten = false;
+		
 		// create new file
 		File file = new File(userXMLDirectory);
 		
 		// delete existing xml file
 		if (file.exists())
 		{
+			// delete
 			file.delete();
 
 			//Debugging output
-			//System.out.println("Alte XML wurde gelöscht");
+			System.out.println("Alte XML wurde gelöscht");
 		}
 		try
 		{
@@ -188,22 +199,30 @@ public class UserXML
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
 			StreamResult result = new StreamResult(new File(userXMLDirectory));
+			
+			// change indicator because writing was succesfull
+			isWritten = true;
 
 			transformer.transform(source, result);
 
 			// Debugging output
-			//System.out.println("Neue User XMl wurde angelegt");
+			System.out.println("Neue User XMl wurde angelegt");
 
 		} catch (ParserConfigurationException pce)
 		{
 			pce.printStackTrace();
+			
 			// Debugging output
-			//System.out.println("Schreiben NICHT erfolgreich!");
+			System.out.println("Schreiben NICHT erfolgreich!");
 		} catch (TransformerException tfe)
 		{
 			tfe.printStackTrace();
+			
 			// Debugging output
-			//System.out.println("Schreiben NICHT erfolgreich!");
+			System.out.println("Schreiben NICHT erfolgreich!");
 		}
+		
+		// return indicator
+		return isWritten;
 	}
 }

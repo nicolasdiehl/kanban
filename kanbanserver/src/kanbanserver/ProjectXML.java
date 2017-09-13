@@ -7,7 +7,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -22,11 +21,16 @@ import org.w3c.dom.NodeList;
 
 import model.ITask;
 import model.Project;
-import model.SimpleProject;
-import model.User;
 
 public class ProjectXML
 {
+	/**
+	 * ProjectXML class to read and write a XML
+	 * 
+	 * An object of this class needs a directory and the project id to generate a file (to find and to store the XML)
+	 */
+	
+	// create the directory file
 	private String projectXMLDirectory;
 
 	public ProjectXML(String directory, String pID)
@@ -36,6 +40,11 @@ public class ProjectXML
 
 	public Project readProjectXML()
 	{
+		/**
+		 * Function to read a project XML
+		 * @return an object of class Project
+		 */
+		
 		try
 		{
 			// essentiall to cast a string into a date
@@ -104,7 +113,6 @@ public class ProjectXML
 			e.printStackTrace();
 		} catch (ParseException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -114,7 +122,14 @@ public class ProjectXML
 
 	public boolean writeProjectXML(Project project)
 	{
+		/**
+		 *  Function to write a project XML
+		 * @return boolean indicating if writing was succesfull
+		 */
+		
+		// indicator
 		boolean isWritten = false;
+		
 		// essentiall to cast a date into a string
 		DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
@@ -124,11 +139,11 @@ public class ProjectXML
 		// delete existing xml file
 		if (file.exists())
 		{
+			// delete
 			file.delete();
 
 			//Debugging output
-			//System.out.println("Alte XML wurde gelöscht");
-
+			System.out.println("Alte XML wurde gelöscht");
 		}
 
 		try
@@ -221,28 +236,22 @@ public class ProjectXML
 				// cast Date to String
 				String reportDateCreate = df.format(taskList.get(i).getCreatorDate());
 				tDateCreate.appendChild(doc.createTextNode(reportDateCreate));
-				task.appendChild(tDateCreate);
-
-				// loop to store the memberList in project xml
-
-				//				// add new element "comment" to task
-				//				Element tComment = doc.createElement("tComment");
-				//				task.appendChild(tComment);
-				//				
-				//				// store all comments in a list of type String
-				//				List<String> comments = taskList.get(i).getComment();
-				//				// loop to store the commentlines in comment
-				//				for (int d = 0; d < comments.size(); d++)
-				//				{
-				//					// add new element "commentline" to comment
-				//					Element tCommentLine = doc.createElement("tCommentLine");
-				//					
-				//					tComment.appendChild(tCommentLine);
-				//					
-				//				}
-				//				
-				//				// add new element "List<String> comment" to task
+				task.appendChild(tDateCreate);				
 			}
+			
+//			// store all members in a list of type SimpleProject
+//			List<String> memberList = project.getMembersProperty();
+//			
+//			Element pMembers = doc.createElement("pMembers");
+//			projectXML.appendChild(pMembers);
+//			
+//			// loop to store the memberList in project xml
+//			for (int i = 0; i < memberList.size(); i++)
+//			{
+//				Element mID = doc.createElement("memberID");
+//				mID.appendChild(doc.createTextNode(memberList.get(i)));
+//				pMembers.appendChild(mID);
+//			}
 
 			// write the content into xml file
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -252,17 +261,24 @@ public class ProjectXML
 
 			transformer.transform(source, result);
 
+			// change indicator because writing was succesfull
 			isWritten = true;
 
 		} catch (ParserConfigurationException pce)
 		{
 			pce.printStackTrace();
+			
+			// Debugging output
 			System.out.println("Schreiben NICHT erfolgreich!");
 		} catch (TransformerException tfe)
 		{
 			tfe.printStackTrace();
+			
+			// Debugging output
 			System.out.println("Schreiben NICHT erfolgreich!");
 		}
+		
+		// return indicator
 		return isWritten;
 	}
 }
