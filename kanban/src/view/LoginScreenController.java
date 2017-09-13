@@ -68,7 +68,7 @@ public class LoginScreenController {
 			// with
 			// Threads;
 			if (mainApp.loginName == "") {
-				// System.out.print(".");
+				 System.out.print(".");
 			} else {
 				System.out.println(mainApp.loginName + " logged in.");
 			}
