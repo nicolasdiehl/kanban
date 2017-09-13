@@ -155,6 +155,7 @@ public class UserXML
 
 			// add new element "cProject" to user
 			Element currentProject = doc.createElement("cProject");
+			
 			// set attribute to currentProject element
 			currentProject.setAttribute("pID", user.getProjectCurrent().getId());
 			userXML.appendChild(currentProject);
