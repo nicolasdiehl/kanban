@@ -35,6 +35,7 @@ public class KClient implements Runnable {
 	/**
 	 * Transmits a String to the server asking for a list of SimpleProject
 	 * Objects.
+	 * @param userName: Projects for this user are requested
 	 */
 	public void requestSimpleProjects(String userName) {
 		try {
@@ -47,6 +48,11 @@ public class KClient implements Runnable {
 			System.out.println("SimpleProject request sent");
 		}
 	}
+	
+	/**
+	 * Transmit a String to request a Login for this specified user
+	 * @param userName: Login for this user is requested
+	 */
 	public void requestLogIn(String userName) {
 		try {
 			System.out.println("Client Message: Sending Request to Log in.");
@@ -59,19 +65,24 @@ public class KClient implements Runnable {
 			System.out.println("Login request sent");
 		}
 	}
-	public void sendNewProject(Project project) {
+	
+	/**
+	 * Sends a 
+	 * @param project
+	 */	
+	public void sendProject(Project project) {
 		try {
-			System.out.println("Client Message: Sending new project to Server");
+			System.out.println("Client Message: Sending project to Server");
 			objectOutputStream.writeObject(project);
 		} catch (IOException e) {
-			System.err.println("Client Error: sending new project message.");
+			System.err.println("Client Error: sending project message.");
 			e.printStackTrace();
 		}finally {
-			System.out.println("New Project sent");
+			System.out.println("Project sent");
 		}
 	}
 
-	/*
+	/**
 	 * Establishes a connection, tries again if fail.
 	 */
 	public void connectToServer(InetAddress address, int port) {

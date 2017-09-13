@@ -20,6 +20,10 @@ public class ClientControl {
 		return instance;
 	}
 	
+	/**
+	 * Constructor
+	 * starts a new KClient as Thread
+	 */
 	public ClientControl() {
 		// Start Client thread?
 		System.out.println("starting thread of client");
@@ -42,24 +46,38 @@ public class ClientControl {
 		kclient.requestSimpleProjects(name);
 		this.mainApp = mainApp;
 	}	
+	/**
+	 * 
+	 * @param simpleUserObj
+	 */
 	public void simpleUserReturnedFromLogIn(SimpleUser simpleUserObj) {
 		user.setName(simpleUserObj.getFirstName() + " " + simpleUserObj.getLastName());
 		mainApp.loginName = user.getName();
 		System.out.println(mainApp.loginName);
 	}
-	
+	/**
+	 * 
+	 * @param returnedList
+	 */
 	public void simpleProjectsReturnedFromLogin(ArrayList<SimpleProject> returnedList) {
 		user.setProjects(returnedList);
 	}
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public List<SimpleProject> getSimpleProjects() {
 		return user.getProjects();
 	}
-
+	/**
+	 * 
+	 * @param projectNew
+	 * @return
+	 */
 	public boolean projectCreate(Project projectNew) {
 		boolean isProjectCreated = false;
 		//anlegen der Projekt-XML
-		kclient.sendNewProject(projectNew);
+		kclient.sendProject(projectNew);
 		
 		return isProjectCreated;
 	}
