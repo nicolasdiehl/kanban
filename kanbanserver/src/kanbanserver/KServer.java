@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import model.SimpleProject;
-
 /**
  * Main thread of the server. Handles xml and storage of data.
  */

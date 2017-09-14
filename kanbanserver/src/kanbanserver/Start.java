@@ -1,6 +1,5 @@
 package kanbanserver;
 
-import java.io.IOException;
 
 public class Start {
     /* Start the project with Start.java,

@@ -83,9 +83,9 @@ public class XML<T>
 	 * @return
 	 * @throws IOException
 	 */
+	@SuppressWarnings("unchecked")
 	public T readXML() throws IOException
 	{
-		FileReader reader = new FileReader(directoryXML);
 		Path path = Paths.get(directoryXML);
 		String xml = new String(Files.readAllBytes(path));
 
