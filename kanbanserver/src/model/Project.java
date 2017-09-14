@@ -25,8 +25,6 @@ public class Project implements IProject, IProjectFX, Serializable{
 	//TODO delete members, add courses?
 	/**list of tasks */
 	private List<ITask> tasks;	
-	
-	private ObservableList<ITask> tasksProperty = FXCollections.observableArrayList();
 	/**list of project member ids */
 	private List<String> members;	
 	
@@ -60,12 +58,8 @@ public class Project implements IProject, IProjectFX, Serializable{
 	 * @param creator			creator id
 	 */
 	public Project(String name,String description ,String creator ) {
-			this(name, description,null,null,new ArrayList<ITask>(),null,"-1");
-			Date current = new Date();
-			modified = current;
-			created = current;		
-			members = new ArrayList<String>();
-			members.add(creator);
+		this(name, description,new Date(),new Date(),new ArrayList<ITask>(),new ArrayList<String>(),"-1");
+			members.add(creator);		
 	}
 	
 	@Override 	
@@ -141,13 +135,12 @@ public class Project implements IProject, IProjectFX, Serializable{
 	
 	@Override
 	public void addTask(ITask value) {
-		tasks.add(value);
-		tasksProperty.add(value);
+		tasks.add(value);		
 	}
 
 	@Override
-	public void addMember(int value) {
-//		members.add(value);	
+	public void addMember(String value) {
+		members.add(value);	
 	}
 
 	@Override
@@ -202,7 +195,7 @@ public class Project implements IProject, IProjectFX, Serializable{
 
 	@Override
 	public ObservableList<ITask> getTasksProperty() {
-		return tasksProperty;
+		return FXCollections.observableArrayList(tasks);
 	}
 
 	@Override
