@@ -148,7 +148,7 @@ public class KClient implements Runnable {
 		while (receivingMessages) {
 			try {
 				currentObject = objectInputStream.readObject();
-				if (currentObject instanceof ArrayList<?>) {
+				if (currentObject instanceof ArrayList<?> && ((ArrayList<?>)currentObject).size() > 0) {
 					System.out.println("Client Message: Received Object is ArrayList.");
 					if (((ArrayList<?>) currentObject).get(0) instanceof SimpleProject) {
 						System.out.println("Client Message: Objects are SimpleProjects.");

@@ -27,7 +27,7 @@ public class ServerControl {
 		SimpleUser userSimple = new SimpleUser();
 
 		if(ldap.login(userName, userSimple)) {
-			user = new User(userName, userSimple.getFirstName() + " " + userSimple.getLastName(), null, null);
+			user = new User(userName, userSimple.getFirstName() + " " + userSimple.getLastName(), new ArrayList<SimpleProject>(), null);
 		}
 		return userSimple;
 	}
@@ -39,7 +39,8 @@ public class ServerControl {
 	 */
 	public ArrayList<SimpleProject> getProjectsForUserLogin(String userName) {
 		
-		XML<User> userXML = new XML<User>(System.getProperty("java.class.path") + "\\User\\", userName);
+//		XML<User> userXML = new XML<User>(System.getProperty("java.class.path") + "\\User\\", userName);
+		XML<User> userXML = new XML<User>("D:\\kanban\\User\\", userName);
 		try
 		{
 			user = userXML.readXML();
@@ -47,23 +48,10 @@ public class ServerControl {
 		}
 		catch(IOException e)
 		{
+//			e.printStackTrace();
 			userXML.writeXML(user);
-			return null;
+			return new ArrayList<SimpleProject>();
 		}
-
-//		File f = new File(userXML.getUserXMLDirectory());
-//		
-//		if(f.exists() && !f.isDirectory())
-//		{
-//			user = userXML.readUserXML();
-//		}else {
-//			userXML.writeUserXML(user);
-//		}
-//		if (user != null) {
-//			return (ArrayList<SimpleProject>) user.getProjects();
-//		}else {
-//			return null;
-//		}
 	}
 	/**
 	 * 
@@ -72,11 +60,11 @@ public class ServerControl {
 	 */
 	public boolean createNewProjectXML(Project newProject) {
 		newProject.setID(UUID.randomUUID().toString());
-		XML<Project> projectXML = new XML<Project>(System.getProperty("java.class.path") + "\\Project\\", newProject.getID());
+		XML<Project> projectXML = new XML<Project>("D:\\kanban\\Project\\", newProject.getID());
 		SimpleProject simpleNewProject = new SimpleProject(newProject.getName(), newProject.getID());
 		user.setProjectCurrent(simpleNewProject);
 		user.addProjects(simpleNewProject);
-		XML<User> userXml = new XML<User>(System.getProperty("java.class.path") + "\\User\\", user.getUid());
+		XML<User> userXml = new XML<User>("D:\\kanban\\User\\", user.getUid());
 		userXml.writeXML(user);
 		return projectXML.writeXML(newProject);
 	}

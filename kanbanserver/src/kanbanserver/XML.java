@@ -71,6 +71,7 @@ public class XML<T>
 		// can not happen (because new file will be created)
 		catch (FileNotFoundException | UnsupportedEncodingException e)
 		{
+			e.printStackTrace();
 			return false;
 		}
 		
