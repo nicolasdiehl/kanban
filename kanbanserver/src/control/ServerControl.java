@@ -1,11 +1,11 @@
 package control;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import kanbanserver.ProjectXML;
-import kanbanserver.UserXML;
+import kanbanserver.XML;
 import ldap.Ldap;
 import model.Project;
 import model.SimpleProject;
@@ -15,22 +15,18 @@ import model.User;
 public class ServerControl {
 
 
-	private UserXML userXML;
-	private ProjectXML projectXML;
 	private User user;
 
 	/**
-	 * Called to log in a User by UID name. Calls LDAP function and returns a SimpleUser Object.
+	 * Constructor
 	 * @param userName
-	 * @return logged in SimpleUser Object.
+	 * @return
 	 */
 	public SimpleUser userLogin(String userName) {
 		
 		Ldap ldap = new Ldap("ldaps://10.16.1.1:636","ou=accounts,dc=linuxmuster-net,dc=lokal");
 		SimpleUser userSimple = new SimpleUser();
-		/*
-		 * userSimple gets altered to store user first and last name, set in LDAP function.
-		 */
+
 		if(ldap.login(userName, userSimple)) {
 			user = new User(userName, userSimple.getFirstName() + " " + userSimple.getLastName(), null, null);
 		}
@@ -44,20 +40,31 @@ public class ServerControl {
 	 */
 	public ArrayList<SimpleProject> getProjectsForUserLogin(String userName) {
 		
-		userXML = new UserXML(System.getProperty("java.class.path") + "\\User\\", userName);
-		File f = new File(userXML.getUserXMLDirectory());
-		if(f.exists() && !f.isDirectory())
+		XML<User> userXML = new XML<User>(System.getProperty("java.class.path") + "\\User\\", userName);
+		try
 		{
-			user = userXML.readUserXML();
-		}else {
-			userXML.writeUserXML(user);
-		}
-		if (user != null) {
-			//returns dummy list of simpleProjects, dummy is in user.getProjects()
+			user = userXML.readXML();
 			return (ArrayList<SimpleProject>) user.getProjects();
-		}else {
+		}
+		catch(IOException e)
+		{
+			userXML.writeXML(user);
 			return null;
 		}
+
+//		File f = new File(userXML.getUserXMLDirectory());
+//		
+//		if(f.exists() && !f.isDirectory())
+//		{
+//			user = userXML.readUserXML();
+//		}else {
+//			userXML.writeUserXML(user);
+//		}
+//		if (user != null) {
+//			return (ArrayList<SimpleProject>) user.getProjects();
+//		}else {
+//			return null;
+//		}
 	}
 	/**
 	 * 
@@ -65,14 +72,9 @@ public class ServerControl {
 	 * @return boolean for successful XML-write
 	 */
 	public boolean createNewProjectXML(Project newProject) {
-		boolean successfulCreate = false;
 		newProject.setID(UUID.randomUUID().toString());
-		projectXML = new ProjectXML(System.getProperty("java.class.path") + "\\Project\\", newProject.getID());
-		successfulCreate = projectXML.writeProjectXML(newProject);
-		user.setProjectCurrent(new SimpleProject( newProject.getName(), newProject.getID()));
-		user.addProjects(new SimpleProject( newProject.getName(), newProject.getID()));
-		userXML.writeUserXML(user);
-		return successfulCreate;
+		XML<Project> projectXML = new XML<Project>(System.getProperty("java.class.path") + "\\User\\", newProject.getID());
+		return projectXML.writeXML(newProject);
 	}
 	public User getUser() {
 		return user;
