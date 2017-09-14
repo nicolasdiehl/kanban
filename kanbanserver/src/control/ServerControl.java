@@ -73,7 +73,12 @@ public class ServerControl {
 	 */
 	public boolean createNewProjectXML(Project newProject) {
 		newProject.setID(UUID.randomUUID().toString());
-		XML<Project> projectXML = new XML<Project>(System.getProperty("java.class.path") + "\\User\\", newProject.getID());
+		XML<Project> projectXML = new XML<Project>(System.getProperty("java.class.path") + "\\Project\\", newProject.getID());
+		SimpleProject simpleNewProject = new SimpleProject(newProject.getName(), newProject.getID());
+		user.setProjectCurrent(simpleNewProject);
+		user.addProjects(simpleNewProject);
+		XML<User> userXml = new XML<User>(System.getProperty("java.class.path") + "\\User\\", user.getUid());
+		userXml.writeXML(user);
 		return projectXML.writeXML(newProject);
 	}
 	public User getUser() {
