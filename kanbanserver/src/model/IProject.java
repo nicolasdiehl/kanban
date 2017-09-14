@@ -102,5 +102,5 @@ public interface IProject extends IProjectFX{
 	 * add member id to list
 	 * @param value	member id
 	 */
-	void addMember(int value);
+	void addMember(String value);
 }
