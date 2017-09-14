@@ -126,6 +126,7 @@ public class Ldap {
 		try {
 
 			Result = search(SearchBase, HemsUid, User);
+			Result = true;
 		} catch (NamingException ex) {
 			System.out.println(ex);
 		}
