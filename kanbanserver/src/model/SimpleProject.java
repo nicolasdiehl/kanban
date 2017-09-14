@@ -7,6 +7,11 @@ public class SimpleProject implements Serializable {
 	private String name;
 	private String id;
 
+	/**
+	 * Constructor
+	 * @param name
+	 * @param id
+	 */
 	public SimpleProject(String name, String id) {
 		this.setName(name);
 		this.setId(id);
