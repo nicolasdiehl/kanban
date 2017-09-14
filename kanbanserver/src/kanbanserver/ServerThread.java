@@ -36,8 +36,17 @@ class ServerThread extends Thread {
 	public void sendSimpleProjects(String userName) {
 		try {
 			System.out.println("Server Message: Sending SimpleProject 's.");
+			/*
+			 * calls getProjectsForUserLogin for this user(name) and gets Project list back
+			 */
 			ArrayList<SimpleProject> projectList = serverControl.getProjectsForUserLogin(userName);
+			/*
+			 * Project list is set to servercontrol user. Every Serverthread has his logged in Control
+			 */
 			serverControl.getUser().setProjects(projectList);
+			/*
+			 * Sends that object.
+			 */
 			objectOutputStream.writeObject(projectList);
 		} catch (IOException e) {
 			System.err.println("Server Error: Error sending list of simple objects to client.");
@@ -46,14 +55,21 @@ class ServerThread extends Thread {
 	}
 
 	/**
-	 * 
+	 * Function to send a simpleUser to client after LogIn
 	 * @param userName
 	 */
 	public boolean sendSimpleUser(String userName) {
 		boolean successfulLdap = false;
 		try {
 			System.out.println("Server Message: Sending SimpleUser.");
+			/*
+			 * calls logIn function of ServerControl and gets a SimpleUser back.
+			 * SimpleUser only contains moodle UID and the name stored and called by ldap.
+			 */
 			SimpleUser simpleUser = serverControl.userLogin(userName);
+			/*
+			 * 
+			 */
 			if (simpleUser.getFirstName() != null) {
 				successfulLdap = true;
 			}
@@ -97,8 +113,14 @@ class ServerThread extends Thread {
 				if (currentObject instanceof String) {
 					System.out.println("Server Message: Received String Object");
 					String switchString = (String) currentObject;
+					/*
+					 * check for pipe separation.
+					 */
 					String[] switchArray = switchString.split(Pattern.quote("|"));
-					System.out.println(switchArray[0]);
+					/*
+					 * checks separation array for length = 2. If length = 1, there is
+					 * only one parameter receved.
+					 */
 					if (switchArray.length == 2) {
 						switchString = switchArray[0];
 					}

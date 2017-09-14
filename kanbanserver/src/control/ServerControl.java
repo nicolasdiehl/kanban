@@ -20,15 +20,17 @@ public class ServerControl {
 	private User user;
 
 	/**
-	 * Constructor
+	 * Called to log in a User by UID name. Calls LDAP function and returns a SimpleUser Object.
 	 * @param userName
-	 * @return
+	 * @return logged in SimpleUser Object.
 	 */
 	public SimpleUser userLogin(String userName) {
 		
 		Ldap ldap = new Ldap("ldaps://10.16.1.1:636","ou=accounts,dc=linuxmuster-net,dc=lokal");
 		SimpleUser userSimple = new SimpleUser();
-
+		/*
+		 * userSimple gets altered to store user first and last name, set in LDAP function.
+		 */
 		if(ldap.login(userName, userSimple)) {
 			user = new User(userName, userSimple.getFirstName() + " " + userSimple.getLastName(), null, null);
 		}
@@ -51,6 +53,7 @@ public class ServerControl {
 			userXML.writeUserXML(user);
 		}
 		if (user != null) {
+			//returns dummy list of simpleProjects, dummy is in user.getProjects()
 			return (ArrayList<SimpleProject>) user.getProjects();
 		}else {
 			return null;
@@ -64,8 +67,9 @@ public class ServerControl {
 	public boolean createNewProjectXML(Project newProject) {
 		boolean successfulCreate = false;
 		newProject.setID(UUID.randomUUID().toString());
-		projectXML = new ProjectXML(System.getProperty("java.class.path") + "\\User\\", newProject.getID());
+		projectXML = new ProjectXML(System.getProperty("java.class.path") + "\\Project\\", newProject.getID());
 		successfulCreate = projectXML.writeProjectXML(newProject);
+		user.setProjectCurrent(newProject);
 		return successfulCreate;
 	}
 	public User getUser() {

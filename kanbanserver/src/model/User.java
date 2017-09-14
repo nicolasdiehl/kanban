@@ -34,7 +34,7 @@ public class User implements Serializable
 	/**
 	 * project current --> project object, the user is currently working with
 	 */
-	private SimpleProject projectCurrent;
+	private Project projectCurrent;
 
 	/**
 	 * constructor for loading project
@@ -43,7 +43,7 @@ public class User implements Serializable
 	 * @param projects			list of all projects the user worked on
 	 * @param project current	project object the user is working on 
 	 */
-	public User(String uid, String name, ArrayList<SimpleProject> projects, SimpleProject projectCurrent)
+	public User(String uid, String name, ArrayList<SimpleProject> projects, Project projectCurrent)
 	{
 		this.uid = uid;
 		this.name = name;
@@ -86,12 +86,12 @@ public class User implements Serializable
 		this.projects = projects;
 	}
 
-	public SimpleProject getProjectCurrent()
+	public Project getProjectCurrent()
 	{
 		return projectCurrent;
 	}
 
-	public void setProjectCurrent(SimpleProject projectCurrent)
+	public void setProjectCurrent(Project projectCurrent)
 	{
 		this.projectCurrent = projectCurrent;
 	}
